@@ -168,7 +168,8 @@ app.post('/api/auth/google', async (req, res) => {
 });
 
 // Database setup
-const db = new sqlite3.Database('./eco_pakalpojumi.db');
+const dbPath = path.join(__dirname, 'eco_pakalpojumi.db');
+const db = new sqlite3.Database(dbPath);
 
 // Create tables if not exist
 db.serialize(() => {

@@ -1,30 +1,28 @@
 <template>
   <div class="register-page">
-    <!-- Background Elements -->
-    <div class="bg-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-
     <div class="register-container">
       <!-- Left Panel - Form -->
       <div class="form-panel">
         <div class="form-container">
           <div class="form-header">
-            <h2>{{ t('register.title') }} 🌱</h2>
+            <h2>{{ t('register.title') }}</h2>
             <p>{{ t('register.subtitle') }}</p>
           </div>
 
           <!-- Success Message -->
           <div v-if="success" class="success-message">
-            <span class="success-icon">✅</span>
+            <svg class="success-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
             <span>{{ success }}</span>
           </div>
 
           <!-- Error Message -->
           <div v-if="error" class="error-message">
-            <span class="error-icon">⚠️</span>
+            <svg class="error-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
             <span>{{ error }}</span>
             <button class="error-close" @click="error = ''">×</button>
           </div>
@@ -34,7 +32,9 @@
             <div class="input-group">
               <label for="name">{{ t('register.fullName') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">👤</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
                 <input 
                   id="name"
                   v-model="user.name" 
@@ -48,7 +48,10 @@
             <div class="input-group">
               <label for="email">{{ t('register.email') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">📧</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
                 <input 
                   id="email"
                   v-model="user.email" 
@@ -62,7 +65,9 @@
             <div class="input-group">
               <label for="phone">{{ t('register.phone') }} <span class="optional">({{ t('register.optional') }})</span></label>
               <div class="input-wrapper">
-                <span class="input-icon">📱</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                </svg>
                 <input 
                   id="phone"
                   v-model="user.phone" 
@@ -80,7 +85,9 @@
             <div class="input-group">
               <label for="password">{{ t('register.password') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">🔒</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
                 <input 
                   id="password"
                   v-model="user.password" 
@@ -93,7 +100,13 @@
                   class="toggle-password"
                   @click="showPassword = !showPassword"
                 >
-                  {{ showPassword ? '🙈' : '👁️' }}
+                  <svg v-if="!showPassword" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <svg v-else viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
                 </button>
               </div>
               <!-- Password Strength Indicator -->
@@ -134,7 +147,13 @@
                   class="toggle-password"
                   @click="showConfirmPassword = !showConfirmPassword"
                 >
-                  {{ showConfirmPassword ? '🙈' : '👁️' }}
+                  <svg v-if="!showConfirmPassword" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <svg v-else viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
                 </button>
               </div>
               <span v-if="confirmPassword && !passwordsMatch" class="match-error">
@@ -484,68 +503,20 @@ export default {
   align-items: center;
   justify-content: center;
   background: var(--bg-color);
-  position: relative;
-  overflow: hidden;
   padding: 20px;
-}
-
-/* Background Shapes */
-.bg-shapes {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%);
-}
-
-.shape-1 {
-  width: 500px;
-  height: 500px;
-  top: -150px;
-  left: -100px;
-  animation: float 20s infinite ease-in-out;
-}
-
-.shape-2 {
-  width: 300px;
-  height: 300px;
-  bottom: -100px;
-  right: -50px;
-  animation: float 15s infinite ease-in-out reverse;
-}
-
-.shape-3 {
-  width: 200px;
-  height: 200px;
-  top: 50%;
-  right: 30%;
-  animation: float 25s infinite ease-in-out;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(20px, -30px) rotate(5deg); }
-  50% { transform: translate(-20px, 20px) rotate(-5deg); }
-  75% { transform: translate(30px, 10px) rotate(3deg); }
 }
 
 /* Register Container */
 .register-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1050px;
+  max-width: 950px;
   width: 100%;
   background: var(--card-bg);
-  border-radius: 24px;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
-  position: relative;
-  z-index: 10;
+  border: 1px solid var(--border-color);
 }
 
 /* Form Panel */
@@ -559,24 +530,26 @@ export default {
 }
 
 .form-container {
-  max-width: 380px;
+  max-width: 360px;
   width: 100%;
 }
 
 .form-header {
-  text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
 .form-header h2 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--text-color);
-  font-size: 1.8em;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .form-header p {
   margin: 0;
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* Messages */
@@ -584,13 +557,13 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 20px;
   color: #dc2626;
-  font-size: 0.9em;
+  font-size: 0.875rem;
 }
 
 .dark .error-message {
@@ -602,24 +575,18 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: #ecfdf5;
   border: 1px solid #a7f3d0;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 20px;
   color: #059669;
-  font-size: 0.9em;
-  animation: slideIn 0.3s ease;
+  font-size: 0.875rem;
 }
 
 .dark .success-message {
   background: rgba(5, 150, 105, 0.1);
   border-color: rgba(5, 150, 105, 0.3);
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .error-icon, .success-icon {
@@ -630,10 +597,11 @@ export default {
   margin-left: auto;
   background: none;
   border: none;
-  font-size: 1.3em;
+  font-size: 1.2rem;
   cursor: pointer;
   color: inherit;
   opacity: 0.6;
+  line-height: 1;
 }
 
 .error-close:hover {
@@ -644,18 +612,18 @@ export default {
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .input-group label {
-  font-size: 0.9em;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-color);
 }
 
@@ -667,26 +635,26 @@ export default {
 
 .input-icon {
   position: absolute;
-  left: 14px;
-  font-size: 1.1em;
+  left: 12px;
+  color: var(--text-secondary);
   z-index: 1;
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 14px 14px 14px 45px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 11px 12px 11px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1em;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .input-wrapper input:focus {
   outline: none;
-  border-color: #2ecc71;
-  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .input-wrapper input::placeholder {
@@ -694,21 +662,28 @@ export default {
 }
 
 .input-wrapper input.password-match {
-  border-color: #2ecc71;
+  border-color: var(--primary);
 }
 
 .input-wrapper input.password-mismatch {
-  border-color: #e74c3c;
+  border-color: #dc2626;
 }
 
 .toggle-password {
   position: absolute;
-  right: 12px;
+  right: 10px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1em;
-  padding: 5px;
+  padding: 4px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: var(--text-color);
 }
 
 /* Password Strength */
@@ -716,99 +691,93 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .strength-bar {
   flex: 1;
-  height: 6px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 2px;
   overflow: hidden;
-}
-
-.dark .strength-bar {
-  background: rgba(255, 255, 255, 0.1);
 }
 
 .strength-fill {
   height: 100%;
-  border-radius: 3px;
-  transition: all 0.3s;
+  border-radius: 2px;
+  transition: var(--transition);
 }
 
-.strength-fill.weak { background: #e74c3c; }
-.strength-fill.medium { background: #f39c12; }
-.strength-fill.strong { background: #27ae60; }
-.strength-fill.very-strong { background: #2ecc71; }
+.strength-fill.weak { background: #dc2626; }
+.strength-fill.medium { background: #f59e0b; }
+.strength-fill.strong { background: var(--primary); }
+.strength-fill.very-strong { background: var(--primary-light); }
 
 .strength-text {
-  font-size: 0.8em;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-.strength-text.weak { color: #e74c3c; }
-.strength-text.medium { color: #f39c12; }
-.strength-text.strong { color: #27ae60; }
-.strength-text.very-strong { color: #2ecc71; }
+.strength-text.weak { color: #dc2626; }
+.strength-text.medium { color: #f59e0b; }
+.strength-text.strong { color: var(--primary); }
+.strength-text.very-strong { color: var(--primary-light); }
 
 /* Password Requirements */
 .password-requirements {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .password-requirements span {
-  font-size: 0.75em;
+  font-size: 0.7rem;
   color: var(--text-secondary);
-  padding: 4px 8px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  transition: all 0.2s;
-}
-
-.dark .password-requirements span {
-  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 7px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
 .password-requirements span.met {
-  color: #27ae60;
-  background: rgba(46, 204, 113, 0.1);
+  color: var(--primary);
+  background: var(--primary-subtle);
+  border-color: transparent;
 }
 
 /* Phone input styling */
 .phone-valid {
-  border-color: #27ae60 !important;
+  border-color: var(--primary) !important;
 }
 
 .phone-invalid {
-  border-color: #e74c3c !important;
+  border-color: #dc2626 !important;
 }
 
 .phone-hint {
-  font-size: 0.8em;
-  color: #e74c3c;
+  font-size: 0.75rem;
+  color: #dc2626;
   margin-top: 4px;
 }
 
 .optional {
   font-weight: normal;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85em;
 }
 
 /* Match indicators */
 .match-error {
-  font-size: 0.8em;
-  color: #e74c3c;
+  font-size: 0.75rem;
+  color: #dc2626;
   margin-top: 4px;
 }
 
 .match-success {
-  font-size: 0.8em;
-  color: #27ae60;
+  font-size: 0.75rem;
+  color: var(--primary);
   margin-top: 4px;
 }
 
@@ -818,9 +787,9 @@ export default {
   align-items: flex-start;
   gap: 10px;
   cursor: pointer;
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .terms-checkbox input {
@@ -828,31 +797,33 @@ export default {
 }
 
 .terms-checkbox .checkbox-mark {
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  border: 2px solid var(--border-color);
-  border-radius: 6px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: var(--transition);
   margin-top: 2px;
+  background: var(--bg-color);
 }
 
 .terms-checkbox input:checked + .checkbox-mark {
-  background: #2ecc71;
-  border-color: #2ecc71;
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .terms-checkbox input:checked + .checkbox-mark::after {
   content: '✓';
   color: white;
-  font-size: 0.8em;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .terms-checkbox a {
-  color: #2ecc71;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -863,27 +834,25 @@ export default {
 /* Register Button */
 .register-btn {
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 12px 16px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1.05em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 5px;
+  transition: var(--transition);
+  margin-top: 8px;
 }
 
 .register-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+  background: var(--primary-dark);
 }
 
 .register-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  transform: none;
 }
 
 .btn-content {
@@ -898,7 +867,7 @@ export default {
 }
 
 .register-btn:hover:not(:disabled) .btn-arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 .btn-loading {
@@ -909,8 +878,8 @@ export default {
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
@@ -926,7 +895,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin: 20px 0;
+  margin: 16px 0;
 }
 
 .divider::before,
@@ -938,7 +907,7 @@ export default {
 }
 
 .divider span {
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   white-space: nowrap;
 }
@@ -955,7 +924,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 44px;
+  min-height: 42px;
 }
 
 .google-btn-wrapper > div {
@@ -967,24 +936,20 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 0.95em;
+  font-size: 0.875rem;
   cursor: pointer;
-  transition: all 0.2s;
-  height: 44px;
+  transition: var(--transition);
+  height: 42px;
 }
 
 .social-btn:hover {
   border-color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.dark .social-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-color);
 }
 
 .social-icon {
@@ -994,8 +959,8 @@ export default {
 }
 
 .social-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .social-btn.github {
@@ -1018,12 +983,12 @@ export default {
 .login-prompt p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 0.95em;
+  font-size: 0.875rem;
 }
 
 .login-link {
-  color: #2ecc71;
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -1033,21 +998,13 @@ export default {
 
 /* Branding Panel */
 .branding-panel {
-  background: linear-gradient(135deg, #1abc9c 0%, #2ecc71 50%, #27ae60 100%);
-  padding: 50px 40px;
+  background: var(--primary);
+  padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
   position: relative;
-  overflow: hidden;
-}
-
-.branding-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .brand-content {
@@ -1056,97 +1013,125 @@ export default {
 }
 
 .brand-logo {
-  font-size: 4em;
-  margin-bottom: 20px;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #ffffff;
 }
 
 .branding-panel h1 {
-  font-size: 2em;
-  font-weight: 700;
-  margin: 0 0 10px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .branding-panel > .brand-content > p {
-  font-size: 1.1em;
-  opacity: 0.9;
-  margin: 0 0 35px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0 0 32px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Benefits List */
 .benefits-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-bottom: 35px;
+  gap: 14px;
+  margin-bottom: 32px;
 }
 
 .benefit {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
+  color: #ffffff;
 }
 
 .benefit-icon {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4em;
   flex-shrink: 0;
+  color: #ffffff;
+}
+
+.benefit-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke: #ffffff;
 }
 
 .benefit h4 {
   margin: 0;
-  font-size: 1em;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
 }
 
 .benefit p {
   margin: 2px 0 0;
-  font-size: 0.85em;
-  opacity: 0.8;
+  font-size: 0.8rem;
+  opacity: 0.75;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Mini Testimonial */
 .testimonial-mini {
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
 }
 
 .testimonial-mini > p {
   margin: 0 0 12px;
   font-style: italic;
-  font-size: 0.95em;
+  font-size: 0.875rem;
   line-height: 1.5;
+  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .testimonial-author {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.85em;
-  opacity: 0.9;
+  font-size: 0.8rem;
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .author-avatar {
-  width: 30px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.2);
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #ffffff;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
   .register-container {
     grid-template-columns: 1fr;
-    max-width: 480px;
+    max-width: 440px;
   }
 
   .branding-panel {
@@ -1154,13 +1139,13 @@ export default {
   }
 
   .form-panel {
-    padding: 30px 20px;
+    padding: 32px 24px;
   }
 }
 
 @media (max-width: 400px) {
   .form-header h2 {
-    font-size: 1.5em;
+    font-size: 1.25rem;
   }
 
   .social-login {
@@ -1171,6 +1156,4 @@ export default {
     flex-direction: column;
   }
 }
-
-
 </style>

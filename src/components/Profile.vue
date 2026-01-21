@@ -11,14 +11,16 @@
               {{ user?.name?.charAt(0)?.toUpperCase() || '?' }}
             </div>
           </div>
-          <button class="avatar-edit-btn" @click="triggerAvatarUpload">📷</button>
+          <button class="avatar-edit-btn" @click="triggerAvatarUpload">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </button>
           <input type="file" ref="avatarInput" @change="handleAvatarUpload" accept="image/*" hidden />
         </div>
         <div class="profile-info">
           <h1>{{ user?.name || 'User' }}</h1>
           <p class="email">{{ user?.email }}</p>
           <div class="member-badge">
-            <span class="badge-icon">🌱</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.52 0 10-2.24 10-5v-4"/><path d="M2 17v-4"/><path d="M12 12c5.52 0 10-2.24 10-5S17.52 2 12 2 2 4.24 2 7s4.48 5 10 5Z"/></svg>
             <span>{{ t('profile.memberSince') }} {{ memberSince }}</span>
           </div>
         </div>
@@ -29,28 +31,36 @@
       <!-- Stats Overview -->
       <div class="stats-section">
         <div class="stat-card">
-          <div class="stat-icon green">🌍</div>
+          <div class="stat-icon green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
           <div class="stat-content">
             <span class="stat-value">{{ userStats.co2Saved }}</span>
             <span class="stat-label">{{ t('profile.stats.co2Saved') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon blue">🎯</div>
+          <div class="stat-icon blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
           <div class="stat-content">
             <span class="stat-value">{{ userStats.challengesCompleted }}</span>
             <span class="stat-label">{{ t('profile.stats.challengesDone') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon purple">🛒</div>
+          <div class="stat-icon purple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </div>
           <div class="stat-content">
             <span class="stat-value">{{ userStats.ecoOrders }}</span>
             <span class="stat-label">{{ t('profile.stats.ecoOrders') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon orange">🔥</div>
+          <div class="stat-icon orange">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-1.08-3.82-.5-5.5 1.5 1 2.5 2 2.5 5A2.5 2.5 0 0 0 14.5 11c1-1 1.5-2.5 1.5-4.5 3.5 1.5 6 4 6 9a7 7 0 1 1-14 0c0-1.42.35-2.72.93-3.89"/></svg>
+          </div>
           <div class="stat-content">
             <span class="stat-value">{{ userStats.streak }}</span>
             <span class="stat-label">{{ t('profile.stats.streak') }}</span>
@@ -63,22 +73,30 @@
         <div class="profile-main">
           <!-- Quick Actions -->
           <div class="section-card">
-            <h2>⚡ {{ t('profile.quickActions') }}</h2>
+            <h2>{{ t('profile.quickActions') }}</h2>
             <div class="quick-actions">
               <router-link to="/calculator" class="action-btn">
-                <span class="action-icon">🧮</span>
+                <span class="action-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="16" y2="18"/></svg>
+                </span>
                 <span class="action-text">{{ t('profile.calculateFootprint') }}</span>
               </router-link>
               <router-link to="/challenges" class="action-btn">
-                <span class="action-icon">🎯</span>
+                <span class="action-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                </span>
                 <span class="action-text">{{ t('profile.joinChallenges') }}</span>
               </router-link>
               <router-link to="/footprint" class="action-btn">
-                <span class="action-icon">📊</span>
+                <span class="action-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                </span>
                 <span class="action-text">{{ t('profile.logActivity') }}</span>
               </router-link>
               <router-link to="/products" class="action-btn">
-                <span class="action-icon">🛍️</span>
+                <span class="action-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                </span>
                 <span class="action-text">{{ t('profile.shopProducts') }}</span>
               </router-link>
             </div>
@@ -87,9 +105,11 @@
           <!-- Edit Profile Section -->
           <div class="section-card">
             <div class="section-header">
-              <h2>👤 {{ t('profile.profileInfo') }}</h2>
+              <h2>{{ t('profile.profileInfo') }}</h2>
               <button class="toggle-edit" @click="showEdit = !showEdit">
-                {{ showEdit ? '✕ ' + t('common.cancel') : '✏️ ' + t('common.edit') }}
+                <svg v-if="!showEdit" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                {{ showEdit ? t('common.cancel') : t('common.edit') }}
               </button>
             </div>
 
@@ -459,15 +479,12 @@ export default {
 /* Hero Section */
 .profile-hero {
   position: relative;
-  padding: 120px 20px 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  overflow: hidden;
+  padding: 100px 20px 60px;
+  background: var(--primary);
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  display: none;
 }
 
 .profile-avatar-section {
@@ -476,7 +493,7 @@ export default {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 24px;
 }
 
 .avatar-wrapper {
@@ -484,12 +501,11 @@ export default {
 }
 
 .avatar-ring {
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  padding: 5px;
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .avatar-img {
@@ -503,32 +519,35 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  background: rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3em;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 600;
   color: white;
 }
 
 .avatar-edit-btn {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 36px;
-  height: 36px;
+  bottom: 4px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   border: none;
   background: white;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  font-size: 1em;
-  transition: transform 0.2s;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  color: var(--text-color);
 }
 
 .avatar-edit-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .profile-info {
@@ -536,34 +555,36 @@ export default {
 }
 
 .profile-info h1 {
-  margin: 0 0 8px;
-  font-size: 2.2em;
-  font-weight: 700;
+  margin: 0 0 6px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .profile-info .email {
-  margin: 0 0 12px;
-  opacity: 0.9;
+  margin: 0 0 10px;
+  opacity: 0.85;
+  font-size: 0.9rem;
 }
 
 .member-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  font-size: 0.9em;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
 }
 
-.badge-icon {
-  font-size: 1.1em;
+.member-badge svg {
+  opacity: 0.9;
 }
 
 /* Container */
 .profile-container {
-  max-width: 1100px;
-  margin: -30px auto 0;
+  max-width: 1000px;
+  margin: -24px auto 0;
   padding: 0 20px;
   position: relative;
   z-index: 10;
@@ -573,34 +594,35 @@ export default {
 .stats-section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: var(--radius-lg);
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  gap: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
 .stat-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5em;
+  color: var(--primary);
 }
 
-.stat-icon.green { background: rgba(46, 204, 113, 0.15); }
-.stat-icon.blue { background: rgba(52, 152, 219, 0.15); }
-.stat-icon.purple { background: rgba(155, 89, 182, 0.15); }
-.stat-icon.orange { background: rgba(243, 156, 18, 0.15); }
+.stat-icon.green { background: var(--primary-subtle); color: var(--primary); }
+.stat-icon.blue { background: #e8f4fd; color: #3b82f6; }
+.stat-icon.purple { background: #f3e8ff; color: #8b5cf6; }
+.stat-icon.orange { background: #fef3e2; color: #f59e0b; }
 
 .stat-content {
   display: flex;
@@ -608,43 +630,45 @@ export default {
 }
 
 .stat-value {
-  font-size: 1.5em;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .stat-label {
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 /* Profile Grid */
 .profile-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 25px;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
 }
 
 /* Section Cards */
 .section-card {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
 .section-card h2 {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   color: var(--text-color);
-  font-size: 1.2em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .section-header h2 {
@@ -652,61 +676,65 @@ export default {
 }
 
 .toggle-edit {
-  padding: 8px 16px;
-  border: 2px solid var(--border-color);
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .toggle-edit:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* Quick Actions */
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 15px 18px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 12px;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   color: var(--text-color);
-  transition: all 0.2s;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .dark .action-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .action-btn:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
-  transform: translateX(5px);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .action-icon {
-  font-size: 1.5em;
+  color: var(--primary);
 }
 
 .action-text {
   font-weight: 500;
+  font-size: 0.9rem;
 }
 
 /* Profile Display */
 .profile-display {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .info-row {
@@ -718,6 +746,7 @@ export default {
 
 .info-label {
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 .info-value {
@@ -729,103 +758,109 @@ export default {
 .edit-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .form-group label {
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 12px 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1em;
+  font-size: 0.95rem;
   font-family: inherit;
+  transition: var(--transition);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #667eea;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .form-actions {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .btn-save {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .btn-save:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  background: var(--primary-dark);
 }
 
 /* Achievements */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .achievement {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px 10px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 12px;
+  padding: 14px 10px;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
   opacity: 0.5;
   filter: grayscale(1);
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .dark .achievement {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .achievement.unlocked {
   opacity: 1;
   filter: none;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+  background: var(--primary-subtle);
+  border-color: var(--primary-light);
 }
 
 .achievement-icon {
-  font-size: 2em;
+  font-size: 1.5rem;
   margin-bottom: 8px;
+  color: var(--primary);
 }
 
 .achievement-name {
-  font-size: 0.8em;
+  font-size: 0.75rem;
   color: var(--text-color);
   text-align: center;
+  font-weight: 500;
 }
 
 .achievement-progress {
   width: 100%;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  height: 3px;
+  background: var(--border-color);
   border-radius: 2px;
   margin-top: 8px;
   overflow: hidden;
@@ -837,7 +872,7 @@ export default {
 
 .achievement-progress .progress-fill {
   height: 100%;
-  background: #667eea;
+  background: var(--primary);
   border-radius: 2px;
 }
 
@@ -845,40 +880,44 @@ export default {
 .profile-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .sidebar-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-card h3 {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /* Level Card */
 .level-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   color: white;
+  border: none;
 }
 
 .level-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .level-badge {
-  padding: 5px 12px;
+  padding: 4px 10px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
+  border-radius: var(--radius-md);
   font-weight: 600;
+  font-size: 0.85rem;
 }
 
 .level-title {
@@ -888,26 +927,26 @@ export default {
 .level-progress {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .level-bar {
-  height: 10px;
+  height: 8px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .level-fill {
   height: 100%;
   background: white;
-  border-radius: 5px;
+  border-radius: 4px;
   transition: width 0.5s ease;
 }
 
 .level-text {
   text-align: right;
-  font-size: 0.85em;
+  font-size: 0.8rem;
   opacity: 0.9;
 }
 
@@ -915,24 +954,24 @@ export default {
 .activity-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .activity-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .activity-icon {
-  width: 36px;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1em;
+  color: var(--primary);
 }
 
 .dark .activity-icon {
@@ -946,58 +985,64 @@ export default {
 }
 
 .activity-text {
-  font-size: 0.9em;
+  font-size: 0.85rem;
   color: var(--text-color);
 }
 
 .activity-time {
-  font-size: 0.75em;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
 /* Danger Zone */
 .danger-zone {
-  border: 2px solid rgba(231, 76, 60, 0.3);
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+}
+
+.dark .danger-zone {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
 }
 
 .danger-text {
-  margin: 0 0 15px;
-  font-size: 0.9em;
+  margin: 0 0 12px;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
 .btn-logout,
 .btn-delete {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: none;
-  border-radius: 10px;
-  font-size: 0.95em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 10px;
+  transition: var(--transition);
+  margin-bottom: 8px;
 }
 
 .btn-logout {
-  background: rgba(231, 76, 60, 0.1);
-  color: #e74c3c;
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 .btn-logout:hover {
-  background: #e74c3c;
+  background: #dc2626;
   color: white;
 }
 
 .btn-delete {
   background: transparent;
-  border: 2px solid #e74c3c;
-  color: #e74c3c;
+  border: 1px solid #dc2626;
+  color: #dc2626;
   margin-bottom: 0;
 }
 
 .btn-delete:hover {
-  background: #e74c3c;
+  background: #dc2626;
   color: white;
 }
 
@@ -1019,23 +1064,23 @@ export default {
 
 @media (max-width: 600px) {
   .profile-hero {
-    padding: 100px 15px 50px;
+    padding: 90px 15px 40px;
   }
 
   .profile-info h1 {
-    font-size: 1.6em;
+    font-size: 1.4rem;
   }
 
   .stats-section {
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .stat-card {
-    padding: 15px;
+    padding: 12px;
     flex-direction: column;
     text-align: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .quick-actions {

@@ -2,41 +2,46 @@
   <div class="education-page">
     <!-- Hero Section -->
     <div class="education-hero">
-      <div class="hero-content">
-        <h1>📚 {{ t('education.title') }}</h1>
+      <div class="header-content">
+        <h1>{{ t('education.title') }}</h1>
         <p>{{ t('education.subtitle') }}</p>
-        <div class="hero-search">
-          <input 
-            type="text" 
-            v-model="searchQuery" 
-            :placeholder="t('education.searchPlaceholder')"
-            class="search-input"
-          >
-          <button class="search-btn">🔍</button>
-        </div>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <span class="stat-icon">📖</span>
           <span class="stat-value">{{ articles.length }}</span>
           <span class="stat-label">{{ t('education.articles') }}</span>
         </div>
+        <div class="stat-divider"></div>
         <div class="hero-stat">
-          <span class="stat-icon">🎬</span>
           <span class="stat-value">{{ videos.length }}</span>
           <span class="stat-label">{{ t('education.videos') }}</span>
         </div>
+        <div class="stat-divider"></div>
         <div class="hero-stat">
-          <span class="stat-icon">📋</span>
           <span class="stat-value">{{ guides.length }}</span>
           <span class="stat-label">{{ t('education.guides') }}</span>
         </div>
       </div>
     </div>
 
+    <!-- Search and Topics -->
+    <div class="search-section">
+      <div class="search-bar">
+        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input 
+          type="text" 
+          v-model="searchQuery" 
+          :placeholder="t('education.searchPlaceholder')"
+          class="search-input"
+        >
+      </div>
+    </div>
+
     <!-- Quick Topics -->
     <div class="quick-topics">
-      <h2>🎯 {{ t('education.quickTopics') }}</h2>
+      <h2>{{ t('education.quickTopics') }}</h2>
       <div class="topics-grid">
         <button 
           v-for="topic in topics" 
@@ -44,7 +49,6 @@
           :class="['topic-card', { active: selectedTopic === topic.id }]"
           @click="selectTopic(topic.id)"
         >
-          <span class="topic-icon">{{ topic.icon }}</span>
           <span class="topic-name">{{ topic.name }}</span>
         </button>
       </div>
@@ -53,20 +57,26 @@
     <!-- Featured Section -->
     <div class="featured-section" v-if="featuredContent">
       <div class="featured-card">
-        <div class="featured-badge">⭐ {{ t('education.featured') }}</div>
+        <div class="featured-badge">{{ t('education.featured') }}</div>
         <div class="featured-image">
-          <span class="featured-emoji">{{ featuredContent.icon }}</span>
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
         </div>
         <div class="featured-content">
           <span class="featured-type">{{ featuredContent.type }}</span>
           <h2>{{ featuredContent.title }}</h2>
           <p>{{ featuredContent.description }}</p>
           <div class="featured-meta">
-            <span>⏱️ {{ featuredContent.readTime }}</span>
-            <span>📅 {{ featuredContent.date }}</span>
+            <span>{{ featuredContent.readTime }}</span>
+            <span>{{ featuredContent.date }}</span>
           </div>
           <button class="featured-btn" @click="openContent(featuredContent)">
-            {{ t('education.startLearning') }} →
+            {{ t('education.startLearning') }}
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
           </button>
         </div>
       </div>
@@ -75,7 +85,7 @@
     <!-- Content Tabs -->
     <div class="content-section">
       <div class="section-header">
-        <h2>📚 {{ t('education.learningResources') }}</h2>
+        <h2>{{ t('education.learningResources') }}</h2>
         <div class="tab-buttons">
           <button 
             :class="['tab-btn', { active: activeTab === 'all' }]"
@@ -87,19 +97,28 @@
             :class="['tab-btn', { active: activeTab === 'articles' }]"
             @click="activeTab = 'articles'"
           >
-            📖 {{ t('education.articles') }}
+            <svg class="tab-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            </svg>
+            {{ t('education.articles') }}
           </button>
           <button 
             :class="['tab-btn', { active: activeTab === 'videos' }]"
             @click="activeTab = 'videos'"
           >
-            🎬 {{ t('education.videos') }}
+            <svg class="tab-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+            {{ t('education.videos') }}
           </button>
           <button 
             :class="['tab-btn', { active: activeTab === 'guides' }]"
             @click="activeTab = 'guides'"
           >
-            📋 {{ t('education.guides') }}
+            <svg class="tab-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+            {{ t('education.guides') }}
           </button>
         </div>
       </div>
@@ -113,8 +132,10 @@
           @click="openContent(item)"
         >
           <div class="card-image" :style="{ background: getGradient(item.type) }">
-            <span class="card-emoji">{{ item.icon }}</span>
-            <span class="card-type-badge">{{ getTypeBadge(item.type) }}</span>
+            <span class="card-type-icon" v-html="getTypeIcon(item.type)"></span>
+            <span class="card-type-badge">
+              <span v-html="getTypeBadgeIcon(item.type)"></span>
+            </span>
           </div>
           <div class="card-body">
             <div class="card-tags">
@@ -123,7 +144,12 @@
             <h3>{{ item.title }}</h3>
             <p>{{ truncate(item.description, 100) }}</p>
             <div class="card-footer">
-              <span class="card-meta">⏱️ {{ item.readTime }}</span>
+              <span class="card-meta">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                {{ item.readTime }}
+              </span>
               <span class="card-difficulty" :class="item.difficulty">
                 {{ item.difficulty }}
               </span>
@@ -134,7 +160,11 @@
 
       <!-- Empty State -->
       <div v-if="filteredContent.length === 0" class="empty-state">
-        <div class="empty-icon">🔍</div>
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
         <h3>{{ t('education.noContentFound') }}</h3>
         <p>{{ t('education.tryAdjusting') }}</p>
       </div>
@@ -142,12 +172,17 @@
 
     <!-- Learning Paths -->
     <div class="learning-paths">
-      <h2>🛤️ {{ t('education.learningPaths') }}</h2>
+      <h2>
+        <svg class="section-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+        </svg>
+        {{ t('education.learningPaths') }}
+      </h2>
       <p class="section-desc">{{ t('education.learningPathsDesc') }}</p>
       <div class="paths-grid">
         <div v-for="path in learningPaths" :key="path.id" class="path-card">
           <div class="path-header" :style="{ background: path.color }">
-            <span class="path-icon">{{ path.icon }}</span>
+            <span class="path-icon" v-html="getPathIcon(path.id)"></span>
             <span class="path-level">{{ path.level }}</span>
           </div>
           <div class="path-body">
@@ -160,8 +195,18 @@
               <span class="progress-text">{{ getPathProgress(path.id) }}% {{ t('education.complete') }}</span>
             </div>
             <div class="path-modules">
-              <span>📚 {{ path.modules }} {{ t('education.modules') }}</span>
-              <span>⏱️ {{ path.duration }}</span>
+              <span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                </svg>
+                {{ path.modules }} {{ t('education.modules') }}
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                {{ path.duration }}
+              </span>
             </div>
             <button class="path-btn" @click="startLearningPath(path)">
               {{ getPathProgress(path.id) > 0 ? t('education.continue') : t('education.startPath') }} →
@@ -173,12 +218,17 @@
 
     <!-- Tips Carousel -->
     <div class="tips-section">
-      <h2>💡 {{ t('education.dailyEcoTips') }}</h2>
+      <h2>
+        <svg class="section-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 01-1 1H9a1 1 0 01-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/>
+        </svg>
+        {{ t('education.dailyEcoTips') }}
+      </h2>
       <div class="tips-carousel">
         <div class="tip-slide" v-for="(tip, index) in dailyTips" :key="index">
           <div class="tip-number">{{ index + 1 }}</div>
           <div class="tip-content">
-            <span class="tip-icon">{{ tip.icon }}</span>
+            <span class="tip-icon" v-html="getTipIcon(index)"></span>
             <h4>{{ tip.title }}</h4>
             <p>{{ tip.description }}</p>
           </div>
@@ -189,16 +239,30 @@
     <!-- Content Modal -->
     <div v-if="selectedContent" class="content-modal" @click.self="selectedContent = null">
       <div class="modal-content">
-        <button class="modal-close" @click="selectedContent = null">✕</button>
+        <button class="modal-close" @click="selectedContent = null">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
         <div class="modal-header" :style="{ background: getGradient(selectedContent.type) }">
-          <span class="modal-emoji">{{ selectedContent.icon }}</span>
+          <span class="modal-type-icon" v-html="getTypeIcon(selectedContent.type)"></span>
         </div>
         <div class="modal-body">
           <span class="modal-type">{{ selectedContent.type }}</span>
           <h2>{{ selectedContent.title }}</h2>
           <div class="modal-meta">
-            <span>⏱️ {{ selectedContent.readTime }}</span>
-            <span>📅 {{ selectedContent.date }}</span>
+            <span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              {{ selectedContent.readTime }}
+            </span>
+            <span>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              {{ selectedContent.date }}
+            </span>
             <span :class="['difficulty', selectedContent.difficulty]">{{ selectedContent.difficulty }}</span>
           </div>
           <div class="modal-text">
@@ -213,17 +277,29 @@
               :class="{ saved: isContentSaved(selectedContent.id) }"
               @click="toggleSaveContent(selectedContent)"
             >
-              {{ isContentSaved(selectedContent.id) ? '✓' : '🔖' }} {{ t('education.save') }}
+              <svg v-if="isContentSaved(selectedContent.id)" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <svg v-else viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+              </svg>
+              {{ t('education.save') }}
             </button>
             <button class="action-btn" @click="shareContent(selectedContent)">
-              🔗 {{ t('education.share') }}
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+              {{ t('education.share') }}
             </button>
             <button 
               class="action-btn primary" 
               :class="{ completed: isContentCompleted(selectedContent.id) }"
               @click="toggleCompleteContent(selectedContent)"
             >
-              {{ isContentCompleted(selectedContent.id) ? '✓' : '✅' }} {{ t('education.markComplete') }}
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              {{ t('education.markComplete') }}
             </button>
           </div>
         </div>
@@ -233,7 +309,14 @@
     <!-- Toast Notification -->
     <transition name="toast">
       <div v-if="toastMessage" class="toast-notification" :class="toastType">
-        <span class="toast-icon">{{ toastType === 'success' ? '✓' : 'ℹ️' }}</span>
+        <span class="toast-icon">
+          <svg v-if="toastType === 'success'" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <svg v-else viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </span>
         {{ toastMessage }}
       </div>
     </transition>
@@ -266,14 +349,14 @@ export default {
   computed: {
     topics() {
       return [
-        { id: 'energy', name: this.t('education.topics.energy'), icon: '⚡' },
-        { id: 'waste', name: this.t('education.topics.waste'), icon: '♻️' },
-        { id: 'food', name: this.t('education.topics.food'), icon: '🥗' },
-        { id: 'transport', name: this.t('education.topics.transport'), icon: '🚲' },
-        { id: 'home', name: this.t('education.topics.home'), icon: '🏠' },
-        { id: 'garden', name: this.t('education.topics.garden'), icon: '🌱' },
-        { id: 'fashion', name: this.t('education.topics.fashion'), icon: '👕' },
-        { id: 'water', name: this.t('education.topics.water'), icon: '💧' }
+        { id: 'energy', name: this.t('education.topics.energy') },
+        { id: 'waste', name: this.t('education.topics.waste') },
+        { id: 'food', name: this.t('education.topics.food') },
+        { id: 'transport', name: this.t('education.topics.transport') },
+        { id: 'home', name: this.t('education.topics.home') },
+        { id: 'garden', name: this.t('education.topics.garden') },
+        { id: 'fashion', name: this.t('education.topics.fashion') },
+        { id: 'water', name: this.t('education.topics.water') }
       ]
     },
     allContent() {
@@ -281,7 +364,6 @@ export default {
         {
           id: 1,
           type: 'article',
-          icon: '🌍',
           title: this.t('education.content.carbonFootprintTitle'),
           description: this.t('education.content.carbonFootprintDesc'),
           fullContent: this.t('education.content.carbonFootprintFull'),
@@ -294,7 +376,6 @@ export default {
         {
           id: 2,
           type: 'video',
-          icon: '🎬',
           title: this.t('education.content.compostTitle'),
           description: this.t('education.content.compostDesc'),
           fullContent: this.t('education.content.compostFull'),
@@ -307,7 +388,6 @@ export default {
         {
           id: 3,
           type: 'guide',
-          icon: '📋',
           title: this.t('education.content.zeroWasteTitle'),
           description: this.t('education.content.zeroWasteDesc'),
           fullContent: this.t('education.content.zeroWasteFull'),
@@ -320,7 +400,6 @@ export default {
         {
           id: 4,
           type: 'article',
-          icon: '🚲',
           title: this.t('education.content.cyclingTitle'),
           description: this.t('education.content.cyclingDesc'),
           fullContent: this.t('education.content.cyclingFull'),
@@ -333,7 +412,6 @@ export default {
         {
           id: 5,
           type: 'video',
-          icon: '🌿',
           title: this.t('education.content.plantsTitle'),
           description: this.t('education.content.plantsDesc'),
           fullContent: this.t('education.content.plantsFull'),
@@ -346,7 +424,6 @@ export default {
         {
           id: 6,
           type: 'guide',
-          icon: '👗',
           title: this.t('education.content.wardrobeTitle'),
           description: this.t('education.content.wardrobeDesc'),
           fullContent: this.t('education.content.wardrobeFull'),
@@ -359,7 +436,6 @@ export default {
         {
           id: 7,
           type: 'article',
-          icon: '💧',
           title: this.t('education.content.waterTitle'),
           description: this.t('education.content.waterDesc'),
           fullContent: this.t('education.content.waterFull'),
@@ -372,7 +448,6 @@ export default {
         {
           id: 8,
           type: 'guide',
-          icon: '🥕',
           title: this.t('education.content.seasonalTitle'),
           description: this.t('education.content.seasonalDesc'),
           fullContent: this.t('education.content.seasonalFull'),
@@ -385,7 +460,6 @@ export default {
         {
           id: 9,
           type: 'video',
-          icon: '☀️',
           title: this.t('education.content.solarTitle'),
           description: this.t('education.content.solarDesc'),
           fullContent: this.t('education.content.solarFull'),
@@ -401,7 +475,6 @@ export default {
       return [
         {
           id: 1,
-          icon: '🌱',
           title: this.t('education.paths.zeroWasteTitle'),
           description: this.t('education.paths.zeroWasteDesc'),
           level: this.t('education.beginner'),
@@ -412,7 +485,6 @@ export default {
         },
         {
           id: 2,
-          icon: '🏠',
           title: this.t('education.paths.ecoHomeTitle'),
           description: this.t('education.paths.ecoHomeDesc'),
           level: this.t('education.intermediate'),
@@ -423,7 +495,6 @@ export default {
         },
         {
           id: 3,
-          icon: '🥗',
           title: this.t('education.paths.sustainableEatingTitle'),
           description: this.t('education.paths.sustainableEatingDesc'),
           level: this.t('education.beginner'),
@@ -437,27 +508,22 @@ export default {
     dailyTips() {
       return [
         {
-          icon: '🚿',
           title: this.t('education.tips.shorterShowersTitle'),
           description: this.t('education.tips.shorterShowersDesc')
         },
         {
-          icon: '🔌',
           title: this.t('education.tips.unplugTitle'),
           description: this.t('education.tips.unplugDesc')
         },
         {
-          icon: '🛍️',
           title: this.t('education.tips.bagsTitle'),
           description: this.t('education.tips.bagsDesc')
         },
         {
-          icon: '🌡️',
           title: this.t('education.tips.thermostatTitle'),
           description: this.t('education.tips.thermostatDesc')
         },
         {
-          icon: '🥡',
           title: this.t('education.tips.mealPrepTitle'),
           description: this.t('education.tips.mealPrepDesc')
         }
@@ -526,8 +592,42 @@ export default {
       return text.length > length ? text.substring(0, length) + '...' : text;
     },
     getTypeBadge(type) {
-      const badges = { article: '📖', video: '🎬', guide: '📋' };
-      return badges[type] || '📄';
+      const badges = { article: 'Article', video: 'Video', guide: 'Guide' };
+      return badges[type] || 'Content';
+    },
+    getTypeBadgeIcon(type) {
+      const icons = {
+        article: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
+        video: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+        guide: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+      };
+      return icons[type] || icons.article;
+    },
+    getTypeIcon(type) {
+      const icons = {
+        article: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>',
+        video: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+        guide: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
+      };
+      return icons[type] || icons.article;
+    },
+    getPathIcon(pathId) {
+      const icons = {
+        1: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 2.252.744 4.33 2 6.004"/><path d="M12 6c-3 0-5.5 2.5-5.5 5.5S9 17 12 17s5.5-2.5 5.5-5.5S15 6 12 6z"/></svg>',
+        2: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+        3: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>'
+      };
+      return icons[pathId] || icons[1];
+    },
+    getTipIcon(index) {
+      const icons = [
+        '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/></svg>',
+        '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
+        '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+        '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z"/></svg>',
+        '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>'
+      ];
+      return icons[index] || icons[0];
     },
     getGradient(type) {
       const gradients = {
@@ -641,79 +741,43 @@ export default {
 <style scoped>
 .education-page {
   min-height: 100vh;
-  padding: 80px 20px 60px;
+  padding: 80px 24px 60px;
   background: var(--bg-color);
 }
 
 /* Hero Section */
 .education-hero {
-  max-width: 1200px;
-  margin: 0 auto 40px;
-  padding: 50px 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 24px;
-  color: white;
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  padding: 32px;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 24px;
 }
 
-.hero-content h1 {
-  margin: 0 0 10px;
-  font-size: 2.5em;
+.header-content h1 {
+  margin: 0 0 6px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-color);
+  letter-spacing: -0.02em;
 }
 
-.hero-content p {
-  margin: 0 0 25px;
-  opacity: 0.9;
-  font-size: 1.15em;
-}
-
-.hero-search {
-  display: flex;
-  gap: 10px;
-}
-
-.search-input {
-  padding: 14px 20px;
-  border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 1em;
-  width: 300px;
-  backdrop-filter: blur(10px);
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.search-input:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.search-btn {
-  padding: 14px 20px;
-  border: none;
-  border-radius: 12px;
-  background: white;
-  color: #764ba2;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.search-btn:hover {
-  transform: scale(1.05);
+.header-content p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 .hero-stats {
   display: flex;
-  gap: 40px;
+  align-items: center;
+  gap: 24px;
 }
 
 .hero-stat {
@@ -723,65 +787,103 @@ export default {
   text-align: center;
 }
 
-.stat-icon {
-  font-size: 1.8em;
-  margin-bottom: 5px;
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border-color);
 }
 
 .stat-value {
-  font-size: 2em;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .stat-label {
-  font-size: 0.9em;
-  opacity: 0.85;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Search Section */
+.search-section {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 400px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+}
+
+.search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  padding: 14px 12px;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  outline: none;
 }
 
 /* Quick Topics */
 .quick-topics {
-  max-width: 1200px;
-  margin: 0 auto 40px;
+  max-width: 1100px;
+  margin: 0 auto 32px;
 }
 
 .quick-topics h2 {
   color: var(--text-color);
-  margin: 0 0 20px;
-  font-size: 1.5em;
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .topics-grid {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .topic-card {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border: 2px solid var(--border-color);
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--border-color);
   background: var(--card-bg);
-  border-radius: 30px;
+  border-radius: 100px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.2s;
   color: var(--text-color);
+  font-size: 0.875rem;
 }
 
 .topic-card:hover {
-  border-color: #2ecc71;
-  transform: translateY(-2px);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .topic-card.active {
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  border-color: transparent;
+  background: var(--primary);
+  border-color: var(--primary);
   color: white;
-}
-
-.topic-icon {
-  font-size: 1.3em;
 }
 
 .topic-name {
@@ -790,220 +892,232 @@ export default {
 
 /* Featured Section */
 .featured-section {
-  max-width: 1200px;
-  margin: 0 auto 40px;
+  max-width: 1100px;
+  margin: 0 auto 32px;
 }
 
 .featured-card {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 220px 1fr;
   background: var(--card-bg);
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
   position: relative;
 }
 
 .featured-badge {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  background: #f59e0b;
   color: white;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9em;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  font-size: 0.8rem;
   z-index: 1;
 }
 
 .featured-image {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
+  min-height: 220px;
 }
 
 .featured-emoji {
-  font-size: 5em;
+  color: white;
+  opacity: 0.8;
 }
 
 .featured-content {
-  padding: 30px;
+  padding: 24px;
 }
 
 .featured-type {
   display: inline-block;
-  padding: 5px 12px;
-  background: rgba(102, 126, 234, 0.15);
-  color: #667eea;
-  border-radius: 15px;
-  font-size: 0.85em;
-  font-weight: 600;
+  padding: 4px 10px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .featured-content h2 {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-color);
-  font-size: 1.8em;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .featured-content p {
   color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 15px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
 }
 
 .featured-meta {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   color: var(--text-secondary);
-  font-size: 0.9em;
-  margin-bottom: 20px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
 }
 
 .featured-btn {
-  padding: 14px 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px 24px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .featured-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  background: var(--primary-dark);
 }
 
 /* Content Section */
 .content-section {
-  max-width: 1200px;
-  margin: 0 auto 50px;
+  max-width: 1100px;
+  margin: 0 auto 40px;
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 12px;
 }
 
 .section-header h2 {
   margin: 0;
   color: var(--text-color);
-  font-size: 1.5em;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .tab-buttons {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tab-btn {
-  padding: 10px 20px;
+  padding: 8px 16px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 0.95em;
-  transition: all 0.2s;
+  font-size: 0.875rem;
+  transition: var(--transition);
 }
 
 .dark .tab-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  background: var(--primary);
   color: white;
 }
 
 /* Content Grid */
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .content-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .content-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary);
 }
 
 .card-image {
-  height: 160px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-.card-emoji {
-  font-size: 4em;
+.card-type-icon {
+  color: white;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-type-icon svg {
+  width: 48px;
+  height: 48px;
 }
 
 .card-type-badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.25);
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1em;
+  color: white;
 }
 
 .card-body {
-  padding: 20px;
+  padding: 16px;
 }
 
 .card-tags {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 
 .card-tag {
-  padding: 4px 10px;
-  background: rgba(46, 204, 113, 0.1);
-  color: #27ae60;
-  border-radius: 12px;
-  font-size: 0.8em;
+  padding: 3px 8px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
 }
 
 .card-body h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
-  font-size: 1.15em;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .card-body p {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
@@ -1015,90 +1129,105 @@ export default {
 
 .card-meta {
   color: var(--text-secondary);
-  font-size: 0.85em;
+  font-size: 0.8rem;
 }
 
 .card-difficulty {
-  padding: 4px 10px;
-  border-radius: 10px;
-  font-size: 0.8em;
-  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .card-difficulty.Beginner {
-  background: rgba(46, 204, 113, 0.15);
-  color: #27ae60;
+  background: var(--primary-subtle);
+  color: var(--primary);
 }
 
 .card-difficulty.Intermediate {
-  background: rgba(243, 156, 18, 0.15);
-  color: #f39c12;
+  background: #fef3e2;
+  color: #f59e0b;
 }
 
 .card-difficulty.Advanced {
-  background: rgba(231, 76, 60, 0.15);
-  color: #e74c3c;
+  background: #fee2e2;
+  color: #dc2626;
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 48px 20px;
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
 }
 
 .empty-icon {
-  font-size: 4em;
-  margin-bottom: 15px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  margin-bottom: 12px;
 }
 
 .empty-state h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .empty-state p {
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* Learning Paths */
 .learning-paths {
-  max-width: 1200px;
-  margin: 0 auto 50px;
+  max-width: 1100px;
+  margin: 0 auto 40px;
 }
 
 .learning-paths h2 {
   color: var(--text-color);
-  margin: 0 0 8px;
-  font-size: 1.5em;
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-icon {
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 .section-desc {
   color: var(--text-secondary);
-  margin: 0 0 25px;
+  margin: 0 0 20px;
+  font-size: 0.9rem;
 }
 
 .paths-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
 .path-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
 }
 
 .path-card:hover {
-  transform: translateY(-5px);
+  border-color: var(--primary);
 }
 
 .path-header {
-  padding: 25px;
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1106,43 +1235,53 @@ export default {
 }
 
 .path-icon {
-  font-size: 2.5em;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.path-icon svg {
+  width: 28px;
+  height: 28px;
 }
 
 .path-level {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  font-size: 0.85em;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
   font-weight: 500;
 }
 
 .path-body {
-  padding: 25px;
+  padding: 20px;
 }
 
 .path-body h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
-  font-size: 1.3em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .path-body p {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   color: var(--text-secondary);
   line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 .path-progress {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .progress-bar {
-  height: 8px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .dark .progress-bar {
@@ -1151,99 +1290,111 @@ export default {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #2ecc71, #27ae60);
-  border-radius: 4px;
+  background: var(--primary);
+  border-radius: 3px;
   transition: width 0.5s;
 }
 
 .progress-text {
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 .path-modules {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 16px;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
 }
 
 .path-btn {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 12px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .path-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+  background: var(--primary-dark);
 }
 
 /* Tips Section */
 .tips-section {
-  max-width: 1200px;
-  margin: 0 auto 50px;
+  max-width: 1100px;
+  margin: 0 auto 40px;
 }
 
 .tips-section h2 {
   color: var(--text-color);
-  margin: 0 0 25px;
-  font-size: 1.5em;
+  margin: 0 0 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .tips-carousel {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .tip-slide {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 25px;
+  border-radius: var(--radius-lg);
+  padding: 20px;
   position: relative;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .tip-number {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  top: -8px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  background: var(--primary);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 0.8rem;
 }
 
 .tip-icon {
-  font-size: 2.5em;
-  display: block;
-  margin-bottom: 15px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.tip-icon svg {
+  width: 24px;
+  height: 24px;
 }
 
 .tip-content h4 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .tip-content p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
@@ -1254,7 +1405,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1265,147 +1416,159 @@ export default {
 
 .modal-content {
   background: var(--card-bg);
-  border-radius: 24px;
-  max-width: 700px;
+  border-radius: var(--radius-xl);
+  max-width: 650px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  animation: modalIn 0.3s ease;
+  animation: modalIn 0.2s ease;
+  border: 1px solid var(--border-color);
 }
 
 @keyframes modalIn {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(20px);
+    transform: scale(0.97);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
 }
 
 .modal-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 1.2em;
   color: white;
   z-index: 1;
-  transition: all 0.2s;
-}
-
-.modal-close:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-.modal-header {
-  height: 200px;
+  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.modal-emoji {
-  font-size: 5em;
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.modal-header {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-type-icon {
+  color: white;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-type-icon svg {
+  width: 56px;
+  height: 56px;
 }
 
 .modal-body {
-  padding: 30px;
+  padding: 24px;
 }
 
 .modal-type {
   display: inline-block;
-  padding: 5px 12px;
-  background: rgba(102, 126, 234, 0.15);
-  color: #667eea;
-  border-radius: 15px;
-  font-size: 0.85em;
-  font-weight: 600;
+  padding: 4px 10px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
   text-transform: uppercase;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .modal-body h2 {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-color);
-  font-size: 1.8em;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .modal-meta {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
 }
 
 .modal-meta .difficulty {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
 }
 
 .modal-text {
   color: var(--text-color);
-  line-height: 1.8;
-  margin-bottom: 25px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
 }
 
 .modal-tags {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .modal-tags .tag {
-  padding: 6px 14px;
-  background: rgba(46, 204, 113, 0.1);
-  color: #27ae60;
-  border-radius: 20px;
-  font-size: 0.9em;
+  padding: 4px 12px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
 }
 
 .modal-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .action-btn {
-  padding: 12px 24px;
-  border: 2px solid var(--border-color);
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  font-size: 0.95em;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .action-btn:hover {
-  border-color: #2ecc71;
-  color: #2ecc71;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .action-btn.primary {
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  background: var(--primary);
   color: white;
   border: none;
 }
 
 .action-btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+  background: var(--primary-dark);
 }
 
 /* Responsive */
@@ -1413,11 +1576,11 @@ export default {
   .education-hero {
     flex-direction: column;
     text-align: center;
-    padding: 35px 25px;
+    padding: 28px 20px;
   }
   
   .hero-content h1 {
-    font-size: 1.8em;
+    font-size: 1.5rem;
   }
   
   .search-input {

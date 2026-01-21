@@ -1,35 +1,51 @@
 <template>
   <div class="login-page">
-    <!-- Background Elements -->
-    <div class="bg-shapes">
-      <div class="shape shape-1"></div>
-      <div class="shape shape-2"></div>
-      <div class="shape shape-3"></div>
-    </div>
-
     <div class="login-container">
       <!-- Left Panel - Branding -->
       <div class="branding-panel">
         <div class="brand-content">
-          <div class="brand-logo">🌿</div>
+          <div class="brand-logo">EP</div>
           <h1>Eco Pakalpojumi</h1>
           <p>{{ t('login.brandTagline') }}</p>
           
           <div class="brand-features">
             <div class="feature">
-              <span class="feature-icon">🛍️</span>
+              <span class="feature-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </span>
               <span>{{ t('login.features.shop') }}</span>
             </div>
             <div class="feature">
-              <span class="feature-icon">📊</span>
+              <span class="feature-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </span>
               <span>{{ t('login.features.track') }}</span>
             </div>
             <div class="feature">
-              <span class="feature-icon">🏆</span>
+              <span class="feature-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="8" r="6"/>
+                  <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+                </svg>
+              </span>
               <span>{{ t('login.features.challenges') }}</span>
             </div>
             <div class="feature">
-              <span class="feature-icon">🌍</span>
+              <span class="feature-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                </svg>
+              </span>
               <span>{{ t('login.features.community') }}</span>
             </div>
           </div>
@@ -51,13 +67,17 @@
       <div class="form-panel">
         <div class="form-container">
           <div class="form-header">
-            <h2>{{ t('login.welcomeBack') }} 👋</h2>
+            <h2>{{ t('login.welcomeBack') }}</h2>
             <p>{{ t('login.subtitle') }}</p>
           </div>
 
           <!-- Error Message -->
           <div v-if="error" class="error-message">
-            <span class="error-icon">⚠️</span>
+            <svg class="error-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
             <span>{{ error }}</span>
             <button class="error-close" @click="error = ''">×</button>
           </div>
@@ -67,7 +87,10 @@
             <div class="input-group">
               <label for="email">{{ t('login.email') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">📧</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
                 <input 
                   id="email"
                   v-model="credentials.email" 
@@ -82,7 +105,10 @@
             <div class="input-group">
               <label for="password">{{ t('login.password') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">🔒</span>
+                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0110 0v4"/>
+                </svg>
                 <input 
                   id="password"
                   v-model="credentials.password" 
@@ -96,7 +122,14 @@
                   class="toggle-password"
                   @click="showPassword = !showPassword"
                 >
-                  {{ showPassword ? '🙈' : '👁️' }}
+                  <svg v-if="!showPassword" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <svg v-else viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -117,7 +150,10 @@
               </span>
               <span v-else class="btn-content">
                 <span>{{ t('login.signIn') }}</span>
-                <span class="btn-arrow">→</span>
+                <svg class="btn-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                  <polyline points="12 5 19 12 12 19"/>
+                </svg>
               </span>
             </button>
           </form>
@@ -151,7 +187,11 @@
 
           <!-- Demo Credentials -->
           <div class="demo-hint">
-            <span class="hint-icon">💡</span>
+            <svg class="hint-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
             <span>{{ t('login.demo') }}</span>
           </div>
         </div>
@@ -341,183 +381,151 @@ export default {
   align-items: center;
   justify-content: center;
   background: var(--bg-color);
-  position: relative;
-  overflow: hidden;
   padding: 20px;
-}
-
-/* Background Shapes */
-.bg-shapes {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%);
-}
-
-.shape-1 {
-  width: 500px;
-  height: 500px;
-  top: -150px;
-  right: -100px;
-  animation: float 20s infinite ease-in-out;
-}
-
-.shape-2 {
-  width: 300px;
-  height: 300px;
-  bottom: -100px;
-  left: -50px;
-  animation: float 15s infinite ease-in-out reverse;
-}
-
-.shape-3 {
-  width: 200px;
-  height: 200px;
-  top: 50%;
-  left: 30%;
-  animation: float 25s infinite ease-in-out;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(20px, -30px) rotate(5deg); }
-  50% { transform: translate(-20px, 20px) rotate(-5deg); }
-  75% { transform: translate(30px, 10px) rotate(3deg); }
 }
 
 /* Login Container */
 .login-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 1000px;
+  max-width: 900px;
   width: 100%;
   background: var(--card-bg);
-  border-radius: 24px;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
-  position: relative;
-  z-index: 10;
+  border: 1px solid var(--border-color);
 }
 
 /* Branding Panel */
 .branding-panel {
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #1abc9c 100%);
-  padding: 50px 40px;
+  background: var(--primary);
+  padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.branding-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .brand-content {
   position: relative;
-  z-index: 1;
 }
 
 .brand-logo {
-  font-size: 4em;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
   margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .branding-panel h1 {
-  font-size: 2.2em;
+  font-size: 1.75rem;
   font-weight: 700;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .branding-panel > .brand-content > p {
-  font-size: 1.1em;
-  opacity: 0.9;
-  margin: 0 0 40px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0 0 32px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .brand-features {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 40px;
+  gap: 12px;
+  margin-bottom: 32px;
 }
 
 .feature {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 0.95em;
+  font-size: 0.9rem;
+  color: #ffffff;
 }
 
 .feature-icon {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1em;
+  color: #ffffff;
+}
+
+.feature-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: #ffffff;
 }
 
 .brand-stats {
   display: flex;
-  gap: 30px;
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stat {
-  text-align: center;
+  text-align: left;
 }
 
 .stat-number {
   display: block;
-  font-size: 1.8em;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .stat-label {
-  font-size: 0.85em;
+  font-size: 0.8rem;
   opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Form Panel */
 .form-panel {
-  padding: 50px 40px;
+  padding: 48px 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .form-container {
-  max-width: 360px;
+  max-width: 340px;
   width: 100%;
 }
 
 .form-header {
-  text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
 
 .form-header h2 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--text-color);
-  font-size: 1.8em;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .form-header p {
   margin: 0;
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* Error Message */
@@ -525,13 +533,13 @@ export default {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: #fef2f2;
   border: 1px solid #fecaca;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   margin-bottom: 20px;
   color: #dc2626;
-  font-size: 0.9em;
+  font-size: 0.875rem;
 }
 
 .dark .error-message {
@@ -547,10 +555,11 @@ export default {
   margin-left: auto;
   background: none;
   border: none;
-  font-size: 1.3em;
+  font-size: 1.2rem;
   cursor: pointer;
   color: inherit;
   opacity: 0.6;
+  line-height: 1;
 }
 
 .error-close:hover {
@@ -561,18 +570,18 @@ export default {
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .input-group label {
-  font-size: 0.9em;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: var(--text-color);
 }
 
@@ -585,29 +594,28 @@ export default {
 .input-icon {
   position: absolute;
   left: 14px;
-  font-size: 1.1em;
-  z-index: 1;
+  color: var(--text-muted);
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 14px 14px 14px 45px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 12px 12px 12px 44px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1em;
+  font-size: 0.95rem;
   transition: all 0.2s;
 }
 
 .input-wrapper input:focus {
   outline: none;
-  border-color: #2ecc71;
-  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .input-wrapper input::placeholder {
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .toggle-password {
@@ -616,8 +624,15 @@ export default {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1em;
-  padding: 5px;
+  padding: 4px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: var(--text-secondary);
 }
 
 /* Form Options */
@@ -632,7 +647,7 @@ export default {
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.875rem;
   color: var(--text-color);
 }
 
@@ -641,10 +656,10 @@ export default {
 }
 
 .checkbox-mark {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--border-color);
-  border-radius: 6px;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -652,19 +667,19 @@ export default {
 }
 
 .remember-me input:checked + .checkbox-mark {
-  background: #2ecc71;
-  border-color: #2ecc71;
+  background: var(--primary);
+  border-color: var(--primary);
 }
 
 .remember-me input:checked + .checkbox-mark::after {
   content: '✓';
   color: white;
-  font-size: 0.8em;
+  font-size: 0.7rem;
 }
 
 .forgot-link {
-  font-size: 0.9em;
-  color: #2ecc71;
+  font-size: 0.875rem;
+  color: var(--primary);
   text-decoration: none;
 }
 
@@ -675,21 +690,21 @@ export default {
 /* Login Button */
 .login-btn {
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 14px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1.05em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 10px;
+  transition: all 0.2s;
+  margin-top: 8px;
 }
 
 .login-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+  background: var(--primary-dark);
+  box-shadow: var(--shadow);
 }
 
 .login-btn:disabled {
@@ -720,8 +735,8 @@ export default {
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
@@ -736,8 +751,8 @@ export default {
 .divider {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin: 25px 0;
+  gap: 12px;
+  margin: 24px 0;
 }
 
 .divider::before,
@@ -749,8 +764,8 @@ export default {
 }
 
 .divider span {
-  font-size: 0.85em;
-  color: var(--text-secondary);
+  font-size: 0.8rem;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
@@ -766,7 +781,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 44px;
+  min-height: 42px;
 }
 
 .google-btn-wrapper > div {
@@ -778,24 +793,19 @@ export default {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 11px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 0.95em;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
-  height: 44px;
+  height: 42px;
 }
 
 .social-btn:hover {
-  border-color: var(--text-secondary);
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.dark .social-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-secondary);
 }
 
 .social-icon {
@@ -805,8 +815,8 @@ export default {
 }
 
 .social-icon svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
 }
 
 .social-btn.github {
@@ -823,18 +833,18 @@ export default {
 /* Register Prompt */
 .register-prompt {
   text-align: center;
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
 .register-prompt p {
   margin: 0;
   color: var(--text-secondary);
-  font-size: 0.95em;
+  font-size: 0.9rem;
 }
 
 .register-link {
-  color: #2ecc71;
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -849,22 +859,22 @@ export default {
   justify-content: center;
   gap: 8px;
   margin-top: 20px;
-  padding: 12px;
-  background: rgba(46, 204, 113, 0.08);
-  border-radius: 10px;
-  font-size: 0.85em;
+  padding: 10px 14px;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
 .hint-icon {
-  font-size: 1.1em;
+  color: var(--primary);
 }
 
 /* Responsive */
-@media (max-width: 800px) {
+@media (max-width: 768px) {
   .login-container {
     grid-template-columns: 1fr;
-    max-width: 450px;
+    max-width: 420px;
   }
 
   .branding-panel {
@@ -872,13 +882,13 @@ export default {
   }
 
   .form-panel {
-    padding: 40px 25px;
+    padding: 40px 24px;
   }
 }
 
 @media (max-width: 400px) {
   .form-header h2 {
-    font-size: 1.5em;
+    font-size: 1.3rem;
   }
 
   .social-login {

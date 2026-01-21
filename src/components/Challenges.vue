@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <div class="challenges-hero">
       <div class="hero-content">
-        <h1>🎯 {{ t('challenges.title') }}</h1>
+        <h1><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('challenges.title') }}</h1>
         <p>{{ t('challenges.subtitle') }}</p>
       </div>
       <div class="hero-stats">
@@ -31,23 +31,23 @@
       <div class="challenges-main">
         <!-- Featured Challenge -->
         <div class="featured-challenge" v-if="featuredChallenge">
-          <div class="featured-badge">⭐ Featured Challenge</div>
+          <div class="featured-badge"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Featured Challenge</div>
           <div class="featured-content">
-            <div class="featured-icon">{{ featuredChallenge.icon }}</div>
+            <div class="featured-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
             <div class="featured-info">
               <h2>{{ featuredChallenge.title }}</h2>
               <p>{{ featuredChallenge.description }}</p>
               <div class="featured-meta">
                 <span class="meta-item">
-                  <span class="meta-icon">🏆</span>
+                  <span class="meta-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
                   {{ featuredChallenge.points }} points
                 </span>
                 <span class="meta-item">
-                  <span class="meta-icon">👥</span>
+                  <span class="meta-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                   {{ featuredChallenge.participants }} participating
                 </span>
                 <span class="meta-item">
-                  <span class="meta-icon">⏰</span>
+                  <span class="meta-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                   {{ featuredChallenge.duration }}
                 </span>
               </div>
@@ -63,7 +63,7 @@
               :class="{ joined: featuredChallenge.joined }"
               @click="toggleJoin(featuredChallenge)"
             >
-              {{ featuredChallenge.joined ? '✓ Joined' : 'Join Challenge' }}
+              {{ featuredChallenge.joined ? 'Joined' : 'Join Challenge' }}
             </button>
           </div>
         </div>
@@ -77,7 +77,6 @@
               :class="['filter-tab', { active: activeFilter === tab.id }]"
               @click="activeFilter = tab.id"
             >
-              <span class="tab-icon">{{ tab.icon }}</span>
               {{ tab.label }}
             </button>
           </div>
@@ -99,7 +98,6 @@
             :class="['category-chip', { active: activeCategory === cat.id }]"
             @click="activeCategory = activeCategory === cat.id ? 'all' : cat.id"
           >
-            <span>{{ cat.icon }}</span>
             {{ cat.name }}
           </button>
         </div>
@@ -112,10 +110,10 @@
             :class="['challenge-card', { completed: challenge.completed, joined: challenge.joined }]"
           >
             <div class="card-header" :style="{ background: challenge.gradient }">
-              <span class="challenge-icon">{{ challenge.icon }}</span>
+              <span class="challenge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
               <div class="card-badges">
                 <span v-if="challenge.isNew" class="badge new">NEW</span>
-                <span v-if="challenge.isHot" class="badge hot">🔥 HOT</span>
+                <span v-if="challenge.isHot" class="badge hot">HOT</span>
                 <span class="badge difficulty" :class="challenge.difficulty">
                   {{ challenge.difficulty }}
                 </span>
@@ -129,15 +127,15 @@
               
               <div class="card-stats">
                 <div class="stat">
-                  <span class="stat-icon">🏆</span>
+                  <span class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span>
                   <span>{{ challenge.points }} pts</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-icon">👥</span>
+                  <span class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                   <span>{{ challenge.participants }}</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-icon">⏰</span>
+                  <span class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                   <span>{{ challenge.daysLeft }}d left</span>
                 </div>
               </div>
@@ -161,24 +159,24 @@
                   class="action-btn completed"
                   disabled
                 >
-                  ✅ Completed
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Completed
                 </button>
                 <button 
                   v-else-if="challenge.joined"
                   class="action-btn progress-btn"
                   @click="updateProgress(challenge)"
                 >
-                  📝 {{ t('challenges.logProgress') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg> {{ t('challenges.logProgress') }}
                 </button>
                 <button 
                   v-else
                   class="action-btn join-btn"
                   @click="toggleJoin(challenge)"
                 >
-                  🚀 {{ t('challenges.joinChallenge') }}
+                  {{ t('challenges.joinChallenge') }}
                 </button>
                 <button class="share-btn" @click="shareChallenge(challenge)">
-                  📤
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
                 </button>
               </div>
             </div>
@@ -187,7 +185,7 @@
 
         <!-- Empty State -->
         <div v-if="filteredChallenges.length === 0" class="empty-state">
-          <div class="empty-icon">🔍</div>
+          <div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
           <h3>No challenges found</h3>
           <p>Try adjusting your filters or check back later for new challenges!</p>
         </div>
@@ -197,7 +195,7 @@
       <aside class="challenges-sidebar">
         <!-- Your Active Challenges -->
         <div class="sidebar-card">
-          <h3>🎯 {{ t('challenges.yourActiveChallenges') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('challenges.yourActiveChallenges') }}</h3>
           <div v-if="activeChallenges.length === 0" class="no-active">
             <p>{{ t('challenges.noActiveYet') }}</p>
             <span class="hint">{{ t('challenges.browseAndJoin') }}</span>
@@ -208,7 +206,7 @@
               :key="challenge.id"
               class="active-item"
             >
-              <span class="active-icon">{{ challenge.icon }}</span>
+              <span class="active-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
               <div class="active-info">
                 <span class="active-title">{{ challenge.title }}</span>
                 <div class="mini-progress">
@@ -225,7 +223,7 @@
 
         <!-- Leaderboard -->
         <div class="sidebar-card">
-          <h3>🏅 {{ t('challenges.leaderboard') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>{{ t('challenges.leaderboard') }}</h3>
           <div class="leaderboard">
             <div 
               v-for="(user, index) in leaderboard" 
@@ -249,7 +247,7 @@
 
         <!-- Achievements -->
         <div class="sidebar-card">
-          <h3>🏆 Challenge Badges</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>Challenge Badges</h3>
           <div class="badges-grid">
             <div 
               v-for="badge in badges" 
@@ -257,7 +255,7 @@
               :class="['badge-item', { unlocked: badge.unlocked }]"
               :title="badge.description"
             >
-              <span class="badge-icon">{{ badge.icon }}</span>
+              <span class="badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
               <span class="badge-name">{{ badge.name }}</span>
             </div>
           </div>
@@ -265,7 +263,7 @@
 
         <!-- Community Impact -->
         <div class="sidebar-card impact-card">
-          <h3>🌍 {{ t('challenges.communityImpact') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>{{ t('challenges.communityImpact') }}</h3>
           <div class="impact-stats">
             <div class="impact-item">
               <span class="impact-value">12,450</span>
@@ -287,9 +285,9 @@
     <!-- Progress Modal -->
     <div v-if="showProgressModal" class="modal-overlay" @click.self="showProgressModal = false">
       <div class="progress-modal">
-        <button class="modal-close" @click="showProgressModal = false">✕</button>
+        <button class="modal-close" @click="showProgressModal = false">×</button>
         <div class="modal-header">
-          <span class="modal-icon">{{ selectedChallenge?.icon }}</span>
+          <span class="modal-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
           <h2>{{ selectedChallenge?.title }}</h2>
         </div>
         <div class="modal-body">
@@ -662,102 +660,103 @@ export default {
 
 /* Hero Section */
 .challenges-hero {
-  max-width: 1200px;
-  margin: 0 auto 30px;
-  padding: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 24px;
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 32px;
+  background: var(--primary);
+  border-radius: var(--radius-xl);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 24px;
 }
 
 .hero-content h1 {
-  margin: 0 0 10px;
-  font-size: 2.2em;
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .hero-content p {
   margin: 0;
-  opacity: 0.9;
-  font-size: 1.1em;
+  opacity: 0.85;
+  font-size: 1rem;
 }
 
 .hero-stats {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
 .hero-stat {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 15px 25px;
+  border-radius: var(--radius-lg);
+  padding: 12px 20px;
   text-align: center;
 }
 
 .stat-number {
   display: block;
-  font-size: 1.8em;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .stat-label {
-  font-size: 0.85em;
-  opacity: 0.9;
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
 /* Container Layout */
 .challenges-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 30px;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
 }
 
 /* Featured Challenge */
 .featured-challenge {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
 }
 
 .featured-badge {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  top: 16px;
+  right: 16px;
+  background: #f59e0b;
   color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .featured-content {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 }
 
 .featured-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.1) 100%);
-  border-radius: 20px;
+  width: 64px;
+  height: 64px;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5em;
+  color: var(--primary);
   flex-shrink: 0;
 }
 
@@ -766,82 +765,83 @@ export default {
 }
 
 .featured-info h2 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .featured-info p {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: var(--text-secondary);
-  font-size: 0.95em;
+  font-size: 0.9rem;
 }
 
 .featured-meta {
   display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 10px;
 }
 
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.9em;
+  gap: 4px;
+  font-size: 0.85rem;
   color: var(--text-color);
 }
 
 .meta-icon {
-  font-size: 1.1em;
+  color: var(--primary);
 }
 
 .featured-progress {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .progress-bar {
   flex: 1;
-  height: 8px;
-  background: rgba(102, 126, 234, 0.2);
-  border-radius: 4px;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 4px;
+  background: var(--primary);
+  border-radius: 3px;
   transition: width 0.5s ease;
 }
 
 .progress-text {
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  min-width: 80px;
+  min-width: 70px;
 }
 
 .featured-btn {
-  padding: 14px 28px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px 24px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
   flex-shrink: 0;
 }
 
 .featured-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  background: var(--primary-dark);
 }
 
 .featured-btn.joined {
-  background: rgba(102, 126, 234, 0.15);
-  color: #667eea;
+  background: var(--primary-subtle);
+  color: var(--primary);
 }
 
 /* Filter Section */
@@ -849,45 +849,46 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 12px;
 }
 
 .filter-tabs {
   display: flex;
-  gap: 8px;
-  padding: 6px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  gap: 6px;
+  padding: 4px;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
 }
 
 .dark .filter-tabs {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .filter-tab {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
+  gap: 5px;
+  padding: 8px 14px;
   border: none;
   background: transparent;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 0.9em;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .filter-tab:hover {
-  background: rgba(102, 126, 234, 0.1);
+  color: var(--primary);
 }
 
 .filter-tab.active {
-  background: white;
-  color: #667eea;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  color: var(--primary);
+  box-shadow: var(--shadow);
 }
 
 .dark .filter-tab.active {
@@ -895,69 +896,69 @@ export default {
 }
 
 .tab-icon {
-  font-size: 1.1em;
+  color: inherit;
 }
 
 .sort-dropdown select {
-  padding: 10px 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 0.9em;
+  font-size: 0.85rem;
   cursor: pointer;
 }
 
 /* Category Chips */
 .category-chips {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .category-chip {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border: 2px solid var(--border-color);
+  gap: 5px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 25px;
+  border-radius: 100px;
   cursor: pointer;
   color: var(--text-color);
-  font-size: 0.9em;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .category-chip:hover {
-  border-color: #667eea;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .category-chip.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   color: white;
-  border-color: transparent;
+  border-color: var(--primary);
 }
 
 /* Challenges Grid */
 .challenges-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .challenge-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
 }
 
 .challenge-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary);
 }
 
 .challenge-card.completed {
@@ -965,39 +966,39 @@ export default {
 }
 
 .card-header {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
 .challenge-icon {
-  font-size: 2.5em;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  color: white;
+  opacity: 0.85;
 }
 
 .card-badges {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   align-items: flex-end;
 }
 
 .badge {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.7em;
-  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.65rem;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
 .badge.new {
-  background: #2ecc71;
+  background: var(--primary);
   color: white;
 }
 
 .badge.hot {
-  background: #e74c3c;
+  background: #dc2626;
   color: white;
 }
 
@@ -1007,143 +1008,149 @@ export default {
 }
 
 .badge.difficulty.easy {
-  color: #27ae60;
+  color: var(--primary);
 }
 
 .badge.difficulty.medium {
-  color: #f39c12;
+  color: #f59e0b;
 }
 
 .badge.difficulty.hard {
-  color: #e74c3c;
+  color: #dc2626;
 }
 
 .card-body {
-  padding: 0 20px 20px;
+  padding: 0 16px 16px;
 }
 
 .card-category {
-  font-size: 0.8em;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .card-body h3 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .card-body p {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
 .card-stats {
   display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
 .card-stats .stat {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.85em;
+  gap: 4px;
+  font-size: 0.8rem;
   color: var(--text-color);
 }
 
 .stat-icon {
-  font-size: 1em;
+  color: var(--primary);
 }
 
 .challenge-progress {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .progress-header {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .card-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .action-btn {
   flex: 1;
-  padding: 12px;
+  padding: 10px;
   border: none;
-  border-radius: 10px;
-  font-size: 0.9em;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .join-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   color: white;
 }
 
 .join-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  background: var(--primary-dark);
 }
 
 .progress-btn {
-  background: rgba(46, 204, 113, 0.15);
-  color: #27ae60;
+  background: var(--primary-subtle);
+  color: var(--primary);
 }
 
 .progress-btn:hover {
-  background: #2ecc71;
+  background: var(--primary);
   color: white;
 }
 
 .action-btn.completed {
-  background: rgba(46, 204, 113, 0.15);
-  color: #27ae60;
+  background: var(--primary-subtle);
+  color: var(--primary);
   cursor: default;
 }
 
 .share-btn {
-  width: 44px;
-  height: 44px;
-  border: 2px solid var(--border-color);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 1.1em;
-  transition: all 0.2s;
+  transition: var(--transition);
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
 }
 
 .share-btn:hover {
-  border-color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 48px 20px;
 }
 
 .empty-icon {
-  font-size: 4em;
-  margin-bottom: 15px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  margin-bottom: 12px;
 }
 
 .empty-state h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .empty-state p {
@@ -1160,15 +1167,16 @@ export default {
 
 .sidebar-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-card h3 {
   margin: 0 0 15px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /* Active Challenges */
@@ -1183,7 +1191,7 @@ export default {
 }
 
 .no-active .hint {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
@@ -1198,16 +1206,17 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 12px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
 }
 
 .dark .active-item {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .active-icon {
-  font-size: 1.5em;
+  color: var(--primary);
 }
 
 .active-info {
@@ -1216,26 +1225,26 @@ export default {
 
 .active-title {
   display: block;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   color: var(--text-color);
   margin-bottom: 6px;
 }
 
 .mini-progress {
   height: 4px;
-  background: rgba(102, 126, 234, 0.2);
+  background: var(--primary-subtle);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .mini-fill {
   height: 100%;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: var(--primary);
   border-radius: 2px;
 }
 
 .active-days {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
@@ -1251,12 +1260,12 @@ export default {
   align-items: center;
   gap: 12px;
   padding: 10px;
-  border-radius: 10px;
-  transition: all 0.2s;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
 }
 
 .leader-item.is-you {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+  background: var(--primary-subtle);
 }
 
 .leader-rank {
@@ -1266,10 +1275,11 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   font-weight: 700;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--bg-color);
   color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 .dark .leader-rank {
@@ -1277,17 +1287,20 @@ export default {
 }
 
 .leader-rank.rank-1 {
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  background: #d4a853;
+  border-color: #d4a853;
   color: white;
 }
 
 .leader-rank.rank-2 {
-  background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+  background: #9ca3af;
+  border-color: #9ca3af;
   color: white;
 }
 
 .leader-rank.rank-3 {
-  background: linear-gradient(135deg, #d68910 0%, #b9770e 100%);
+  background: #c9844a;
+  border-color: #c9844a;
   color: white;
 }
 
@@ -1299,7 +1312,7 @@ export default {
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
@@ -1309,20 +1322,20 @@ export default {
 
 .leader-name {
   display: block;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-color);
 }
 
 .leader-challenges {
-  font-size: 0.75em;
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
 .leader-points {
-  font-size: 0.9em;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--primary);
 }
 
 /* Badges */
@@ -1337,37 +1350,40 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 12px 8px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 12px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
   opacity: 0.4;
   filter: grayscale(1);
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .dark .badge-item {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .badge-item.unlocked {
   opacity: 1;
   filter: none;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+  background: var(--primary-subtle);
+  border-color: var(--primary);
 }
 
 .badge-icon {
-  font-size: 1.8em;
+  color: var(--primary);
   margin-bottom: 5px;
 }
 
 .badge-name {
-  font-size: 0.7em;
+  font-size: 0.7rem;
   color: var(--text-color);
   text-align: center;
 }
 
 /* Impact Card */
 .impact-card {
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%);
+  background: var(--primary-subtle);
+  border: 1px solid var(--primary);
 }
 
 .impact-stats {
@@ -1383,13 +1399,13 @@ export default {
 }
 
 .impact-value {
-  font-size: 1.2em;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #2ecc71;
+  color: var(--primary);
 }
 
 .impact-label {
-  font-size: 0.9em;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
@@ -1407,23 +1423,12 @@ export default {
 
 .progress-modal {
   background: var(--card-bg);
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   padding: 30px;
   width: 100%;
   max-width: 400px;
   position: relative;
-  animation: modalIn 0.3s ease;
-}
-
-@keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  border: 1px solid var(--border-color);
 }
 
 .modal-close {
@@ -1433,12 +1438,13 @@ export default {
   width: 32px;
   height: 32px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--bg-color);
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1rem;
   color: var(--text-secondary);
-  transition: all 0.2s;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .dark .modal-close {
@@ -1446,7 +1452,8 @@ export default {
 }
 
 .modal-close:hover {
-  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+  border-color: var(--text-secondary);
 }
 
 .modal-header {
@@ -1457,13 +1464,13 @@ export default {
 }
 
 .modal-icon {
-  font-size: 2em;
+  color: var(--primary);
 }
 
 .modal-header h2 {
   margin: 0;
   color: var(--text-color);
-  font-size: 1.3em;
+  font-size: 1.2rem;
 }
 
 .modal-body p {
@@ -1491,35 +1498,41 @@ export default {
 .increment-btn {
   width: 44px;
   height: 44px;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 10px;
-  font-size: 1.5em;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
   cursor: pointer;
   color: var(--text-color);
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .increment-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .progress-input-row input {
   flex: 1;
   padding: 12px;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1.2em;
+  font-size: 1.1rem;
   text-align: center;
+}
+
+.progress-input-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .input-hint {
   display: block;
   margin-top: 8px;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   text-align: center;
 }
@@ -1533,30 +1546,34 @@ export default {
   flex: 1;
   padding: 14px;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 
 .modal-btn.cancel {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--bg-color);
   color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 .dark .modal-btn.cancel {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.modal-btn.cancel:hover {
+  border-color: var(--text-secondary);
+}
+
 .modal-btn.confirm {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--primary);
   color: white;
 }
 
 .modal-btn.confirm:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  background: var(--primary-dark);
 }
 
 /* Responsive */
@@ -1590,11 +1607,11 @@ export default {
 
 @media (max-width: 600px) {
   .challenges-hero {
-    padding: 25px;
+    padding: 24px;
   }
 
   .hero-content h1 {
-    font-size: 1.6em;
+    font-size: 1.5rem;
   }
 
   .hero-stat {
@@ -1602,7 +1619,7 @@ export default {
   }
 
   .stat-number {
-    font-size: 1.4em;
+    font-size: 1.3rem;
   }
 
   .filter-tabs {

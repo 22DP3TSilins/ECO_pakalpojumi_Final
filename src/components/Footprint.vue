@@ -3,33 +3,33 @@
     <!-- Hero Stats Section -->
     <div class="tracker-hero">
       <div class="hero-left">
-        <h1>🌍 {{ t('footprint.title') }}</h1>
+        <h1><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>{{ t('footprint.title') }}</h1>
         <p>{{ t('footprint.subtitle') }}</p>
       </div>
       <div class="hero-stats">
         <div class="stat-card main-stat">
-          <div class="stat-icon">🌱</div>
+          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
           <div class="stat-info">
             <span class="stat-value">{{ totalImpact.toFixed(1) }}</span>
             <span class="stat-label">{{ t('footprint.kgCo2') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">📊</div>
+          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
           <div class="stat-info">
             <span class="stat-value">{{ activities.length }}</span>
             <span class="stat-label">{{ t('footprint.activities') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">🔥</div>
+          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
           <div class="stat-info">
             <span class="stat-value">{{ currentStreak }}</span>
             <span class="stat-label">{{ t('footprint.streak') }} {{ t('footprint.days') }}</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">🏆</div>
+          <div class="stat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
           <div class="stat-info">
             <span class="stat-value">{{ achievementsCount }}</span>
             <span class="stat-label">{{ t('footprint.achievements') }}</span>
@@ -43,7 +43,7 @@
       <div class="tracker-main">
         <!-- Quick Log Section -->
         <div class="quick-log-section">
-          <h2>⚡ {{ t('footprint.quickLog') }}</h2>
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>{{ t('footprint.quickLog') }}</h2>
           <p class="section-desc">{{ t('footprint.quickLogDesc') }}</p>
           <div class="quick-activities">
             <button 
@@ -52,7 +52,7 @@
               class="quick-activity-btn"
               @click="quickLog(qa)"
             >
-              <span class="qa-icon">{{ qa.icon }}</span>
+              <span class="qa-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></span>
               <span class="qa-name">{{ qa.name }}</span>
               <span class="qa-impact">+{{ qa.impact }}kg</span>
             </button>
@@ -62,9 +62,9 @@
         <!-- Custom Log Section -->
         <div class="custom-log-section">
           <div class="section-header">
-            <h2>📝 {{ t('footprint.logCustomActivity') }}</h2>
+            <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>{{ t('footprint.logCustomActivity') }}</h2>
             <button class="toggle-btn" @click="showCustomForm = !showCustomForm">
-              {{ showCustomForm ? '✕ ' + t('common.close') : '+ ' + t('footprint.addCustom') }}
+              {{ showCustomForm ? t('common.close') : '+ ' + t('footprint.addCustom') }}
             </button>
           </div>
           
@@ -76,7 +76,7 @@
                   <select v-model="newActivity.category" required>
                     <option value="">{{ t('footprint.selectCategory') }}</option>
                     <option v-for="cat in categories" :key="cat.id" :value="cat.id">
-                      {{ cat.icon }} {{ cat.name }}
+                      {{ cat.name }}
                     </option>
                   </select>
                 </div>
@@ -97,14 +97,14 @@
                 <label>{{ t('footprint.notes') }}</label>
                 <textarea v-model="newActivity.notes" :placeholder="t('footprint.additionalDetails')"></textarea>
               </div>
-              <button type="submit" class="submit-btn">🌱 {{ t('footprint.logActivity') }}</button>
+              <button type="submit" class="submit-btn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>{{ t('footprint.logActivity') }}</button>
             </form>
           </div>
         </div>
 
         <!-- Weekly Progress -->
         <div class="weekly-section">
-          <h2>📈 {{ t('footprint.weeklyProgress') }}</h2>
+          <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>{{ t('footprint.weeklyProgress') }}</h2>
           <div class="week-chart">
             <div 
               v-for="(day, index) in weekData" 
@@ -141,7 +141,7 @@
         <!-- Activity History -->
         <div class="history-section">
           <div class="section-header">
-            <h2>📋 {{ t('footprint.activityHistory') }}</h2>
+            <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>{{ t('footprint.activityHistory') }}</h2>
             <div class="filter-btns">
               <button 
                 :class="['filter-btn', { active: historyFilter === 'all' }]"
@@ -159,7 +159,7 @@
           </div>
 
           <div v-if="filteredActivities.length === 0" class="empty-history">
-            <div class="empty-icon">🌿</div>
+            <div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></div>
             <h3>{{ t('footprint.noActivitiesYet') }}</h3>
             <p>{{ t('footprint.startLogging') }}</p>
           </div>
@@ -171,7 +171,7 @@
               class="activity-card"
             >
               <div class="activity-icon" :style="{ background: getCategoryColor(activity.activity) }">
-                {{ getCategoryIcon(activity.activity) }}
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
               </div>
               <div class="activity-info">
                 <h4>{{ activity.activity }}</h4>
@@ -190,7 +190,7 @@
       <aside class="tracker-sidebar">
         <!-- Impact Breakdown -->
         <div class="sidebar-card">
-          <h3>🥧 {{ t('footprint.impactByCategory') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>{{ t('footprint.impactByCategory') }}</h3>
           <div class="category-breakdown">
             <div 
               v-for="cat in categoryBreakdown" 
@@ -198,7 +198,7 @@
               class="category-item"
             >
               <div class="cat-header">
-                <span class="cat-icon">{{ cat.icon }}</span>
+                <span class="cat-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></span>
                 <span class="cat-name">{{ cat.name }}</span>
                 <span class="cat-value">{{ cat.total.toFixed(1) }} kg</span>
               </div>
@@ -217,7 +217,7 @@
 
         <!-- Achievements -->
         <div class="sidebar-card">
-          <h3>🏆 {{ t('footprint.achievements') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>{{ t('footprint.achievements') }}</h3>
           <div class="achievements-grid">
             <div 
               v-for="badge in achievements" 
@@ -225,7 +225,7 @@
               :class="['badge', { unlocked: badge.unlocked }]"
               :title="badge.description"
             >
-              <span class="badge-icon">{{ badge.icon }}</span>
+              <span class="badge-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span>
               <span class="badge-name">{{ badge.name }}</span>
               <div class="badge-progress" v-if="!badge.unlocked">
                 <div class="progress-fill" :style="{ width: badge.progress + '%' }"></div>
@@ -236,7 +236,7 @@
 
         <!-- Eco Goals -->
         <div class="sidebar-card">
-          <h3>🎯 {{ t('footprint.monthlyGoal') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('footprint.monthlyGoal') }}</h3>
           <div class="goal-progress">
             <div class="goal-circle">
               <svg viewBox="0 0 100 100">
@@ -258,12 +258,12 @@
 
         <!-- Tips -->
         <div class="sidebar-card tips-card">
-          <h3>💡 {{ t('footprint.dailyTip') }}</h3>
+          <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>{{ t('footprint.dailyTip') }}</h3>
           <div class="daily-tip">
-            <span class="tip-icon">{{ currentTip.icon }}</span>
+            <span class="tip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
             <p>{{ currentTip.text }}</p>
           </div>
-          <button class="refresh-tip" @click="refreshTip">🔄 {{ t('footprint.newTip') }}</button>
+          <button class="refresh-tip" @click="refreshTip"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>{{ t('footprint.newTip') }}</button>
         </div>
       </aside>
     </div>
@@ -609,8 +609,8 @@ export default {
   max-width: 1200px;
   margin: 0 auto 30px;
   padding: 40px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  border-radius: 24px;
+  background: var(--primary);
+  border-radius: var(--radius-xl);
   color: white;
   display: flex;
   justify-content: space-between;
@@ -621,13 +621,13 @@ export default {
 
 .hero-left h1 {
   margin: 0 0 10px;
-  font-size: 2.2em;
+  font-size: 2rem;
 }
 
 .hero-left p {
   margin: 0;
   opacity: 0.9;
-  font-size: 1.1em;
+  font-size: 1rem;
 }
 
 .hero-stats {
@@ -638,8 +638,7 @@ export default {
 
 .stat-card {
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 15px 20px;
   display: flex;
   align-items: center;
@@ -651,7 +650,7 @@ export default {
 }
 
 .stat-icon {
-  font-size: 1.8em;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .stat-info {
@@ -660,12 +659,12 @@ export default {
 }
 
 .stat-value {
-  font-size: 1.5em;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
 .stat-label {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   opacity: 0.9;
 }
 
@@ -681,21 +680,22 @@ export default {
 /* Quick Log Section */
 .quick-log-section {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .quick-log-section h2 {
   margin: 0 0 5px;
   color: var(--text-color);
+  font-size: 1.1rem;
 }
 
 .section-desc {
   margin: 0 0 20px;
   color: var(--text-secondary);
-  font-size: 0.95em;
+  font-size: 0.9rem;
 }
 
 .quick-activities {
@@ -710,45 +710,44 @@ export default {
   align-items: center;
   gap: 8px;
   padding: 18px 12px;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   background: var(--card-bg);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
   color: var(--text-color);
 }
 
 .quick-activity-btn:hover {
-  border-color: #2ecc71;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.2);
+  border-color: var(--primary);
+  background: var(--primary-subtle);
 }
 
 .qa-icon {
-  font-size: 2em;
+  color: var(--primary);
 }
 
 .qa-name {
-  font-size: 0.9em;
+  font-size: 0.9rem;
   text-align: center;
 }
 
 .qa-impact {
   padding: 4px 10px;
-  background: rgba(46, 204, 113, 0.15);
-  color: #27ae60;
-  border-radius: 20px;
-  font-size: 0.8em;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
 /* Custom Log Section */
 .custom-log-section {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -761,31 +760,32 @@ export default {
 .section-header h2 {
   margin: 0;
   color: var(--text-color);
+  font-size: 1.1rem;
 }
 
 .toggle-btn {
   padding: 8px 16px;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  font-size: 0.9em;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .toggle-btn:hover {
-  border-color: #2ecc71;
-  color: #2ecc71;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .custom-form {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .form-grid {
@@ -807,25 +807,26 @@ export default {
 
 .form-group label {
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   padding: 12px 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .form-group textarea {
@@ -837,33 +838,33 @@ export default {
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1em;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+  background: var(--primary-dark);
 }
 
 /* Weekly Section */
 .weekly-section {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .weekly-section h2 {
   margin: 0 0 20px;
   color: var(--text-color);
+  font-size: 1.1rem;
 }
 
 .week-chart {
@@ -886,8 +887,8 @@ export default {
 .bar-container {
   width: 100%;
   height: 100px;
-  background: rgba(46, 204, 113, 0.1);
-  border-radius: 8px;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -895,23 +896,23 @@ export default {
 
 .bar-fill {
   width: 100%;
-  background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%);
-  border-radius: 8px 8px 0 0;
+  background: var(--primary);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   transition: height 0.5s ease;
   min-height: 4px;
 }
 
 .bar-fill.today {
-  background: linear-gradient(180deg, #f39c12 0%, #e67e22 100%);
+  background: #d4a853;
 }
 
 .day-label {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
 .day-value {
-  font-size: 0.75em;
+  font-size: 0.75rem;
   color: var(--text-color);
   font-weight: 600;
 }
@@ -929,23 +930,23 @@ export default {
 
 .summary-label {
   display: block;
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
 .summary-value {
-  font-size: 1.1em;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #2ecc71;
+  color: var(--primary);
 }
 
 /* History Section */
 .history-section {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 25px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .filter-btns {
@@ -956,21 +957,23 @@ export default {
 .filter-btn {
   padding: 6px 14px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 0.85em;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .dark .filter-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .filter-btn.active {
-  background: #2ecc71;
+  background: var(--primary);
   color: white;
+  border-color: var(--primary);
 }
 
 .empty-history {
@@ -979,7 +982,8 @@ export default {
 }
 
 .empty-icon {
-  font-size: 3em;
+  color: var(--text-secondary);
+  opacity: 0.5;
   margin-bottom: 15px;
 }
 
@@ -1006,28 +1010,29 @@ export default {
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 12px;
-  transition: all 0.2s;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .dark .activity-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .activity-card:hover {
-  background: rgba(46, 204, 113, 0.1);
+  border-color: var(--primary);
 }
 
 .activity-icon {
   width: 45px;
   height: 45px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4em;
   flex-shrink: 0;
+  color: var(--primary);
 }
 
 .activity-info {
@@ -1037,11 +1042,11 @@ export default {
 .activity-info h4 {
   margin: 0 0 4px;
   color: var(--text-color);
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .activity-date {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
@@ -1051,13 +1056,13 @@ export default {
 
 .impact-value {
   display: block;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #2ecc71;
+  color: var(--primary);
 }
 
 .impact-unit {
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
@@ -1070,15 +1075,15 @@ export default {
 
 .sidebar-card {
   background: var(--card-bg);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-card h3 {
   margin: 0 0 15px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 1rem;
 }
 
 /* Category Breakdown */
@@ -1101,24 +1106,24 @@ export default {
 }
 
 .cat-icon {
-  font-size: 1.2em;
+  color: var(--primary);
 }
 
 .cat-name {
   flex: 1;
   color: var(--text-color);
-  font-size: 0.9em;
+  font-size: 0.9rem;
 }
 
 .cat-value {
   color: var(--text-secondary);
-  font-size: 0.85em;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .cat-bar {
   height: 6px;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--bg-color);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -1145,30 +1150,32 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
   opacity: 0.5;
   filter: grayscale(1);
-  transition: all 0.3s;
+  transition: var(--transition);
 }
 
 .dark .badge {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .badge.unlocked {
   opacity: 1;
   filter: none;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(39, 174, 96, 0.1) 100%);
+  background: var(--primary-subtle);
+  border-color: var(--primary);
 }
 
 .badge-icon {
-  font-size: 1.8em;
+  color: var(--primary);
   margin-bottom: 5px;
 }
 
 .badge-name {
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: var(--text-color);
   text-align: center;
 }
@@ -1176,7 +1183,7 @@ export default {
 .badge-progress {
   width: 100%;
   height: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--bg-color);
   border-radius: 2px;
   margin-top: 8px;
   overflow: hidden;
@@ -1188,7 +1195,7 @@ export default {
 
 .badge-progress .progress-fill {
   height: 100%;
-  background: #2ecc71;
+  background: var(--primary);
   border-radius: 2px;
 }
 
@@ -1213,13 +1220,13 @@ export default {
 
 .goal-bg {
   fill: none;
-  stroke: rgba(46, 204, 113, 0.2);
+  stroke: var(--primary-subtle);
   stroke-width: 8;
 }
 
 .goal-fill {
   fill: none;
-  stroke: #2ecc71;
+  stroke: var(--primary);
   stroke-width: 8;
   stroke-linecap: round;
   stroke-dasharray: 283;
@@ -1236,13 +1243,13 @@ export default {
 
 .goal-current {
   display: block;
-  font-size: 1.8em;
+  font-size: 1.7rem;
   font-weight: 700;
   color: var(--text-color);
 }
 
 .goal-target {
-  font-size: 0.85em;
+  font-size: 0.85rem;
   color: var(--text-secondary);
 }
 
@@ -1250,12 +1257,13 @@ export default {
   margin: 15px 0 0;
   text-align: center;
   color: var(--text-color);
-  font-size: 0.95em;
+  font-size: 0.95rem;
 }
 
 /* Tips Card */
 .tips-card {
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%);
+  background: var(--primary-subtle);
+  border: 1px solid var(--primary);
 }
 
 .daily-tip {
@@ -1266,7 +1274,7 @@ export default {
 }
 
 .tip-icon {
-  font-size: 2em;
+  color: var(--primary);
 }
 
 .daily-tip p {
@@ -1279,17 +1287,16 @@ export default {
   width: 100%;
   padding: 10px;
   border: none;
-  background: rgba(46, 204, 113, 0.2);
-  color: #27ae60;
-  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 0.9em;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .refresh-tip:hover {
-  background: #2ecc71;
-  color: white;
+  background: var(--primary-dark);
 }
 
 /* Responsive */
@@ -1314,11 +1321,11 @@ export default {
 
 @media (max-width: 600px) {
   .tracker-hero {
-    padding: 25px;
+    padding: 24px;
   }
   
   .hero-left h1 {
-    font-size: 1.6em;
+    font-size: 1.5rem;
   }
   
   .stat-card {
@@ -1326,7 +1333,7 @@ export default {
   }
   
   .stat-value {
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
   
   .quick-activities {

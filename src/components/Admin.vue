@@ -132,20 +132,22 @@
             <div class="stat-card stat-users">
               <div class="stat-header">
                 <span class="stat-icon-bg">👥</span>
-                <span class="stat-trend up">+12%</span>
+                <span :class="['stat-trend', trends.users >= 0 ? 'up' : 'down']">
+                  {{ trends.users >= 0 ? '+' : '' }}{{ trends.users }}%
+                </span>
               </div>
               <div class="stat-body">
-                <span class="stat-value">{{ stats.totalUsers }}</span>
-                <span class="stat-label">Total Users</span>
+                <span class="stat-value">{{ filteredStats.totalUsers }}</span>
+                <span class="stat-label">New Users</span>
               </div>
               <div class="stat-footer">
-                <span class="stat-compare">vs last month</span>
+                <span class="stat-compare">{{ periodLabel }}</span>
               </div>
             </div>
             <div class="stat-card stat-products">
               <div class="stat-header">
                 <span class="stat-icon-bg">🛍️</span>
-                <span class="stat-trend up">+5%</span>
+                <span class="stat-trend neutral">Total</span>
               </div>
               <div class="stat-body">
                 <span class="stat-value">{{ stats.totalProducts }}</span>
@@ -158,28 +160,47 @@
             <div class="stat-card stat-orders">
               <div class="stat-header">
                 <span class="stat-icon-bg">📦</span>
-                <span class="stat-trend up">+23%</span>
+                <span :class="['stat-trend', trends.orders >= 0 ? 'up' : 'down']">
+                  {{ trends.orders >= 0 ? '+' : '' }}{{ trends.orders }}%
+                </span>
               </div>
               <div class="stat-body">
-                <span class="stat-value">{{ stats.totalOrders }}</span>
+                <span class="stat-value">{{ filteredStats.totalOrders }}</span>
                 <span class="stat-label">Orders</span>
               </div>
               <div class="stat-footer">
-                <span class="stat-compare">This period</span>
+                <span class="stat-compare">{{ periodLabel }}</span>
               </div>
             </div>
             <div class="stat-card stat-revenue">
               <div class="stat-header">
                 <span class="stat-icon-bg">💰</span>
-                <span class="stat-trend up">+18%</span>
+                <span :class="['stat-trend', trends.revenue >= 0 ? 'up' : 'down']">
+                  {{ trends.revenue >= 0 ? '+' : '' }}{{ trends.revenue }}%
+                </span>
               </div>
               <div class="stat-body">
-                <span class="stat-value">€{{ calculateRevenue() }}</span>
+                <span class="stat-value">€{{ filteredStats.revenue.toFixed(2) }}</span>
                 <span class="stat-label">Revenue</span>
               </div>
               <div class="stat-footer">
-                <span class="stat-compare">Total earnings</span>
+                <span class="stat-compare">{{ periodLabel }}</span>
               </div>
+            </div>
+          </div>
+
+          <div class="totals-bar">
+            <div class="total-item">
+              <span class="total-label">Total Users:</span>
+              <span class="total-value">{{ stats.totalUsers }}</span>
+            </div>
+            <div class="total-item">
+              <span class="total-label">Total Orders:</span>
+              <span class="total-value">{{ stats.totalOrders }}</span>
+            </div>
+            <div class="total-item">
+              <span class="total-label">All-time Revenue:</span>
+              <span class="total-value">€{{ calculateRevenue() }}</span>
             </div>
           </div>
 
@@ -190,8 +211,8 @@
                 <button class="card-action" @click="activeTab = 'orders'">View All →</button>
               </div>
               <div class="card-body">
-                <div v-if="orders.length > 0" class="mini-table">
-                  <div v-for="order in orders.slice(0, 5)" :key="order.id" class="mini-row">
+                <div v-if="ordersInRange.length > 0" class="mini-table">
+                  <div v-for="order in ordersInRange.slice(0, 5)" :key="order.id" class="mini-row">
                     <span class="order-id">#{{ order.id }}</span>
                     <span class="order-customer">{{ order.user_name }}</span>
                     <span class="order-total">€{{ order.total?.toFixed(2) }}</span>
@@ -200,7 +221,7 @@
                 </div>
                 <div v-else class="empty-card">
                   <span>📭</span>
-                  <p>No orders yet</p>
+                  <p>No orders in this period</p>
                 </div>
               </div>
             </div>
@@ -750,6 +771,127 @@ export default {
     }
   },
   computed: {
+    // Get date range boundaries
+    dateRangeBounds() {
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      let startDate, prevStartDate, prevEndDate
+      
+      switch (this.dateRange) {
+        case 'today':
+          startDate = today
+          prevStartDate = new Date(today)
+          prevStartDate.setDate(prevStartDate.getDate() - 1)
+          prevEndDate = today
+          break
+        case 'week':
+          startDate = new Date(today)
+          startDate.setDate(today.getDate() - today.getDay()) // Start of week (Sunday)
+          prevStartDate = new Date(startDate)
+          prevStartDate.setDate(prevStartDate.getDate() - 7)
+          prevEndDate = new Date(startDate)
+          break
+        case 'month':
+          startDate = new Date(now.getFullYear(), now.getMonth(), 1)
+          prevStartDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+          prevEndDate = startDate
+          break
+        case 'year':
+          startDate = new Date(now.getFullYear(), 0, 1)
+          prevStartDate = new Date(now.getFullYear() - 1, 0, 1)
+          prevEndDate = startDate
+          break
+        default:
+          startDate = new Date(now.getFullYear(), now.getMonth(), 1)
+          prevStartDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+          prevEndDate = startDate
+      }
+      
+      return { startDate, prevStartDate, prevEndDate, now }
+    },
+    
+    // Filter orders by date range
+    ordersInRange() {
+      const { startDate, now } = this.dateRangeBounds
+      return this.orders.filter(order => {
+        const orderDate = new Date(order.created_at)
+        return orderDate >= startDate && orderDate <= now
+      })
+    },
+    
+    // Previous period orders for trend comparison
+    ordersPrevPeriod() {
+      const { prevStartDate, prevEndDate } = this.dateRangeBounds
+      return this.orders.filter(order => {
+        const orderDate = new Date(order.created_at)
+        return orderDate >= prevStartDate && orderDate < prevEndDate
+      })
+    },
+    
+    // Filter users by date range
+    usersInRange() {
+      const { startDate, now } = this.dateRangeBounds
+      return this.users.filter(user => {
+        const userDate = new Date(user.created_at)
+        return userDate >= startDate && userDate <= now
+      })
+    },
+    
+    // Previous period users
+    usersPrevPeriod() {
+      const { prevStartDate, prevEndDate } = this.dateRangeBounds
+      return this.users.filter(user => {
+        const userDate = new Date(user.created_at)
+        return userDate >= prevStartDate && userDate < prevEndDate
+      })
+    },
+    
+    // Filtered stats based on date range
+    filteredStats() {
+      return {
+        totalUsers: this.usersInRange.length,
+        totalOrders: this.ordersInRange.length,
+        totalProducts: this.products.length, // Products don't filter by date usually
+        revenue: this.ordersInRange.reduce((sum, order) => sum + (order.total || 0), 0)
+      }
+    },
+    
+    // Calculate revenue for current period
+    revenueInRange() {
+      return this.ordersInRange.reduce((sum, order) => sum + (order.total || 0), 0)
+    },
+    
+    // Calculate revenue for previous period
+    revenuePrevPeriod() {
+      return this.ordersPrevPeriod.reduce((sum, order) => sum + (order.total || 0), 0)
+    },
+    
+    // Dynamic trends
+    trends() {
+      const calcTrend = (current, previous) => {
+        if (previous === 0) return current > 0 ? 100 : 0
+        return Math.round(((current - previous) / previous) * 100)
+      }
+      
+      return {
+        users: calcTrend(this.usersInRange.length, this.usersPrevPeriod.length),
+        orders: calcTrend(this.ordersInRange.length, this.ordersPrevPeriod.length),
+        revenue: calcTrend(this.revenueInRange, this.revenuePrevPeriod),
+        products: 0 // Products don't have trend calculation
+      }
+    },
+    
+    // Period comparison label
+    periodLabel() {
+      switch (this.dateRange) {
+        case 'today': return 'vs yesterday'
+        case 'week': return 'vs last week'
+        case 'month': return 'vs last month'
+        case 'year': return 'vs last year'
+        default: return 'vs previous period'
+      }
+    },
+    
     filteredUsers() {
       if (!this.userSearch) return this.users
       const search = this.userSearch.toLowerCase()
@@ -2188,7 +2330,36 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+  margin-bottom: 20px;
+}
+
+/* Totals Bar */
+.totals-bar {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
   margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.total-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.total-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9em;
+}
+
+.total-value {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1em;
 }
 
 .stat-card {
@@ -2308,6 +2479,11 @@ export default {
 .stat-trend.down {
   background: linear-gradient(135deg, rgba(231, 76, 60, 0.25), rgba(192, 57, 43, 0.15));
   color: #e74c3c;
+}
+
+.stat-trend.neutral {
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.25), rgba(41, 128, 185, 0.15));
+  color: #3498db;
 }
 
 .stat-body {

@@ -3,7 +3,7 @@
     <!-- Forum Header -->
     <div class="forum-header">
       <div class="header-content">
-        <h1>🌱 {{ t('forum.title') }}</h1>
+        <h1>{{ t('forum.title') }}</h1>
         <p>{{ t('forum.subtitle') }}</p>
       </div>
       <div class="forum-stats">
@@ -11,10 +11,12 @@
           <span class="stat-number">{{ posts.length }}</span>
           <span class="stat-label">{{ t('forum.discussions') }}</span>
         </div>
+        <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-number">{{ totalComments }}</span>
           <span class="stat-label">{{ t('forum.comments') }}</span>
         </div>
+        <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-number">{{ uniqueUsers }}</span>
           <span class="stat-label">{{ t('forum.members') }}</span>
@@ -27,7 +29,7 @@
       <aside class="forum-sidebar">
         <!-- Categories -->
         <div class="sidebar-section">
-          <h3>📂 {{ t('forum.categories') }}</h3>
+          <h3>{{ t('forum.categories') }}</h3>
           <div class="category-list">
             <button 
               v-for="cat in categories" 
@@ -35,7 +37,6 @@
               :class="['category-btn', { active: selectedCategory === cat.id }]"
               @click="selectedCategory = cat.id"
             >
-              <span class="cat-icon">{{ cat.icon }}</span>
               <span class="cat-name">{{ cat.name }}</span>
               <span class="cat-count">{{ getCategoryCount(cat.id) }}</span>
             </button>
@@ -44,7 +45,7 @@
 
         <!-- Popular Tags -->
         <div class="sidebar-section">
-          <h3>🏷️ {{ t('forum.popularTags') }}</h3>
+          <h3>{{ t('forum.popularTags') }}</h3>
           <div class="tags-cloud">
             <span 
               v-for="tag in popularTags" 
@@ -59,12 +60,12 @@
 
         <!-- Community Guidelines -->
         <div class="sidebar-section guidelines">
-          <h3>📜 {{ t('forum.guidelines') }}</h3>
+          <h3>{{ t('forum.guidelines') }}</h3>
           <ul>
-            <li>🌿 {{ t('forum.guidelineRespect') }}</li>
-            <li>🌍 {{ t('forum.guidelineTopics') }}</li>
-            <li>💡 {{ t('forum.guidelineResources') }}</li>
-            <li>🤝 {{ t('forum.guidelineSupport') }}</li>
+            <li>{{ t('forum.guidelineRespect') }}</li>
+            <li>{{ t('forum.guidelineTopics') }}</li>
+            <li>{{ t('forum.guidelineResources') }}</li>
+            <li>{{ t('forum.guidelineSupport') }}</li>
           </ul>
         </div>
       </aside>
@@ -76,13 +77,13 @@
           <div v-if="!showCreateForm" class="create-post-trigger" @click="showCreateForm = true">
             <div class="user-avatar">{{ user.name ? user.name.charAt(0).toUpperCase() : '?' }}</div>
             <span>{{ t('forum.shareThoughts') }}, {{ user.name }}...</span>
-            <button class="create-btn">✍️ {{ t('forum.createPost') }}</button>
+            <button class="create-btn">{{ t('forum.createPost') }}</button>
           </div>
 
           <div v-else class="create-post-form">
             <div class="form-header">
-              <h3>✍️ {{ t('forum.createNewDiscussion') }}</h3>
-              <button class="close-btn" @click="showCreateForm = false">✕</button>
+              <h3>{{ t('forum.createNewDiscussion') }}</h3>
+              <button class="close-btn" @click="showCreateForm = false">×</button>
             </div>
             <form @submit.prevent="addPost">
               <input 
@@ -95,7 +96,7 @@
                 <select v-model="newPost.category" class="category-select">
                   <option value="">{{ t('forum.selectCategory') }}</option>
                   <option v-for="cat in categories.filter(c => c.id !== 'all')" :key="cat.id" :value="cat.id">
-                    {{ cat.icon }} {{ cat.name }}
+                    {{ cat.name }}
                   </option>
                 </select>
                 <input 
@@ -461,119 +462,128 @@ export default {
 <style scoped>
 .forum-page {
   min-height: 100vh;
-  padding: 80px 20px 60px;
-  background: linear-gradient(180deg, var(--bg-color) 0%, rgba(46, 204, 113, 0.03) 100%);
+  padding: 80px 24px 60px;
+  background: var(--bg-color);
 }
 
 /* Header */
 .forum-header {
-  max-width: 1200px;
-  margin: 0 auto 30px;
-  padding: 40px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  border-radius: 24px;
-  color: white;
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 32px;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
 }
 
 .header-content h1 {
-  margin: 0 0 8px;
-  font-size: 2.2em;
+  margin: 0 0 6px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-color);
+  letter-spacing: -0.02em;
 }
 
 .header-content p {
   margin: 0;
-  opacity: 0.9;
-  font-size: 1.1em;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 .forum-stats {
   display: flex;
-  gap: 30px;
+  align-items: center;
+  gap: 24px;
 }
 
 .stat {
   text-align: center;
 }
 
+.stat-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border-color);
+}
+
 .stat-number {
   display: block;
-  font-size: 2em;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: var(--text-color);
 }
 
 .stat-label {
-  font-size: 0.9em;
-  opacity: 0.85;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
 /* Container */
 .forum-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 30px;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
 }
 
 /* Sidebar */
 .forum-sidebar {
   position: sticky;
-  top: 100px;
+  top: 90px;
   height: fit-content;
 }
 
 .sidebar-section {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-section h3 {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-color);
-  font-size: 1.1em;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .category-list {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .category-btn {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 15px;
+  padding: 10px 12px;
   border: none;
   background: transparent;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s;
   color: var(--text-color);
   text-align: left;
   width: 100%;
+  font-size: 0.875rem;
 }
 
 .category-btn:hover {
-  background: rgba(46, 204, 113, 0.1);
+  background: var(--bg-secondary);
 }
 
 .category-btn.active {
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(39, 174, 96, 0.1) 100%);
-  color: #27ae60;
-  font-weight: 600;
-}
-
-.cat-icon {
-  font-size: 1.2em;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  font-weight: 500;
 }
 
 .cat-name {
@@ -581,35 +591,36 @@ export default {
 }
 
 .cat-count {
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--bg-secondary);
   padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.85em;
-  color: var(--text-secondary);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
-.dark .cat-count {
-  background: rgba(255, 255, 255, 0.1);
+.category-btn.active .cat-count {
+  background: var(--primary);
+  color: white;
 }
 
 .tags-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tag {
-  padding: 6px 12px;
-  background: rgba(46, 204, 113, 0.1);
-  color: #27ae60;
-  border-radius: 20px;
-  font-size: 0.85em;
+  padding: 5px 10px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 100px;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .tag:hover, .tag.active {
-  background: #2ecc71;
+  background: var(--primary);
   color: white;
 }
 
@@ -622,7 +633,7 @@ export default {
 .guidelines li {
   padding: 8px 0;
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -637,94 +648,100 @@ export default {
 
 /* Create Post */
 .create-post-section {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .create-post-trigger {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 20px;
+  gap: 14px;
+  padding: 16px 18px;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .create-post-trigger:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary);
 }
 
 .create-post-trigger span {
   flex: 1;
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }
 
 .user-avatar {
-  width: 45px;
-  height: 45px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 600;
-  font-size: 1.2em;
+  font-size: 1rem;
 }
 
 .user-avatar.small {
-  width: 36px;
-  height: 36px;
-  font-size: 1em;
+  width: 32px;
+  height: 32px;
+  font-size: 0.85rem;
 }
 
 .create-btn {
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 10px 18px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
 }
 
 .create-btn:hover {
-  transform: scale(1.05);
+  background: var(--primary-dark);
 }
 
 .create-post-form {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
 }
 
 .form-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .form-header h3 {
   margin: 0;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .close-btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 50%;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 1.2em;
   color: var(--text-secondary);
-  transition: all 0.2s;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dark .close-btn {
@@ -732,118 +749,124 @@ export default {
 }
 
 .close-btn:hover {
-  background: #e74c3c;
+  background: #dc2626;
   color: white;
 }
 
 .create-post-form form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .title-input {
-  padding: 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 1.1em;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .title-input:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 12px;
 }
 
 .category-select, .tags-input {
-  padding: 12px 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  font-size: 0.95em;
+  font-size: 0.9rem;
 }
 
 .category-select:focus, .tags-input:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .create-post-form textarea {
-  padding: 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  min-height: 150px;
+  min-height: 120px;
   resize: vertical;
   font-family: inherit;
 }
 
 .create-post-form textarea:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 8px;
 }
 
 .cancel-btn {
-  padding: 12px 25px;
-  border: 2px solid var(--border-color);
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
   background: transparent;
   color: var(--text-color);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .cancel-btn:hover {
-  border-color: #e74c3c;
-  color: #e74c3c;
+  border-color: #dc2626;
+  color: #dc2626;
 }
 
 .submit-btn {
-  padding: 12px 25px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 10px 20px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+  background: var(--primary-dark);
 }
 
 /* Login Prompt */
 .login-prompt {
   text-align: center;
-  padding: 20px;
+  padding: 16px;
   background: var(--card-bg);
-  border-radius: 12px;
-  margin-bottom: 20px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
   color: var(--text-color);
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
 }
 
 .login-prompt a {
-  color: #2ecc71;
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: 500;
 }
 
 /* Posts Section */
@@ -851,111 +874,117 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .posts-header h2 {
   margin: 0;
   color: var(--text-color);
-  font-size: 1.4em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .sort-options {
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .sort-btn {
-  padding: 8px 15px;
+  padding: 6px 12px;
   border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 0.9em;
-  transition: all 0.2s;
+  font-size: 0.85rem;
+  transition: var(--transition);
 }
 
 .dark .sort-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .sort-btn.active {
-  background: #2ecc71;
+  background: var(--primary);
   color: white;
 }
 
 /* Empty State */
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
+  padding: 48px 20px;
   background: var(--card-bg);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
 }
 
 .empty-icon {
-  font-size: 4em;
-  margin-bottom: 15px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  margin-bottom: 12px;
 }
 
 .empty-state h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .empty-state p {
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 /* Posts List */
 .posts-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .post-card {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 25px;
+  border-radius: var(--radius-lg);
+  padding: 20px;
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
 }
 
 .post-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary);
 }
 
 .post-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .author-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .author-avatar {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .author-avatar.large {
-  width: 55px;
-  height: 55px;
-  font-size: 1.4em;
+  width: 48px;
+  height: 48px;
+  font-size: 1.1rem;
 }
 
 .author-details {
@@ -966,31 +995,35 @@ export default {
 .author-name {
   color: var(--text-color);
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .post-date {
   color: var(--text-secondary);
-  font-size: 0.85em;
+  font-size: 0.8rem;
 }
 
 .post-category {
-  padding: 5px 12px;
-  background: rgba(46, 204, 113, 0.1);
-  color: #27ae60;
-  border-radius: 15px;
-  font-size: 0.85em;
+  padding: 4px 10px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .post-title {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-color);
-  font-size: 1.25em;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .post-excerpt {
-  margin: 0 0 15px;
+  margin: 0 0 12px;
   color: var(--text-secondary);
   line-height: 1.6;
+  font-size: 0.9rem;
 }
 
 .post-footer {
@@ -1001,136 +1034,140 @@ export default {
 
 .post-tags {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .tag-small {
-  padding: 3px 8px;
-  background: rgba(46, 204, 113, 0.08);
-  color: #27ae60;
-  border-radius: 10px;
-  font-size: 0.8em;
+  padding: 2px 8px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
 }
 
 .post-stats {
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
 .stat-item {
   color: var(--text-secondary);
-  font-size: 0.9em;
+  font-size: 0.85rem;
 }
 
 /* Post Detail */
 .post-detail {
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .back-btn {
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  border: none;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  font-size: 0.95em;
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .dark .back-btn {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .back-btn:hover {
-  background: rgba(46, 204, 113, 0.15);
-  color: #27ae60;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .detail-card {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-  margin-bottom: 25px;
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
 }
 
 .detail-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .detail-title {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   color: var(--text-color);
-  font-size: 1.8em;
+  font-size: 1.5rem;
+  font-weight: 600;
   line-height: 1.3;
 }
 
 .detail-content {
   color: var(--text-color);
-  line-height: 1.8;
-  font-size: 1.05em;
+  line-height: 1.7;
+  font-size: 0.95rem;
   white-space: pre-wrap;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .detail-tags {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .detail-actions {
   display: flex;
-  gap: 10px;
-  padding-top: 20px;
+  gap: 8px;
+  padding-top: 16px;
   border-top: 1px solid var(--border-color);
 }
 
 .action-btn {
-  padding: 10px 20px;
-  border: 2px solid var(--border-color);
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
   background: transparent;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  transition: all 0.2s;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .action-btn:hover {
-  border-color: #2ecc71;
-  color: #2ecc71;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* Comments */
 .comments-section {
   background: var(--card-bg);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  border: 1px solid var(--border-color);
 }
 
 .comments-section h3 {
-  margin: 0 0 25px;
+  margin: 0 0 20px;
   color: var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .add-comment {
   display: flex;
-  gap: 15px;
-  margin-bottom: 25px;
-  padding-bottom: 25px;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -1138,69 +1175,72 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .comment-form textarea {
-  padding: 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   background: var(--bg-color);
   color: var(--text-color);
-  min-height: 80px;
+  min-height: 70px;
   resize: vertical;
   font-family: inherit;
+  font-size: 0.9rem;
 }
 
 .comment-form textarea:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--primary-subtle);
 }
 
 .comment-submit {
   align-self: flex-end;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  padding: 8px 16px;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--transition);
 }
 
 .comment-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+  background: var(--primary-dark);
 }
 
 .no-comments {
   text-align: center;
-  padding: 30px;
+  padding: 24px;
   color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
 .comments-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .comment-card {
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 14px;
+  padding: 16px;
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
 }
 
 .dark .comment-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .comment-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .comment-info {
@@ -1211,38 +1251,40 @@ export default {
 .comment-author {
   color: var(--text-color);
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .comment-date {
   color: var(--text-secondary);
-  font-size: 0.8em;
+  font-size: 0.75rem;
 }
 
 .comment-content {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   color: var(--text-color);
   line-height: 1.6;
+  font-size: 0.9rem;
 }
 
 .comment-actions {
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 .mini-action {
-  padding: 5px 12px;
+  padding: 4px 10px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 0.85em;
-  border-radius: 6px;
-  transition: all 0.2s;
+  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
 }
 
 .mini-action:hover {
-  background: rgba(46, 204, 113, 0.1);
-  color: #2ecc71;
+  background: var(--primary-subtle);
+  color: var(--primary);
 }
 
 /* Responsive */
@@ -1255,7 +1297,7 @@ export default {
     position: static;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 16px;
   }
   
   .sidebar-section {
@@ -1274,19 +1316,19 @@ export default {
 
 @media (max-width: 600px) {
   .forum-header {
-    padding: 25px;
+    padding: 20px;
   }
   
   .header-content h1 {
-    font-size: 1.6em;
+    font-size: 1.4rem;
   }
   
   .forum-stats {
-    gap: 20px;
+    gap: 16px;
   }
   
   .stat-number {
-    font-size: 1.5em;
+    font-size: 1.25rem;
   }
   
   .post-card {
