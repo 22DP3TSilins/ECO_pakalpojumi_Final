@@ -330,7 +330,19 @@ export default {
     tipClothingDesc: 'Pērc lietotu vai izvēlies kvalitāti, kas kalpo ilgāk.',
     // Units
     tonnesYear: 'tonnas/gadā',
-    tonnesPerFlight: 't CO₂ uz lidojumu'
+    tonnesPerFlight: 't CO₂ uz lidojumu',
+    // Methodology section
+    methodologyTitle: 'Kā tiek veikti šie aprēķini?',
+    methodologyDesc: 'Mūsu CO₂ aplēses balstās uz recenzētiem emisiju faktoriem no atzītiem zinātniskiem avotiem. Visas vērtības atspoguļo dzīves cikla emisijas kg CO₂ ekvivalentā.',
+    methodologyTransportTitle: 'Transports',
+    methodologyTransportText: 'Automašīnu emisijas pēc IPCC faktoriem: benzīns 0,21 kg CO₂/km, dīzelis 0,18, hibrīds 0,12, elektriskā 0,05. Lidojumu emisijas: īss maršruts 0,255 t, vidējs 0,5 t, tāls maršruts 1,5 t par turp-atpakaļ lidojumu (ICAO). Sabiedriskais transports: 0,089 kg CO₂/stundā (Eurostat vidējais).',
+    methodologyHomeTitle: 'Mājas enerģija',
+    methodologyHomeText: 'Elektroenerģijas tīkla intensitāte: jauktais tīkls 0,42 kg/kWh, atjaunojamā 0,05, ogļu 0,82 (IEA 2023). Apkure: dabas gāze 2,0 kg/m³, apkures eļļa 2,5, elektriskā 0,5, siltumsūknis 0,3, koks/biomasa 0,4 (UK DEFRA). Ūdens sildīšana: 0,001 kg CO₂ uz litru.',
+    methodologyFoodTitle: 'Pārtika un diēta',
+    methodologyFoodText: 'Gaļas emisiju faktori uz kg: liellopa gaļa 27 kg CO₂e, cūkgaļa 12, mājputni 7, zivis 6 (Our World in Data / Poore & Nemecek 2018). Piena produkti: 3 kg CO₂e dienā. Pārtikas atkritumu reizinātājs pievieno proporcionālas emisijas, pamatojoties uz izšķērdēto procentu.',
+    methodologyLifestyleTitle: 'Dzīvesveids un iepirkšanās',
+    methodologyLifestyleText: 'Jauns apģērbs: 25 kg CO₂e vidēji dzīves ciklā (Eiropas Vides aģentūra). Tiešsaistes piegādes iepakojums: 5 kg CO₂e uz paku. Pārstrādes faktors samazina kopējās dzīvesveida emisijas par 5–20% atkarībā no intensitātes (Zero Waste Europe).',
+    methodologySources: 'Avoti: IPCC AR6, IEA 2023, ICAO Carbon Emissions Calculator, Poore & Nemecek (2018) Science, UK DEFRA Conversion Factors, European Environment Agency.'
   },
 
   // Forum Page
@@ -790,6 +802,8 @@ export default {
     passwordPlaceholder: 'Ievadi savu paroli',
     rememberMe: 'Atcerēties mani',
     forgotPassword: 'Aizmirsi paroli?',
+    forgotDesc: 'Ievadi savu e-pastu un mēs nosūtīsim tev jaunu pagaidu paroli.',
+    sendReset: 'Nosūtīt',
     signIn: 'Pieteikties',
     signingIn: 'Piesakās...',
     noAccount: 'Nav konta?',
@@ -870,24 +884,91 @@ export default {
   // Admin Page
   admin: {
     title: 'Administrācijas Panelis',
+    ecoAdmin: 'Eco Admin',
+    controlCenter: 'Vadības Centrs',
+    backToSite: 'Atpakaļ uz vietni',
+    site: 'Vietne',
+    darkMode: 'Tumšais režīms',
+    lightMode: 'Gaišais režīms',
+    myProfile: 'Mans Profils',
+    signOut: 'Izrakstīties',
+
+    // Sidebar
+    sidebarMain: 'Galvenais',
+    sidebarContent: 'Saturs',
+    sidebarSettings: 'Iestatījumi',
     dashboard: 'Pārskats',
     users: 'Lietotāji',
     products: 'Produkti',
     orders: 'Pasūtījumi',
     forum: 'Forums',
     settings: 'Iestatījumi',
-    totalUsers: 'Kopā Lietotāju',
-    totalProducts: 'Kopā Produktu',
-    totalOrders: 'Kopā Pasūtījumu',
-    totalRevenue: 'Kopējie Ieņēmumi',
+
+    // Dashboard
+    dashboardOverview: 'Pārskata Panelis',
+    dashboardWelcome: 'Laipni lūgti atpakaļ! Lūk, kas notiek tavā eko-veikalā.',
+    today: 'Šodien',
+    thisWeek: 'Šī nedēļa',
+    thisMonth: 'Šis mēnesis',
+    thisYear: 'Šis gads',
+    newUsers: 'Jauni Lietotāji',
+    total: 'Kopā',
+    activeListings: 'Aktīvie piedāvājumi',
+    revenue: 'Ieņēmumi',
     recentOrders: 'Nesenie Pasūtījumi',
-    recentUsers: 'Nesenie Lietotāji',
+    topProducts: 'Top Produkti',
+    recentActivity: 'Nesenā Aktivitāte',
+    atAGlance: 'Īss pārskats',
+    totalUsers: 'Kopā lietotāju',
+    totalOrders: 'Kopā pasūtījumu',
+    storeRevenue: 'Veikala ieņēmumi',
+    viewAll: 'Skatīt visu',
+    noOrdersInPeriod: 'Nav pasūtījumu šajā periodā',
+    noProductsYet: 'Vēl nav produktu',
+    noRecentActivity: 'Nav nesenas aktivitātes',
+    vsYesterday: 'pret vakardienu',
+    vsLastWeek: 'pret pagājušo nedēļu',
+    vsLastMonth: 'pret pagājušo mēnesi',
+    vsLastYear: 'pret pagājušo gadu',
+    vsPreviousPeriod: 'pret iepriekšējo periodu',
+
+    // Users tab
+    userManagement: 'Lietotāju Pārvaldība',
+    userManagementDesc: 'Pārvaldiet lietotāju kontus un atļaujas',
+    searchUsers: 'Meklēt lietotājus...',
+    user: 'Lietotājs',
+    email: 'E-pasts',
+    role: 'Loma',
+    status: 'Statuss',
+    joined: 'Pievienojās',
+    actions: 'Darbības',
+    blocked: 'Bloķēts',
+    active: 'Aktīvs',
+    block: 'Bloķēt',
+    unblock: 'Atbloķēt',
+    noUsersFound: 'Lietotāji nav atrasti',
+
+    // Products tab
+    productManagement: 'Produktu Pārvaldība',
+    productManagementDesc: 'Pārvaldiet jūsu ekoloģisko produktu katalogu',
+    searchProducts: 'Meklēt produktus...',
     addProduct: 'Pievienot Produktu',
     editProduct: 'Rediģēt Produktu',
     deleteProduct: 'Dzēst Produktu',
-    addUser: 'Pievienot Lietotāju',
-    editUser: 'Rediģēt Lietotāju',
-    deleteUser: 'Dzēst Lietotāju',
+    inStock: 'noliktavā',
+    noProductsFound: 'Produkti nav atrasti',
+    addFirstProduct: 'Pievienot Pirmo Produktu',
+
+    // Orders tab
+    orderManagement: 'Pasūtījumu Pārvaldība',
+    orderManagementDesc: 'Izsekojiet un pārvaldiet klientu pasūtījumus',
+    all: 'Visi',
+    customer: 'Klients',
+    items: 'Preces',
+    productsCount: 'produkti',
+    date: 'Datums',
+    view: 'Skatīt',
+    noOrdersFound: 'Pasūtījumi nav atrasti',
     orderStatus: {
       pending: 'Gaida',
       processing: 'Apstrādā',
@@ -895,22 +976,70 @@ export default {
       delivered: 'Piegādāts',
       cancelled: 'Atcelts'
     },
+
+    // Forum tab
+    forumManagement: 'Foruma Pārvaldība',
+    forumManagementDesc: 'Moderējiet kopienas diskusijas',
+    searchPosts: 'Meklēt ierakstus...',
+    by: 'Autors',
+    comments: 'komentāri',
+    noForumPosts: 'Foruma ieraksti nav atrasti',
+
+    // Settings tab
+    configureAdmin: 'Konfigurējiet administratora paneli',
+    storeSettings: 'Veikala Iestatījumi',
+    storeName: 'Veikala Nosaukums',
+    storeNamePlaceholder: 'Ievadiet veikala nosaukumu...',
+    currency: 'Valūta',
+    saveChanges: 'Saglabāt Izmaiņas',
+    notifications: 'Paziņojumi',
+    emailOnNewOrders: 'E-pasts par jauniem pasūtījumiem',
+    emailOnNewUsers: 'E-pasts par jauniem lietotājiem',
+    lowStockAlerts: 'Zemu krājumu brīdinājumi',
+
+    // User edit modal
+    editUser: 'Rediģēt Lietotāju',
+    name: 'Vārds',
     userRole: {
       user: 'Lietotājs',
       admin: 'Administrators'
     },
+    saving: 'Saglabā...',
+    cancel: 'Atcelt',
+
+    // Product modal
+    productName: 'Produkta Nosaukums',
+    category: 'Kategorija',
+    selectCategory: 'Izvēlieties kategoriju',
+    description: 'Apraksts',
+    price: 'Cena (€)',
+    stock: 'Noliktava',
+    productImage: 'Produkta Attēls',
+    clickToUpload: 'Noklikšķiniet, lai augšupielādētu',
+    uploadHint: 'JPG, PNG, GIF, WebP (maks. 5MB)',
+    uploading: 'Augšupielādē...',
+    pasteImageUrl: 'Ielīmējiet attēla URL šeit...',
+    lifecycleInfo: 'Dzīves cikla info (Eko ietekme)',
+    lifecyclePlaceholder: 'Informācija par ietekmi uz vidi...',
+    updateProduct: 'Atjaunināt Produktu',
+    or: 'vai',
+
+    // Category names
+    categorySolar: 'Saules enerģija',
+    categoryWater: 'Ūdens',
+    categoryEnergy: 'Enerģija',
+    categoryGarden: 'Dārzs',
+    categoryHome: 'Māja',
+    categoryTransport: 'Transports',
+
     search: 'Meklēt...',
     noResults: 'Nav rezultātu',
-    actions: 'Darbības',
-    status: 'Statuss',
-    date: 'Datums',
-    price: 'Cena',
-    stock: 'Noliktava',
-    category: 'Kategorija',
     confirmDelete: 'Vai tiešām vēlies dzēst?',
     ecoScore: 'Eko Vērtējums',
     systemHealth: 'Sistēmas Veselība',
-    quickActions: 'Ātrās Darbības'
+    quickActions: 'Ātrās Darbības',
+    delete: 'Dzēst',
+    edit: 'Rediģēt'
   },
 
   // Notifications

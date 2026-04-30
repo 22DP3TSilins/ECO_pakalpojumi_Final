@@ -1,7 +1,13 @@
-<template>
+﻿<template>
   <div class="calculator-page">
     <div class="calculator-container">
-      <div class="calculator-header">
+
+      <!-- Hero Header -->
+      <div class="calc-hero">
+        <div class="calc-hero-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+          CO₂
+        </div>
         <h1>{{ t('calculator.title') }}</h1>
         <p>{{ t('calculator.subtitle') }}</p>
       </div>
@@ -22,12 +28,15 @@
 
         <!-- Transportation Section -->
         <div v-show="activeCategory === 'transport'" class="category-section">
-          <h2>{{ t('calculator.transportation') }}</h2>
+          <div class="section-title-row">
+            <span class="section-step">01</span>
+            <h2>{{ t('calculator.transportation') }}</h2>
+          </div>
           
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2l1-7h-8l1 7h2m-7 0h2l1-7H3l1 7h2"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2l1-7h-8l1 7h2m-7 0h2l1-7H3l1 7h2"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.carTravel') }}</h3>
@@ -54,7 +63,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.airTravel') }}</h3>
@@ -80,7 +89,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.publicTransport') }}</h3>
@@ -98,12 +107,15 @@
 
         <!-- Home Energy Section -->
         <div v-show="activeCategory === 'home'" class="category-section">
-          <h2>{{ t('calculator.homeEnergy') }}</h2>
+          <div class="section-title-row">
+            <span class="section-step">02</span>
+            <h2>{{ t('calculator.homeEnergy') }}</h2>
+          </div>
           
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.electricity') }}</h3>
@@ -129,7 +141,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M18.5 8a6.5 6.5 0 1 1-13 0"/><path d="M12 12v10"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M18.5 8a6.5 6.5 0 1 1-13 0"/><path d="M12 12v10"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.heating') }}</h3>
@@ -157,7 +169,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 12v2M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m12 0h2M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/><circle cx="12" cy="12" r="4"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 12v2M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m12 0h2M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/><circle cx="12" cy="12" r="4"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.waterUsage') }}</h3>
@@ -175,12 +187,15 @@
 
         <!-- Food Section -->
         <div v-show="activeCategory === 'food'" class="category-section">
-          <h2>{{ t('calculator.foodDiet') }}</h2>
+          <div class="section-title-row">
+            <span class="section-step">03</span>
+            <h2>{{ t('calculator.foodDiet') }}</h2>
+          </div>
           
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 11h.01M11 15h.01M16 16a5 5 0 0 0-8-4"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 11h.01M11 15h.01M16 16a5 5 0 0 0-8-4"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.meatConsumption') }}</h3>
@@ -210,7 +225,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.dairyProducts') }}</h3>
@@ -228,7 +243,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 6 20 18 20 19 6 21 6"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 6 20 18 20 19 6 21 6"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.foodWaste') }}</h3>
@@ -246,12 +261,15 @@
 
         <!-- Lifestyle Section -->
         <div v-show="activeCategory === 'lifestyle'" class="category-section">
-          <h2>{{ t('calculator.lifestyleShopping') }}</h2>
+          <div class="section-title-row">
+            <span class="section-step">04</span>
+            <h2>{{ t('calculator.lifestyleShopping') }}</h2>
+          </div>
           
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.clothing') }}</h3>
@@ -269,7 +287,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.onlineShopping') }}</h3>
@@ -287,7 +305,7 @@
           <div class="input-card">
             <div class="input-header">
               <span class="input-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
               </span>
               <div>
                 <h3>{{ t('calculator.recyclingHabits') }}</h3>
@@ -317,6 +335,7 @@
 
         <!-- Calculate Button -->
         <button class="calculate-btn" @click="calculateFootprint">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/></svg>
           {{ t('calculator.calculateBtn') }}
         </button>
       </div>
@@ -423,6 +442,50 @@
           {{ t('calculator.recalculate') }}
         </button>
       </div>
+
+      <!-- Methodology Section -->
+      <div class="methodology-section">
+        <button class="methodology-toggle" @click="showMethodology = !showMethodology">
+          <div class="methodology-toggle-left">
+            <span class="methodology-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            </span>
+            <span>{{ t('calculator.methodologyTitle') }}</span>
+          </div>
+          <svg class="chevron" :class="{ open: showMethodology }" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+
+        <div v-show="showMethodology" class="methodology-body">
+          <p class="methodology-intro">{{ t('calculator.methodologyDesc') }}</p>
+          <div class="methodology-grid">
+            <div class="methodology-card">
+              <div class="methodology-card-icon">ðŸš—</div>
+              <h4>{{ t('calculator.methodologyTransportTitle') }}</h4>
+              <p>{{ t('calculator.methodologyTransportText') }}</p>
+            </div>
+            <div class="methodology-card">
+              <div class="methodology-card-icon">ðŸ </div>
+              <h4>{{ t('calculator.methodologyHomeTitle') }}</h4>
+              <p>{{ t('calculator.methodologyHomeText') }}</p>
+            </div>
+            <div class="methodology-card">
+              <div class="methodology-card-icon">ðŸ¥¦</div>
+              <h4>{{ t('calculator.methodologyFoodTitle') }}</h4>
+              <p>{{ t('calculator.methodologyFoodText') }}</p>
+            </div>
+            <div class="methodology-card">
+              <div class="methodology-card-icon">ðŸ›ï¸</div>
+              <h4>{{ t('calculator.methodologyLifestyleTitle') }}</h4>
+              <p>{{ t('calculator.methodologyLifestyleText') }}</p>
+            </div>
+          </div>
+          <p class="methodology-sources">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            {{ t('calculator.methodologySources') }}
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -440,6 +503,7 @@ export default {
     return {
       activeCategory: 'transport',
       showResults: false,
+      showMethodology: false,
       inputs: {
         // Transport
         carKm: 100,
@@ -571,7 +635,7 @@ export default {
       
       if (this.inputs.longFlights > 1) {
         this.personalizedTips.push({
-          icon: '✈️',
+          icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
           title: this.t('calculator.tipFlights'),
           description: this.t('calculator.tipFlightsDesc'),
           savings: '1.5 ' + this.t('calculator.tonnesPerFlight')
@@ -643,37 +707,82 @@ export default {
 <style scoped>
 .calculator-page {
   min-height: 100vh;
-  padding: 100px 20px 60px;
+  padding: 80px 20px 60px;
   background: var(--bg-color);
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .calculator-container {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.calculator-header {
+/* ===== HERO HEADER ===== */
+.calc-hero {
   text-align: center;
-  margin-bottom: 32px;
+  padding: 48px 32px 40px;
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
 }
 
-.calculator-header h1 {
-  font-size: 2rem;
-  color: var(--text-color);
-  margin: 0 0 8px;
+.calc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, var(--primary-subtle) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.calc-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: 999px;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
 }
 
-.calculator-header p {
+.calc-hero h1 {
+  font-size: 2.2rem;
+  color: var(--text-color);
+  margin: 0 0 10px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.calc-hero p {
   color: var(--text-secondary);
   font-size: 1rem;
+  margin: 0;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
+/* ===== CALCULATOR CONTENT ===== */
 .calculator-content {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
-  padding: 28px;
+  padding: 32px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
 }
@@ -681,9 +790,9 @@ export default {
 /* Category Tabs */
 .category-tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-  padding: 6px;
+  gap: 6px;
+  margin-bottom: 28px;
+  padding: 5px;
   background: var(--bg-color);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
@@ -694,11 +803,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: 7px;
+  padding: 11px 14px;
   border: none;
   background: transparent;
-  border-radius: var(--radius-md);
+  border-radius: calc(var(--radius-lg) - 3px);
   cursor: pointer;
   transition: var(--transition);
   color: var(--text-secondary);
@@ -712,57 +821,83 @@ export default {
 }
 
 .tab-btn.active {
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.25);
 }
 
 .tab-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.tab-icon svg {
-  width: 18px;
-  height: 18px;
+/* Section Title Row */
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-/* Category Sections */
+.section-step {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  background: var(--primary-subtle);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.section-title-row h2 {
+  color: var(--text-color);
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Category Section animation */
 .category-section {
   animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.category-section h2 {
-  color: var(--text-color);
-  margin: 0 0 16px;
-  font-size: 1.125rem;
-  font-weight: 600;
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Input Cards */
 .input-card {
   background: var(--bg-color);
   border-radius: var(--radius-lg);
-  padding: 18px;
-  margin-bottom: 12px;
+  padding: 20px;
+  margin-bottom: 14px;
   border: 1px solid var(--border-color);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.input-card:last-of-type {
+  margin-bottom: 0;
+}
+
+.input-card:hover {
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.07);
+  border-color: color-mix(in srgb, var(--primary) 25%, var(--border-color));
 }
 
 .input-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .input-icon {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -771,46 +906,36 @@ export default {
   color: var(--primary);
 }
 
-.input-icon svg {
-  width: 22px;
-  height: 22px;
-}
-
 .input-header h3 {
-  margin: 0;
+  margin: 0 0 3px;
   color: var(--text-color);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.93rem;
+  font-weight: 600;
 }
 
 .input-header p {
-  margin: 3px 0 0;
+  margin: 0;
   color: var(--text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
+/* Range + value row */
 .input-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .input-row input[type="range"] {
   flex: 1;
-  height: 8px;
+  height: 6px;
   -webkit-appearance: none;
   appearance: none;
   background: var(--border-color);
-  border-radius: 4px;
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
-  position: relative;
-}
-
-.input-row input[type="range"]::-webkit-slider-runnable-track {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--border-color);
 }
 
 .input-row input[type="range"]::-webkit-slider-thumb {
@@ -820,27 +945,14 @@ export default {
   background: white;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 0 4px var(--primary), 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 3px var(--primary), 0 2px 6px rgba(0,0,0,0.12);
   border: none;
-  margin-top: -5px;
+  margin-top: -6px;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
 .input-row input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 0 5px var(--primary), 0 3px 8px rgba(0, 0, 0, 0.2);
-}
-
-.input-row input[type="range"]::-moz-range-track {
-  height: 8px;
-  border-radius: 4px;
-  background: var(--border-color);
-}
-
-.input-row input[type="range"]::-moz-range-progress {
-  background: var(--primary);
-  height: 8px;
-  border-radius: 4px;
+  transform: scale(1.15);
 }
 
 .input-row input[type="range"]::-moz-range-thumb {
@@ -849,29 +961,35 @@ export default {
   background: white;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 0 4px var(--primary), 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 3px var(--primary), 0 2px 6px rgba(0,0,0,0.12);
   border: none;
+}
+
+.input-row input[type="range"]::-moz-range-progress {
+  background: var(--primary);
+  height: 6px;
+  border-radius: 3px;
 }
 
 .input-value {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   min-width: 110px;
-  color: var(--text-color);
-  font-weight: 500;
-  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  white-space: nowrap;
 }
 
 .input-value input {
-  width: 55px;
-  padding: 7px 8px;
+  width: 54px;
+  padding: 6px 8px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
   color: var(--text-color);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -880,26 +998,37 @@ export default {
   border-color: var(--primary);
 }
 
+/* Sub options */
 .sub-options {
   margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .sub-options label {
   color: var(--text-secondary);
   font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .sub-options select {
-  padding: 7px 12px;
+  padding: 7px 28px 7px 11px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
   color: var(--text-color);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%232ecc71' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
 .sub-options select:focus {
@@ -910,29 +1039,32 @@ export default {
 /* Flight & Meat Inputs */
 .flight-inputs, .meat-types {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
   gap: 12px;
 }
 
 .flight-type, .meat-type {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .flight-type label, .meat-type label {
   color: var(--text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 .flight-type input, .meat-type input {
-  padding: 9px;
+  padding: 9px 10px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
   color: var(--text-color);
   font-size: 0.875rem;
+  font-weight: 500;
   text-align: center;
+  transition: border-color 0.2s;
 }
 
 .flight-type input:focus, .meat-type input:focus {
@@ -957,11 +1089,12 @@ export default {
   cursor: pointer;
   transition: var(--transition);
   color: var(--text-color);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
 }
 
 .radio-option:hover {
   border-color: var(--primary);
+  background: var(--primary-subtle);
 }
 
 .radio-option input {
@@ -970,108 +1103,134 @@ export default {
 
 .radio-option input:checked + span {
   color: var(--primary);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Calculate Button */
 .calculate-btn {
   width: 100%;
-  padding: 14px;
-  margin-top: 24px;
-  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  margin-top: 28px;
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.97rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.01em;
+}
+
+.calculate-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.5s ease;
 }
 
 .calculate-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.35);
 }
 
-/* Results Section */
+.calculate-btn:hover::after {
+  left: 100%;
+}
+
+/* ===== RESULTS SECTION ===== */
 .results-section {
-  margin-top: 32px;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.35s ease;
 }
 
 .results-header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .results-header h2 {
   color: var(--text-color);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .total-footprint {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 32px;
   padding: 32px;
   background: var(--card-bg);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .footprint-circle {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
+  flex-shrink: 0;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
-}
-
-.footprint-circle.low {
-  background: var(--primary);
+  box-shadow: 0 8px 32px rgba(46, 204, 113, 0.3);
 }
 
 .footprint-circle.medium {
-  background: #f59e0b;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.3);
 }
 
 .footprint-circle.high {
-  background: #ef4444;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.3);
 }
 
 .footprint-circle.very-high {
-  background: #7c3aed;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.3);
 }
 
 .footprint-value {
-  font-size: 3rem;
-  font-weight: 600;
+  font-size: 2.6rem;
+  font-weight: 700;
   line-height: 1;
 }
 
 .footprint-unit {
-  font-size: 0.85rem;
-  opacity: 0.85;
-  margin-top: 4px;
+  font-size: 0.75rem;
+  opacity: 0.88;
+  margin-top: 5px;
+  text-align: center;
+  padding: 0 8px;
 }
 
 .footprint-comparison {
-  width: 100%;
-  max-width: 480px;
-  text-align: center;
+  flex: 1;
 }
 
 .footprint-comparison p {
   color: var(--text-color);
-  margin-bottom: 16px;
-  font-size: 0.9rem;
+  margin: 0 0 18px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .comparison-bar {
@@ -1086,7 +1245,7 @@ export default {
   height: 100%;
   background: linear-gradient(90deg, var(--primary), #f59e0b, #ef4444);
   border-radius: 4px;
-  transition: width 0.8s ease;
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
 }
 
 .bar-markers {
@@ -1111,24 +1270,24 @@ export default {
   color: var(--text-secondary);
 }
 
-.label-low { color: var(--primary); }
-.label-avg { color: #f59e0b; }
-.label-high { color: #ef4444; }
+.label-low { color: var(--primary); font-weight: 600; }
+.label-avg { color: #f59e0b; font-weight: 600; }
+.label-high { color: #ef4444; font-weight: 600; }
 
-/* Breakdown Section */
+/* Breakdown */
 .breakdown-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: 26px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .breakdown-section h3 {
   color: var(--text-color);
-  margin: 0 0 16px;
-  font-size: 1.125rem;
+  margin: 0 0 18px;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -1141,26 +1300,28 @@ export default {
 .breakdown-card {
   background: var(--bg-color);
   border-radius: var(--radius-lg);
-  padding: 14px;
+  padding: 16px;
   border: 1px solid var(--border-color);
+  transition: all 0.25s ease;
+}
+
+.breakdown-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.1);
 }
 
 .breakdown-icon {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: var(--primary);
   display: flex;
-  align-items: center;
-}
-
-.breakdown-icon svg {
-  width: 20px;
-  height: 20px;
 }
 
 .breakdown-details {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
+  align-items: baseline;
+  margin-bottom: 10px;
+  gap: 4px;
 }
 
 .breakdown-label {
@@ -1170,12 +1331,12 @@ export default {
 
 .breakdown-value {
   color: var(--text-color);
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .breakdown-bar {
-  height: 6px;
+  height: 5px;
   background: var(--border-color);
   border-radius: 3px;
   overflow: hidden;
@@ -1183,32 +1344,32 @@ export default {
 
 .breakdown-bar .bar {
   height: 100%;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   border-radius: 3px;
-  transition: width 0.8s ease;
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
 }
 
-/* Tips Section */
+/* Tips */
 .tips-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: 26px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .tips-section h3 {
   color: var(--text-color);
-  margin: 0 0 16px;
-  font-size: 1.125rem;
+  margin: 0 0 18px;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .tips-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .tip-card {
@@ -1217,12 +1378,12 @@ export default {
   padding: 16px;
   background: var(--primary-subtle);
   border-radius: var(--radius-lg);
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--primary) 15%, transparent);
 }
 
 .tip-icon {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1236,36 +1397,36 @@ export default {
   margin: 0 0 4px;
   color: var(--text-color);
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .tip-content p {
   margin: 0 0 8px;
   color: var(--text-secondary);
   font-size: 0.8rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .tip-savings {
   display: inline-block;
-  padding: 3px 8px;
-  background: var(--primary);
+  padding: 3px 10px;
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 600;
 }
 
 .recalculate-btn {
   display: block;
   width: 180px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 11px;
   background: transparent;
-  color: var(--text-color);
+  color: var(--text-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   cursor: pointer;
   transition: var(--transition);
 }
@@ -1273,43 +1434,213 @@ export default {
 .recalculate-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
+  background: var(--primary-subtle);
 }
 
-/* Responsive */
+/* ===== METHODOLOGY SECTION ===== */
+.methodology-section {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.methodology-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.methodology-toggle:hover {
+  background: var(--primary-subtle);
+}
+
+.methodology-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.methodology-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.chevron {
+  transition: transform 0.25s ease;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.methodology-body {
+  padding: 0 24px 28px;
+  animation: fadeIn 0.2s ease;
+}
+
+.methodology-intro {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  padding-top: 4px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.methodology-card {
+  background: var(--bg-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  border: 1px solid var(--border-color);
+}
+
+.methodology-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.methodology-card h4 {
+  margin: 0 0 8px;
+  color: var(--text-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.methodology-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.methodology-sources {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  padding: 14px 16px;
+  background: var(--bg-color);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.methodology-sources svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-  .calculator-header h1 {
-    font-size: 1.5rem;
+  .calculator-page {
+    padding: 72px 16px 48px;
   }
-  
+
+  .calc-hero {
+    padding: 36px 20px 28px;
+  }
+
+  .calc-hero h1 {
+    font-size: 1.7rem;
+  }
+
+  .calculator-content {
+    padding: 20px 16px;
+  }
+
   .category-tabs {
     flex-wrap: wrap;
   }
-  
+
   .tab-btn {
     flex: 1 1 45%;
   }
-  
+
   .tab-label {
     display: none;
   }
-  
+
+  .total-footprint {
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+    gap: 24px;
+  }
+
+  .footprint-comparison {
+    width: 100%;
+    text-align: center;
+  }
+
   .input-row {
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
-  
+
+  .input-value {
+    justify-content: center;
+    min-width: unset;
+  }
+
   .radio-options {
     grid-template-columns: 1fr;
   }
-  
-  .footprint-circle {
-    width: 150px;
-    height: 150px;
+
+  .methodology-grid {
+    grid-template-columns: 1fr;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .calc-hero h1 {
+    font-size: 1.4rem;
+  }
+
+  .footprint-circle {
+    width: 140px;
+    height: 140px;
+  }
+
   .footprint-value {
-    font-size: 2.25rem;
+    font-size: 2.2rem;
+  }
+
+  .breakdown-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

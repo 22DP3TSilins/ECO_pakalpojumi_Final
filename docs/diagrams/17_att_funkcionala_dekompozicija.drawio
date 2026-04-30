@@ -1,0 +1,189 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="dec17" name="Funkcionala dekompozicija">
+    <mxGraphModel dx="1800" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ROOT -->
+        <mxCell id="root" value="ECO PAKALPOJUMI&#10;SISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=12;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="720" y="20" width="220" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- HEADERS row (y=180, h=70, w=200) -->
+        <mxCell id="h1" value="AUTENTIFIKĀCIJAS&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="70" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h2" value="EKOLOĢISKĀS&#10;IETEKMES&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="290" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h3" value="E-KOMERCIJAS&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="510" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h4" value="KOPIENAS FORUMA&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="730" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h5" value="IZAICINĀJUMU&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="950" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h6" value="LIETOTĀJA PROFILA&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="h7" value="ADMINISTRĒŠANAS&#10;APAKŠSISTĒMA" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontStyle=1;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1390" y="180" width="200" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- TRUNK: root → bus → header tops -->
+        <mxCell id="t_down" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="830" y="70" as="sourcePoint"/>
+            <mxPoint x="830" y="130" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_bus" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="130" as="sourcePoint"/>
+            <mxPoint x="1490" y="130" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h1" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="130" as="sourcePoint"/>
+            <mxPoint x="170" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h2" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="390" y="130" as="sourcePoint"/>
+            <mxPoint x="390" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h3" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="130" as="sourcePoint"/>
+            <mxPoint x="610" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h4" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="830" y="130" as="sourcePoint"/>
+            <mxPoint x="830" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h5" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1050" y="130" as="sourcePoint"/>
+            <mxPoint x="1050" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h6" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1270" y="130" as="sourcePoint"/>
+            <mxPoint x="1270" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_h7" style="endArrow=none;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1490" y="130" as="sourcePoint"/>
+            <mxPoint x="1490" y="180" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- COLUMN 1: Autentifikācija (5) -->
+        <mxCell id="c1_1" value="Reģistrācija" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="70" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c1_2" value="Pieteikšanās ar e-pastu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="70" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c1_3" value="Pieteikšanās ar Google OAuth" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="70" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c1_4" value="JWT tokenu pārvaldība" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="70" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c1_5" value="Izrakstīšanās" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="70" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e1_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="h1" target="c1_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c1_1" target="c1_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c1_2" target="c1_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c1_3" target="c1_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e1_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="c1_4" target="c1_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 2: Ekoloģiskā ietekme (6) -->
+        <mxCell id="c2_1" value="Transporta CO₂ aprēķins" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c2_2" value="Mājas CO₂ aprēķins" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c2_3" value="Ēdiena CO₂ aprēķins" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c2_4" value="Dzīvesveida CO₂ aprēķins" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c2_5" value="Aktivitāšu reģistrēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c2_6" value="Statistika un sēriju izsekošana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="290" y="630" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e2_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h2" target="c2_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2_1" target="c2_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2_2" target="c2_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2_3" target="c2_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2_4" target="c2_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2_5" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c2_5" target="c2_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 3: E-komercija (7) -->
+        <mxCell id="c3_1" value="Produktu katalogs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_2" value="Filtrēšana un meklēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_3" value="Iepirkumu grozs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_4" value="Promo kodu pielietošana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_5" value="Pasūtījuma noformēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_6" value="Pasūtījumu vēsture" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="630" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c3_7" value="Krājuma pārvaldība" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="510" y="700" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e3_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h3" target="c3_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_1" target="c3_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_2" target="c3_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_3" target="c3_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_4" target="c3_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_5" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_5" target="c3_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3_6" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c3_6" target="c3_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 4: Forums (5) -->
+        <mxCell id="c4_1" value="Ierakstu publicēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="730" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c4_2" value="Komentāru pievienošana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="730" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c4_3" value="„Patīk&quot; atzīmes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="730" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c4_4" value="Grāmatzīmes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="730" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c4_5" value="Meklēšana un filtrēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="730" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e4_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h4" target="c4_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c4_1" target="c4_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c4_2" target="c4_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c4_3" target="c4_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c4_4" target="c4_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 5: Izaicinājumi (4) -->
+        <mxCell id="c5_1" value="Izaicinājumu saraksts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="950" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c5_2" value="Pievienošanās izaicinājumam" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="950" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c5_3" value="Progresa izsekošana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="950" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c5_4" value="Izpildes apstiprināšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="950" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e5_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h5" target="c5_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c5_1" target="c5_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c5_2" target="c5_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c5_3" target="c5_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 6: Profils (6) -->
+        <mxCell id="c6_1" value="Profila rediģēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c6_2" value="Avatara augšupielāde" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c6_3" value="XP punkti un līmeņi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c6_4" value="Sasniegumu žetoni" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c6_5" value="Paziņojumi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c6_6" value="Izglītības resursi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1170" y="630" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e6_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h6" target="c6_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c6_1" target="c6_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c6_2" target="c6_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c6_3" target="c6_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c6_4" target="c6_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6_5" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c6_5" target="c6_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- COLUMN 7: Administrēšana (7) -->
+        <mxCell id="c7_1" value="Statistikas panelis" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="280" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_2" value="Lietotāju pārvaldība" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="350" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_3" value="Produktu CRUD" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="420" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_4" value="Pasūtījumu pārvaldība" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="490" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_5" value="Foruma moderēšana" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="560" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_6" value="Izaicinājumu CRUD" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="630" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="c7_7" value="Izglītības satura CRUD" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=10;align=center;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="1390" y="700" width="200" height="46" as="geometry"/></mxCell>
+        <mxCell id="e7_h" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="h7" target="c7_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_1" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_1" target="c7_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_2" target="c7_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_3" target="c7_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_4" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_4" target="c7_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_5" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_5" target="c7_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7_6" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="c7_6" target="c7_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

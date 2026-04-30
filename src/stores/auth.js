@@ -2,8 +2,8 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 
-// Configure axios baseURL
-axios.defaults.baseURL = 'http://localhost:3000'
+// Configure axios baseURL (use VITE_API_URL in production, fall back to localhost in dev)
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
@@ -39,9 +39,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, phone) => {
     try {
-      const response = await axios.post('/api/auth/register', { name, email, password })
+      const response = await axios.post('/api/auth/register', { name, email, password, phone })
       return { success: true, message: response.data.message }
     } catch (error) {
       return {

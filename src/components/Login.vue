@@ -3,8 +3,17 @@
     <div class="login-container">
       <!-- Left Panel - Branding -->
       <div class="branding-panel">
+        <div class="branding-shapes">
+          <div class="b-shape b-shape-1"></div>
+          <div class="b-shape b-shape-2"></div>
+        </div>
         <div class="brand-content">
-          <div class="brand-logo">EP</div>
+          <div class="brand-logo">
+            <svg viewBox="0 0 32 32" width="24" height="24" fill="none">
+              <path d="M16 4c-2 0-8 4-8 12s5 12 8 14c3-2 8-6 8-14s-6-12-8-12z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M16 8v14M12 14c2 3 6 3 8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
           <h1>Eco Pakalpojumi</h1>
           <p>{{ t('login.brandTagline') }}</p>
           
@@ -95,6 +104,10 @@
                   id="email"
                   v-model="credentials.email" 
                   type="email" 
+                  name="email"
+                  autocomplete="username"
+                  autocapitalize="none"
+                  spellcheck="false"
                   :placeholder="t('login.emailPlaceholder')"
                   required
                   :class="{ 'has-value': credentials.email }"
@@ -113,6 +126,8 @@
                   id="password"
                   v-model="credentials.password" 
                   :type="showPassword ? 'text' : 'password'" 
+                  name="password"
+                  autocomplete="current-password"
                   :placeholder="t('login.passwordPlaceholder')"
                   required
                   :class="{ 'has-value': credentials.password }"
@@ -140,7 +155,7 @@
                 <span class="checkbox-mark"></span>
                 <span>{{ t('login.rememberMe') }}</span>
               </label>
-              <a href="#" class="forgot-link">{{ t('login.forgotPassword') }}</a>
+              <a href="#" class="forgot-link" @click.prevent="showForgotModal = true">{{ t('login.forgotPassword') }}</a>
             </div>
 
             <button type="submit" class="login-btn" :disabled="loading">
@@ -164,16 +179,8 @@
           </div>
 
           <!-- Social Login -->
-          <div class="social-login">
+          <div class="social-login social-login--single">
             <div id="google-signin-btn" class="google-btn-wrapper"></div>
-            <button type="button" class="social-btn github" @click="githubLogin">
-              <span class="social-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-              </span>
-              <span>GitHub</span>
-            </button>
           </div>
 
           <!-- Register Link -->
@@ -197,15 +204,40 @@
         </div>
       </div>
     </div>
+
+    <!-- Forgot Password Modal -->
+    <Teleport to="body">
+      <div v-if="showForgotModal" class="modal-overlay" @click.self="showForgotModal = false">
+        <div class="modal-box">
+          <button class="modal-close" @click="showForgotModal = false">&times;</button>
+          <h2>{{ t('login.forgotPassword') }}</h2>
+          <p class="modal-desc">{{ t('login.forgotDesc') }}</p>
+
+          <div v-if="resetSuccess" class="alert alert-success">{{ resetSuccess }}</div>
+          <div v-if="resetError" class="alert alert-error">{{ resetError }}</div>
+
+          <form v-if="!resetSuccess" @submit.prevent="sendPasswordReset">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" v-model="resetEmail" name="email" autocomplete="email" autocapitalize="none" spellcheck="false" required placeholder="your@email.com" class="modal-input" />
+            </div>
+            <button type="submit" class="login-btn" :disabled="resetLoading" style="margin-top:12px">
+              <span v-if="resetLoading" class="btn-loading"><span class="spinner"></span> Sending...</span>
+              <span v-else>{{ t('login.sendReset') }}</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <script>
 import { useAuthStore } from '../stores/auth.js'
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
-  name: 'LoginPage',
   setup() {
     const { t } = useI18n()
     return { t }
@@ -220,6 +252,11 @@ export default {
       loading: false,
       showPassword: false,
       rememberMe: false,
+      showForgotModal: false,
+      resetEmail: '',
+      resetSuccess: '',
+      resetError: '',
+      resetLoading: false,
       googleClientId: '374788513993-g2eej9cpmrv8a7ddgth9fhvn7t1rshkq.apps.googleusercontent.com',
       globalStats: {
         totalUsers: 0,
@@ -232,7 +269,7 @@ export default {
     const token = urlParams.get('token');
     if (token) {
       localStorage.setItem('token', token);
-      window.location.href = '/products';
+      this.$router.push('/products');
     }
     
     // Check for remembered email
@@ -251,17 +288,13 @@ export default {
   methods: {
     async fetchGlobalStats() {
       try {
-        const response = await fetch('http://localhost:3000/api/stats/global');
-        if (response.ok) {
-          const data = await response.json();
-          this.globalStats = {
-            totalUsers: data.totalUsers || 0,
-            totalCo2Saved: data.totalCo2Saved || 0
-          };
-        }
+        const { data } = await api.get('/api/stats/global');
+        this.globalStats = {
+          totalUsers: data.totalUsers || 0,
+          totalCo2Saved: data.totalCo2Saved || 0
+        };
       } catch (error) {
         console.error('Error fetching global stats:', error);
-        // Use fallback values if API fails
         this.globalStats = { totalUsers: 150, totalCo2Saved: 2500 };
       }
     },
@@ -317,9 +350,9 @@ export default {
         if (result.success) {
           if (result.isNewUser) {
             // New user created via Google
-            window.location.href = '/products?welcome=true';
+            this.$router.push('/products?welcome=true');
           } else {
-            window.location.href = '/products';
+            this.$router.push('/products');
           }
         } else {
           this.error = result.error || 'Google login failed. Please try again.';
@@ -331,9 +364,17 @@ export default {
       
       this.loading = false;
     },
-    githubLogin() {
-      // GitHub OAuth would require backend setup similar to Google
-      this.error = 'GitHub login coming soon! Please use Google or email login.';
+    async sendPasswordReset() {
+      this.resetError = '';
+      this.resetSuccess = '';
+      this.resetLoading = true;
+      try {
+        const { data } = await api.post('/api/auth/forgot-password', { email: this.resetEmail });
+        this.resetSuccess = data.message || 'A temporary password has been sent to your email.';
+      } catch (error) {
+        this.resetError = error.response?.data?.error || 'Could not connect to server.';
+      }
+      this.resetLoading = false;
     },
     async login() {
       this.loading = true;
@@ -362,7 +403,7 @@ export default {
       const result = await authStore.login(this.credentials.email.trim(), this.credentials.password)
 
       if (result.success) {
-        window.location.href = '/products';
+        this.$router.push('/products');
       } else {
         this.error = result.error || 'Login failed. Please check your credentials and try again.';
         console.error('Login error:', result.error);
@@ -382,13 +423,19 @@ export default {
   justify-content: center;
   background: var(--bg-color);
   padding: 20px;
+  animation: pageFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Login Container */
 .login-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 900px;
+  max-width: 920px;
   width: 100%;
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -399,23 +446,61 @@ export default {
 
 /* Branding Panel */
 .branding-panel {
-  background: var(--primary);
+  background: var(--gradient-eco);
   padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.branding-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.b-shape {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.b-shape-1 {
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.06);
+  top: -60px;
+  right: -60px;
+  animation: float 10s ease-in-out infinite;
+}
+
+.b-shape-2 {
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.04);
+  bottom: -40px;
+  left: -40px;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(3deg); }
 }
 
 .brand-content {
   position: relative;
+  z-index: 1;
 }
 
 .brand-logo {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-md);
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -423,13 +508,14 @@ export default {
   font-size: 1.25rem;
   margin-bottom: 20px;
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .branding-panel h1 {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: 1.85rem;
+  font-weight: 800;
   margin: 0 0 8px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: #ffffff;
 }
 
@@ -457,14 +543,22 @@ export default {
 }
 
 .feature-icon {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(6px);
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature:hover .feature-icon {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.08);
 }
 
 .feature-icon svg {
@@ -486,9 +580,10 @@ export default {
 
 .stat-number {
   display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 800;
   color: #ffffff;
+  letter-spacing: -0.02em;
 }
 
 .stat-label {
@@ -517,9 +612,9 @@ export default {
 .form-header h2 {
   margin: 0 0 6px;
   color: var(--text-color);
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .form-header p {
@@ -611,7 +706,8 @@ export default {
 .input-wrapper input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-subtle);
+  box-shadow: 0 0 0 4px var(--primary-subtle);
+  transform: translateY(-1px);
 }
 
 .input-wrapper input::placeholder {
@@ -691,20 +787,36 @@ export default {
 .login-btn {
   width: 100%;
   padding: 14px;
-  background: var(--primary);
+  background: var(--gradient-eco);
   color: white;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 8px;
+  box-shadow: 0 2px 10px rgba(13, 124, 95, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.login-btn:hover::after {
+  opacity: 1;
 }
 
 .login-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(13, 124, 95, 0.35);
 }
 
 .login-btn:disabled {
@@ -777,6 +889,10 @@ export default {
   align-items: center;
 }
 
+.social-login--single {
+  grid-template-columns: 1fr;
+}
+
 .google-btn-wrapper {
   display: flex;
   justify-content: center;
@@ -819,15 +935,86 @@ export default {
   height: 18px;
 }
 
-.social-btn.github {
-  background: #24292e;
-  border-color: #24292e;
-  color: white;
+/* Forgot Password Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: modalFadeIn 0.25s ease;
 }
 
-.social-btn.github:hover {
-  background: #2f363d;
-  border-color: #2f363d;
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-box {
+  background: var(--card-bg);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.modal-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 8px 0 16px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.alert-success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.alert-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
 }
 
 /* Register Prompt */
@@ -861,9 +1048,10 @@ export default {
   margin-top: 20px;
   padding: 10px 14px;
   background: var(--primary-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   font-size: 0.8rem;
   color: var(--text-secondary);
+  border: 1px solid rgba(13, 124, 95, 0.08);
 }
 
 .hint-icon {

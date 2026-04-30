@@ -222,13 +222,44 @@ db.serialize(() => {
   // Add columns if they don't exist (for existing databases)
   db.run(`ALTER TABLE posts ADD COLUMN category TEXT`, () => {});
   db.run(`ALTER TABLE posts ADD COLUMN tags TEXT`, () => {});
+  db.run(`ALTER TABLE posts ADD COLUMN views INTEGER DEFAULT 0`, () => {});
+  db.run(`CREATE TABLE IF NOT EXISTS post_likes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(post_id, user_id),
+    FOREIGN KEY(post_id) REFERENCES posts(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  )`);
+  db.run(`CREATE TABLE IF NOT EXISTS post_bookmarks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(post_id, user_id),
+    FOREIGN KEY(post_id) REFERENCES posts(id),
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  )`);
   db.run(`CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     post_id INTEGER,
     user_id INTEGER,
     content TEXT,
     date TEXT,
+    parent_id INTEGER DEFAULT NULL,
     FOREIGN KEY(post_id) REFERENCES posts(id),
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(parent_id) REFERENCES comments(id)
+  )`);
+  db.run(`ALTER TABLE comments ADD COLUMN parent_id INTEGER DEFAULT NULL`, () => {});
+  db.run(`CREATE TABLE IF NOT EXISTS comment_likes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    comment_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    created_at TEXT DEFAULT (datetime('now')),
+    UNIQUE(comment_id, user_id),
+    FOREIGN KEY(comment_id) REFERENCES comments(id),
     FOREIGN KEY(user_id) REFERENCES users(id)
   )`);
   db.run(`CREATE TABLE IF NOT EXISTS challenges (
@@ -269,6 +300,19 @@ db.serialize(() => {
     FOREIGN KEY(order_id) REFERENCES orders(id),
     FOREIGN KEY(product_id) REFERENCES products(id)
   )`);
+  db.run(`CREATE TABLE IF NOT EXISTS notifications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    message TEXT NOT NULL,
+    icon TEXT DEFAULT '🔔',
+    type TEXT DEFAULT 'info',
+    read INTEGER DEFAULT 0,
+    link TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  )`);
+  // Add phone column for existing DBs
+  db.run(`ALTER TABLE users ADD COLUMN phone TEXT`, () => {});
 });
 
 // Routes
@@ -295,11 +339,61 @@ const validatePassword = (password) => {
   return null; // Valid password
 };
 
+// Simple in-memory rate limiter
+const rateLimitStore = new Map();
+const rateLimit = (maxRequests, windowMs) => (req, res, next) => {
+  const ip = req.ip || req.connection.remoteAddress;
+  const key = `${ip}:${req.path}`;
+  const now = Date.now();
+  const windowStart = now - windowMs;
+  
+  let record = rateLimitStore.get(key);
+  if (!record) {
+    record = [];
+    rateLimitStore.set(key, record);
+  }
+  
+  // Remove expired entries
+  while (record.length > 0 && record[0] < windowStart) record.shift();
+  
+  if (record.length >= maxRequests) {
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+  }
+  
+  record.push(now);
+  next();
+};
+
+// Clean up rate limit store every 10 minutes
+setInterval(() => {
+  const cutoff = Date.now() - 15 * 60 * 1000;
+  for (const [key, timestamps] of rateLimitStore) {
+    const filtered = timestamps.filter(t => t > cutoff);
+    if (filtered.length === 0) rateLimitStore.delete(key);
+    else rateLimitStore.set(key, filtered);
+  }
+}, 10 * 60 * 1000);
+
+// Token refresh endpoint
+app.post('/api/auth/refresh', authenticateToken, (req, res) => {
+  const user = req.user;
+  db.get('SELECT id, email, name, role, blocked FROM users WHERE id = ?', [user.id], (err, row) => {
+    if (err || !row) return res.status(401).json({ error: 'User not found' });
+    if (row.blocked) return res.status(403).json({ error: 'Account is blocked' });
+    const token = jwt.sign(
+      { id: row.id, email: row.email, name: row.name, role: row.role },
+      JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+    res.json({ token, user: { id: row.id, email: row.email, name: row.name, role: row.role } });
+  });
+});
+
 // Auth
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', rateLimit(5, 15 * 60 * 1000), async (req, res) => {
   console.log('🔍 REGISTER REQUEST RECEIVED:', req.body);
 
-  const { name, email, password } = req.body;
+  const { name, email, password, phone } = req.body;
 
   // Validate input
   if (!name || !email || !password) {
@@ -348,13 +442,16 @@ app.post('/api/auth/register', async (req, res) => {
       console.log('✅ PASSWORD HASHED');
 
       console.log('💾 INSERTING USER INTO DATABASE...');
-      db.run('INSERT INTO users (email, password, name, role, created_at) VALUES (?, ?, ?, ?, datetime("now"))',
-        [email, hashedPassword, name, 'user'], function(err) {
+      db.run('INSERT INTO users (email, password, name, role, created_at, phone) VALUES (?, ?, ?, ?, datetime("now"), ?)',
+        [email, hashedPassword, name, 'user', phone || null], function(err) {
         if (err) {
           console.log('❌ DATABASE INSERT ERROR:', err);
           return res.status(500).json({ error: 'Failed to create user' });
         }
         console.log('✅ USER CREATED SUCCESSFULLY, ID:', this.lastID);
+        // Create welcome notification
+        db.run('INSERT INTO notifications (user_id, message, icon, type) VALUES (?, ?, ?, ?)',
+          [this.lastID, 'Welcome to Eco Pakalpojumi! Start exploring eco-friendly products. 🌿', '🎉', 'welcome']);
         res.status(201).json({ message: 'User registered successfully' });
       });
     } catch (error) {
@@ -364,7 +461,7 @@ app.post('/api/auth/register', async (req, res) => {
   });
 });
 
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', rateLimit(10, 15 * 60 * 1000), (req, res) => {
   console.log('🔍 LOGIN REQUEST RECEIVED:', req.body);
 
   const { email, password } = req.body;
@@ -426,6 +523,46 @@ app.post('/api/auth/login', (req, res) => {
   });
 });
 
+// Forgot Password
+app.post('/api/auth/forgot-password', rateLimit(3, 15 * 60 * 1000), (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  db.get('SELECT id FROM users WHERE email = ?', [email], async (err, user) => {
+    if (err) {
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (!user) {
+      // Don't reveal whether email exists
+      return res.json({ message: 'If an account with that email exists, a temporary password has been generated. Check your console/logs.' });
+    }
+
+    try {
+      // Generate a random temporary password
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+      let tempPassword = 'Tmp';
+      for (let i = 0; i < 8; i++) {
+        tempPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      tempPassword += '1!'; // ensure it meets strength requirements
+
+      const hashedPassword = await bcrypt.hash(tempPassword, 10);
+      db.run('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, user.id], function(updateErr) {
+        if (updateErr) {
+          return res.status(500).json({ error: 'Failed to reset password' });
+        }
+        // In production, send email. For dev, log it.
+        console.log(`🔑 TEMPORARY PASSWORD for ${email}: ${tempPassword}`);
+        res.json({ message: `Password has been reset. Your temporary password is: ${tempPassword}  — Please change it after logging in.` });
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+});
+
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
@@ -464,9 +601,14 @@ app.get('/api/cart', authenticateToken, (req, res) => {
 
 app.post('/api/cart', authenticateToken, (req, res) => {
   const { product_id, quantity } = req.body;
+  const pid = parseInt(product_id);
+  const qty = parseInt(quantity);
+  if (!pid || pid < 1 || !qty || qty < 1 || qty > 999) {
+    return res.status(400).json({ error: 'Invalid product_id or quantity' });
+  }
   
   // Check if item already in cart
-  db.get('SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?', [req.user.id, product_id], (err, existing) => {
+  db.get('SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?', [req.user.id, pid], (err, existing) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -474,7 +616,7 @@ app.post('/api/cart', authenticateToken, (req, res) => {
     
     if (existing) {
       // Update quantity
-      db.run('UPDATE cart SET quantity = quantity + ? WHERE id = ?', [quantity, existing.id], function(err) {
+      db.run('UPDATE cart SET quantity = quantity + ? WHERE id = ?', [qty, existing.id], function(err) {
         if (err) {
           res.status(500).json({ error: err.message });
           return;
@@ -483,7 +625,7 @@ app.post('/api/cart', authenticateToken, (req, res) => {
       });
     } else {
       // Insert new
-      db.run('INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)', [req.user.id, product_id, quantity], function(err) {
+      db.run('INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)', [req.user.id, pid, qty], function(err) {
         if (err) {
           res.status(500).json({ error: err.message });
           return;
@@ -496,7 +638,11 @@ app.post('/api/cart', authenticateToken, (req, res) => {
 
 app.put('/api/cart/:id', authenticateToken, (req, res) => {
   const { quantity } = req.body;
-  if (quantity <= 0) {
+  const qty = parseInt(quantity);
+  if (isNaN(qty) || qty > 999) {
+    return res.status(400).json({ error: 'Invalid quantity' });
+  }
+  if (qty <= 0) {
     db.run('DELETE FROM cart WHERE id = ? AND user_id = ?', [req.params.id, req.user.id], function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -505,7 +651,7 @@ app.put('/api/cart/:id', authenticateToken, (req, res) => {
       res.json({ deleted: true });
     });
   } else {
-    db.run('UPDATE cart SET quantity = ? WHERE id = ? AND user_id = ?', [quantity, req.params.id, req.user.id], function(err) {
+    db.run('UPDATE cart SET quantity = ? WHERE id = ? AND user_id = ?', [qty, req.params.id, req.user.id], function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
@@ -538,6 +684,11 @@ app.delete('/api/cart', authenticateToken, (req, res) => {
 // Checkout / Create Order
 app.post('/api/checkout', authenticateToken, (req, res) => {
   const userId = req.user.id;
+  const { promoCode } = req.body || {};
+  
+  // Validate promo code server-side
+  const validPromos = { 'ECO10': 0.1, 'GREEN20': 0.2, 'PLANET15': 0.15 };
+  const discountRate = promoCode ? validPromos[promoCode.toUpperCase()] || 0 : 0;
   
   // Get cart items
   db.all(`
@@ -562,8 +713,10 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
       }
     }
     
-    // Calculate total
-    const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    // Calculate total with discount
+    let total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discountAmount = total * discountRate;
+    total = Math.round((total - discountAmount) * 100) / 100;
     
     // Create order
     db.run('INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)', [userId, total, 'pending'], function(err) {
@@ -590,10 +743,14 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
         if (err) {
           console.error('Error clearing cart:', err);
         }
+        // Create order notification
+        db.run('INSERT INTO notifications (user_id, message, icon, type, link) VALUES (?, ?, ?, ?, ?)',
+          [userId, `Order #${orderId} placed successfully! Total: €${total.toFixed(2)}`, '🛒', 'order', `/profile`]);
         res.json({ 
           success: true, 
           orderId: orderId, 
           total: total,
+          discount: discountAmount || 0,
           message: 'Order placed successfully!' 
         });
       });
@@ -634,7 +791,14 @@ app.get('/api/footprint', authenticateToken, (req, res) => {
 
 app.post('/api/footprint', authenticateToken, (req, res) => {
   const { activity, impact } = req.body;
-  db.run('INSERT INTO user_activities (user_id, activity, date, impact) VALUES (?, ?, datetime("now"), ?)', [req.user.id, activity, impact], function(err) {
+  if (!activity || typeof activity !== 'string' || activity.trim().length === 0 || activity.length > 500) {
+    return res.status(400).json({ error: 'Activity is required (max 500 chars)' });
+  }
+  const numImpact = parseFloat(impact);
+  if (isNaN(numImpact) || numImpact < 0 || numImpact > 10000) {
+    return res.status(400).json({ error: 'Impact must be a number between 0 and 10000' });
+  }
+  db.run('INSERT INTO user_activities (user_id, activity, date, impact) VALUES (?, ?, datetime("now"), ?)', [req.user.id, activity.trim(), numImpact], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
@@ -645,10 +809,19 @@ app.post('/api/footprint', authenticateToken, (req, res) => {
 
 // Forum
 app.get('/api/posts', (req, res) => {
+  // Check if user is logged in to include their like/bookmark status
+  const token = req.headers.authorization?.split(' ')[1];
+  let userId = null;
+  if (token) {
+    try { userId = jwt.verify(token, JWT_SECRET).id; } catch (e) {}
+  }
+
   db.all(`
     SELECT posts.id, posts.title, posts.content, posts.category, posts.tags, posts.date,
+    posts.views,
     users.name,
-    (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
+    (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count,
+    (SELECT COUNT(*) FROM post_likes WHERE post_likes.post_id = posts.id) as like_count
     FROM posts 
     JOIN users ON posts.user_id = users.id 
     ORDER BY date DESC
@@ -657,7 +830,24 @@ app.get('/api/posts', (req, res) => {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json({ posts: rows });
+
+    if (!userId) {
+      return res.json({ posts: rows.map(r => ({ ...r, liked: false, bookmarked: false })) });
+    }
+
+    // Get user's likes and bookmarks
+    db.all('SELECT post_id FROM post_likes WHERE user_id = ?', [userId], (err2, likes) => {
+      const likedSet = new Set((likes || []).map(l => l.post_id));
+      db.all('SELECT post_id FROM post_bookmarks WHERE user_id = ?', [userId], (err3, bookmarks) => {
+        const bookmarkedSet = new Set((bookmarks || []).map(b => b.post_id));
+        const postsWithStatus = rows.map(r => ({
+          ...r,
+          liked: likedSet.has(r.id),
+          bookmarked: bookmarkedSet.has(r.id)
+        }));
+        res.json({ posts: postsWithStatus });
+      });
+    });
   });
 });
 
@@ -667,13 +857,92 @@ app.post('/api/posts', (req, res) => {
   if (!token) return res.status(401).json({ error: 'No token' });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
+    if (!title || typeof title !== 'string' || title.trim().length === 0 || title.length > 500) {
+      return res.status(400).json({ error: 'Title is required (max 500 chars)' });
+    }
+    if (!content || typeof content !== 'string' || content.trim().length === 0 || content.length > 50000) {
+      return res.status(400).json({ error: 'Content is required (max 50000 chars)' });
+    }
     db.run('INSERT INTO posts (user_id, title, content, category, tags, date) VALUES (?, ?, ?, ?, ?, datetime("now"))', 
-      [decoded.id, title, content, category || '', tags || ''], function(err) {
+      [decoded.id, title.trim(), content.trim(), category || '', tags || ''], function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
       }
       res.json({ id: this.lastID });
+    });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
+// Track view when opening a post
+app.post('/api/posts/:id/view', (req, res) => {
+  db.run('UPDATE posts SET views = COALESCE(views, 0) + 1 WHERE id = ?', [req.params.id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    db.get('SELECT views FROM posts WHERE id = ?', [req.params.id], (err2, row) => {
+      res.json({ views: row?.views || 0 });
+    });
+  });
+});
+
+// Like / unlike a post
+app.post('/api/posts/:id/like', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Login required' });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const postId = req.params.id;
+    const userId = decoded.id;
+
+    // Check if already liked
+    db.get('SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?', [postId, userId], (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (row) {
+        // Unlike
+        db.run('DELETE FROM post_likes WHERE post_id = ? AND user_id = ?', [postId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          db.get('SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?', [postId], (err3, countRow) => {
+            res.json({ liked: false, like_count: countRow?.count || 0 });
+          });
+        });
+      } else {
+        // Like
+        db.run('INSERT INTO post_likes (post_id, user_id) VALUES (?, ?)', [postId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          db.get('SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?', [postId], (err3, countRow) => {
+            res.json({ liked: true, like_count: countRow?.count || 0 });
+          });
+        });
+      }
+    });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
+// Bookmark / unbookmark a post
+app.post('/api/posts/:id/bookmark', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Login required' });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const postId = req.params.id;
+    const userId = decoded.id;
+
+    db.get('SELECT id FROM post_bookmarks WHERE post_id = ? AND user_id = ?', [postId, userId], (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (row) {
+        db.run('DELETE FROM post_bookmarks WHERE post_id = ? AND user_id = ?', [postId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          res.json({ bookmarked: false });
+        });
+      } else {
+        db.run('INSERT INTO post_bookmarks (post_id, user_id) VALUES (?, ?)', [postId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          res.json({ bookmarked: true });
+        });
+      }
     });
   } catch (err) {
     res.status(401).json({ error: 'Invalid token' });
@@ -681,22 +950,51 @@ app.post('/api/posts', (req, res) => {
 });
 
 app.get('/api/posts/:id/comments', (req, res) => {
-  db.all('SELECT comments.*, users.name FROM comments JOIN users ON comments.user_id = users.id WHERE post_id = ? ORDER BY date ASC', [req.params.id], (err, rows) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  let userId = null;
+  if (token) {
+    try { userId = jwt.verify(token, JWT_SECRET).id; } catch (e) {}
+  }
+
+  db.all(`
+    SELECT comments.*, users.name,
+    (SELECT COUNT(*) FROM comment_likes WHERE comment_likes.comment_id = comments.id) as like_count
+    FROM comments 
+    JOIN users ON comments.user_id = users.id 
+    WHERE comments.post_id = ? 
+    ORDER BY comments.date ASC
+  `, [req.params.id], (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
     }
-    res.json({ comments: rows });
+
+    if (!userId) {
+      return res.json({ comments: rows.map(r => ({ ...r, liked: false })) });
+    }
+
+    db.all('SELECT comment_id FROM comment_likes WHERE user_id = ?', [userId], (err2, likes) => {
+      const likedSet = new Set((likes || []).map(l => l.comment_id));
+      const commentsWithStatus = rows.map(r => ({
+        ...r,
+        liked: likedSet.has(r.id)
+      }));
+      res.json({ comments: commentsWithStatus });
+    });
   });
 });
 
 app.post('/api/posts/:id/comments', (req, res) => {
-  const { content } = req.body;
+  const { content, parent_id } = req.body;
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'No token' });
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    db.run('INSERT INTO comments (post_id, user_id, content, date) VALUES (?, ?, ?, datetime("now"))', [req.params.id, decoded.id, content], function(err) {
+    if (!content || typeof content !== 'string' || content.trim().length === 0 || content.length > 10000) {
+      return res.status(400).json({ error: 'Comment content is required (max 10000 chars)' });
+    }
+    db.run('INSERT INTO comments (post_id, user_id, content, date, parent_id) VALUES (?, ?, ?, datetime("now"), ?)', 
+      [req.params.id, decoded.id, content.trim(), parent_id || null], function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
@@ -708,25 +1006,69 @@ app.post('/api/posts/:id/comments', (req, res) => {
   }
 });
 
+// Like / unlike a comment
+app.post('/api/comments/:id/like', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'Login required' });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const commentId = req.params.id;
+    const userId = decoded.id;
+
+    db.get('SELECT id FROM comment_likes WHERE comment_id = ? AND user_id = ?', [commentId, userId], (err, row) => {
+      if (err) return res.status(500).json({ error: err.message });
+      if (row) {
+        db.run('DELETE FROM comment_likes WHERE comment_id = ? AND user_id = ?', [commentId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          db.get('SELECT COUNT(*) as count FROM comment_likes WHERE comment_id = ?', [commentId], (err3, countRow) => {
+            res.json({ liked: false, like_count: countRow?.count || 0 });
+          });
+        });
+      } else {
+        db.run('INSERT INTO comment_likes (comment_id, user_id) VALUES (?, ?)', [commentId, userId], function(err2) {
+          if (err2) return res.status(500).json({ error: err2.message });
+          db.get('SELECT COUNT(*) as count FROM comment_likes WHERE comment_id = ?', [commentId], (err3, countRow) => {
+            res.json({ liked: true, like_count: countRow?.count || 0 });
+          });
+        });
+      }
+    });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
+
 // Admin: Delete post
-app.delete('/api/admin/posts/:id', requireAdmin, (req, res) => {
+app.delete('/api/admin/posts/:id', authenticateToken, requireAdmin, (req, res) => {
   const postId = req.params.id;
-  // First delete associated comments
+  // Delete associated data first (comments, likes, bookmarks)
   db.run('DELETE FROM comments WHERE post_id = ?', [postId], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
     }
-    // Then delete the post
-    db.run('DELETE FROM posts WHERE id = ?', [postId], function(err) {
+    db.run('DELETE FROM post_likes WHERE post_id = ?', [postId], function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
         return;
       }
-      if (this.changes === 0) {
-        return res.status(404).json({ error: 'Post not found' });
-      }
-      res.json({ message: 'Post deleted' });
+      db.run('DELETE FROM post_bookmarks WHERE post_id = ?', [postId], function(err) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+        // Finally delete the post
+        db.run('DELETE FROM posts WHERE id = ?', [postId], function(err) {
+          if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+          }
+          if (this.changes === 0) {
+            return res.status(404).json({ error: 'Post not found' });
+          }
+          res.json({ message: 'Post deleted' });
+        });
+      });
     });
   });
 });
@@ -774,6 +1116,8 @@ app.put('/api/user', (req, res) => {
       values.push(name);
     }
     if (password) {
+      const passwordError = validatePassword(password);
+      if (passwordError) return res.status(400).json({ error: passwordError });
       const hashedPassword = bcrypt.hashSync(password, 10);
       updateFields.push('password = ?');
       values.push(hashedPassword);
@@ -785,7 +1129,20 @@ app.put('/api/user', (req, res) => {
         res.status(500).json({ error: err.message });
         return;
       }
-      res.json({ message: 'Profile updated' });
+      // Re-issue JWT so the client picks up the new name immediately
+      db.get('SELECT id, email, name, role FROM users WHERE id = ?', [decoded.id], (e, row) => {
+        if (e || !row) return res.json({ message: 'Profile updated' });
+        const newToken = jwt.sign(
+          { id: row.id, email: row.email, name: row.name, role: row.role },
+          JWT_SECRET,
+          { expiresIn: '7d' }
+        );
+        res.json({
+          message: 'Profile updated',
+          token: newToken,
+          user: { id: row.id, email: row.email, name: row.name, role: row.role }
+        });
+      });
     });
   } catch (err) {
     res.status(401).json({ error: 'Invalid token' });
@@ -833,6 +1190,10 @@ app.put('/api/admin/users/:id/block', authenticateToken, requireAdmin, (req, res
 
 app.put('/api/admin/users/:id/role', authenticateToken, requireAdmin, (req, res) => {
   const { role } = req.body;
+  const allowedRoles = ['admin', 'user'];
+  if (!role || !allowedRoles.includes(role)) {
+    return res.status(400).json({ error: 'Invalid role. Allowed: ' + allowedRoles.join(', ') });
+  }
   db.run('UPDATE users SET role = ? WHERE id = ?', [role, req.params.id], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -846,7 +1207,7 @@ app.put('/api/admin/users/:id/role', authenticateToken, requireAdmin, (req, res)
 app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, (req, res) => {
   const userId = req.params.id;
   // Don't allow deleting yourself
-  if (parseInt(userId) === req.user.userId) {
+  if (parseInt(userId) === req.user.id) {
     return res.status(400).json({ error: 'Cannot delete your own account from admin panel' });
   }
   db.run('DELETE FROM users WHERE id = ?', [userId], function(err) {
@@ -878,6 +1239,10 @@ app.get('/api/admin/orders', authenticateToken, requireAdmin, (req, res) => {
 
 app.put('/api/admin/orders/:id/status', authenticateToken, requireAdmin, (req, res) => {
   const { status } = req.body;
+  const allowedStatuses = ['pending', 'processing', 'shipped', 'completed', 'cancelled'];
+  if (!status || !allowedStatuses.includes(status)) {
+    return res.status(400).json({ error: 'Invalid status. Allowed: ' + allowedStatuses.join(', ') });
+  }
   db.run('UPDATE orders SET status = ? WHERE id = ?', [status, req.params.id], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -920,9 +1285,20 @@ app.post('/api/upload', authenticateToken, requireAdmin, upload.single('image'),
 // Product CRUD for admin
 app.post('/api/products', authenticateToken, requireAdmin, (req, res) => {
   const { name, description, price, category, stock, image_url, lifecycle_info } = req.body;
+  if (!name || typeof name !== 'string' || name.trim().length === 0 || name.length > 500) {
+    return res.status(400).json({ error: 'Product name is required (max 500 chars)' });
+  }
+  const numPrice = parseFloat(price);
+  if (isNaN(numPrice) || numPrice < 0) {
+    return res.status(400).json({ error: 'Price must be a non-negative number' });
+  }
+  const numStock = parseInt(stock) || 0;
+  if (numStock < 0) {
+    return res.status(400).json({ error: 'Stock must be non-negative' });
+  }
   db.run(
     'INSERT INTO products (name, description, price, category, stock, image_url, lifecycle_info) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [name, description, price, category, stock || 0, image_url, lifecycle_info],
+    [name.trim(), description || '', numPrice, category || '', numStock, image_url || '', lifecycle_info || ''],
     function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -935,9 +1311,20 @@ app.post('/api/products', authenticateToken, requireAdmin, (req, res) => {
 
 app.put('/api/products/:id', authenticateToken, requireAdmin, (req, res) => {
   const { name, description, price, category, stock, image_url, lifecycle_info } = req.body;
+  if (!name || typeof name !== 'string' || name.trim().length === 0 || name.length > 500) {
+    return res.status(400).json({ error: 'Product name is required (max 500 chars)' });
+  }
+  const numPrice = parseFloat(price);
+  if (isNaN(numPrice) || numPrice < 0) {
+    return res.status(400).json({ error: 'Price must be a non-negative number' });
+  }
+  const numStock = parseInt(stock) || 0;
+  if (numStock < 0) {
+    return res.status(400).json({ error: 'Stock must be non-negative' });
+  }
   db.run(
     'UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ?, image_url = ?, lifecycle_info = ? WHERE id = ?',
-    [name, description, price, category, stock, image_url, lifecycle_info, req.params.id],
+    [name.trim(), description || '', numPrice, category || '', numStock, image_url || '', lifecycle_info || '', req.params.id],
     function(err) {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -1164,6 +1551,45 @@ app.get('/api/stats/global', (req, res) => {
     });
 });
 
-app.listen(port, () => {
+// Notifications API
+app.get('/api/notifications', authenticateToken, (req, res) => {
+  db.all(
+    'SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT 30',
+    [req.user.id],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(rows || []);
+    }
+  );
+});
+
+app.put('/api/notifications/read-all', authenticateToken, (req, res) => {
+  db.run('UPDATE notifications SET read = 1 WHERE user_id = ?', [req.user.id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ updated: this.changes });
+  });
+});
+
+app.put('/api/notifications/:id/read', authenticateToken, (req, res) => {
+  db.run('UPDATE notifications SET read = 1 WHERE id = ? AND user_id = ?', [req.params.id, req.user.id], function(err) {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json({ updated: this.changes });
+  });
+});
+
+const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n  Port ${port} is already in use.`);
+    console.error(`  Kill the other process first, or set a different port:\n`);
+    console.error(`    Windows:  netstat -ano | findstr :${port}`);
+    console.error(`              taskkill /PID <PID> /F\n`);
+    console.error(`    Mac/Linux: lsof -i :${port}`);
+    console.error(`               kill -9 <PID>\n`);
+    process.exit(1);
+  }
+  throw err;
 });

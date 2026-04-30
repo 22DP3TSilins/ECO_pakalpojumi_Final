@@ -1,0 +1,252 @@
+<mxfile host="app.diagrams.net" agent="copilot" version="24.0.0">
+  <diagram name="Arhitektura" id="arch-diagram">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ========== TITLE ========== -->
+        <mxCell id="title" value="Sistēmas „ECO Pakalpojumi" arhitektūras diagramma" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="280" y="10" width="500" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== TIER 1: CLIENT ========== -->
+        <mxCell id="client-tier" value="KLIENTA SLĀNIS (Pārlūkprogramma)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=0;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="980" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- Vue.js 3 SPA -->
+        <mxCell id="vue-spa" value="&lt;b&gt;Vue.js 3 SPA&lt;/b&gt;&lt;br&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font size=&quot;1&quot;&gt;Composition API&lt;br&gt;Vite 8 (build rīks)&lt;br&gt;12 lapu komponenti&lt;br&gt;HTML / CSS / JavaScript&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=11;verticalAlign=top;spacingTop=5;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="180" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Vue Router -->
+        <mxCell id="vue-router" value="&lt;b&gt;Vue Router 4&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;SPA navigācija&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="100" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Pinia -->
+        <mxCell id="pinia" value="&lt;b&gt;Pinia 3&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Stāvokļa pārvaldība&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="165" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Vue I18n -->
+        <mxCell id="vue-i18n" value="&lt;b&gt;Vue I18n 9&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;LV / EN lokalizācija&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="100" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Axios -->
+        <mxCell id="axios" value="&lt;b&gt;Axios&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;HTTP klients + JWT&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="420" y="165" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- User Interface Pages -->
+        <mxCell id="ui-pages" value="&lt;b&gt;Lietotāja saskarne&lt;/b&gt;&lt;br&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font size=&quot;1&quot;&gt;Sākumlapa, Produkti, Grozs&lt;br&gt;CO₂ kalkulators, Forums&lt;br&gt;Izglītība, Izaicinājumi&lt;br&gt;Profils, Admin panelis&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=10;verticalAlign=top;spacingTop=5;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="100" width="200" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- User icon -->
+        <mxCell id="user-icon" value="" style="shape=mxgraph.cisco.users.standing_man;html=1;pointerEvents=1;dashed=0;fillColor=#000000;strokeColor=none;strokeWidth=2;outlineConnect=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="860" y="120" width="50" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="user-label" value="Lietotājs" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="855" y="200" width="70" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ========== ARROW: Client → Server ========== -->
+        <mxCell id="arrow-client-server" value="" style="endArrow=block;startArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;endFill=1;startFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="520" y="260" as="sourcePoint" />
+            <mxPoint x="520" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-label-1" value="REST API (JSON)&lt;br&gt;HTTP / HTTPS" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="268" width="100" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== TIER 2: SERVER ========== -->
+        <mxCell id="server-tier" value="SERVERA SLĀNIS (Node.js / Express.js 4.18)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8e8e8;strokeColor=#333333;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=0;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="310" width="980" height="280" as="geometry" />
+        </mxCell>
+
+        <!-- Middleware label -->
+        <mxCell id="mw-label" value="Starpprogrammatūra (Middleware):" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="335" width="200" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- CORS -->
+        <mxCell id="mw-cors" value="&lt;b&gt;CORS&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Piekļuves kontrole&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- JWT Auth -->
+        <mxCell id="mw-jwt" value="&lt;b&gt;JWT Auth&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Autentifikācija&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="195" y="360" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Rate Limiter -->
+        <mxCell id="mw-rate" value="&lt;b&gt;Rate Limiter&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Pieprasījumu ierobežošana&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="330" y="360" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Multer -->
+        <mxCell id="mw-multer" value="&lt;b&gt;Multer&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Failu augšupielāde&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="485" y="360" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Passport.js -->
+        <mxCell id="mw-passport" value="&lt;b&gt;Passport.js&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Google OAuth 2.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="620" y="360" width="130" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- express.json -->
+        <mxCell id="mw-json" value="&lt;b&gt;express.json()&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;JSON parsēšana&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=15;" vertex="1" parent="1">
+          <mxGeometry x="765" y="360" width="130" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- API Routes label -->
+        <mxCell id="api-label" value="API maršruti (40+ galapunkti):" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="410" width="170" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Auth routes -->
+        <mxCell id="api-auth" value="&lt;b&gt;Autentifikācija&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Reģistrācija, Pieteikšanās&lt;br&gt;Google OAuth, Token atjaunošana&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="435" width="155" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- E-commerce routes -->
+        <mxCell id="api-ecom" value="&lt;b&gt;E-komercija&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Produkti, Grozs&lt;br&gt;Pasūtījumi, Promo kodi&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="230" y="435" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- CO2 routes -->
+        <mxCell id="api-co2" value="&lt;b&gt;CO₂ pēda&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Kalkulators&lt;br&gt;Aktivitāšu izsekošana&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="385" y="435" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Forum routes -->
+        <mxCell id="api-forum" value="&lt;b&gt;Forums&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Ieraksti, Komentāri&lt;br&gt;Patīk, Grāmatzīmes&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="435" width="140" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Challenges routes -->
+        <mxCell id="api-challenges" value="&lt;b&gt;Izaicinājumi&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Eko uzdevumi&lt;br&gt;Izglītība, Punkti&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="695" y="435" width="130" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Admin routes -->
+        <mxCell id="api-admin" value="&lt;b&gt;Administrēšana&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Lietotāju pārvaldība&lt;br&gt;Pasūtījumi, Ieraksti, Attēli&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="840" y="435" width="160" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Business Logic label -->
+        <mxCell id="bl-label" value="Biznesa loģika:" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="55" y="500" width="100" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- bcrypt -->
+        <mxCell id="bl-bcrypt" value="Paroles hešošana&lt;br&gt;(bcryptjs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="525" width="130" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- JWT gen -->
+        <mxCell id="bl-jwt" value="JWT ģenerēšana /&lt;br&gt;validācija" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="205" y="525" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Eco points -->
+        <mxCell id="bl-xp" value="Eko punktu aprēķins&lt;br&gt;(XP / līmeņi)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="525" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Notifications -->
+        <mxCell id="bl-notif" value="Paziņojumu&lt;br&gt;sistēma" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="515" y="525" width="120" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Validation -->
+        <mxCell id="bl-valid" value="Ievades validācija /&lt;br&gt;sanitizēšana" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="650" y="525" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== ARROW: Server → DB ========== -->
+        <mxCell id="arrow-server-db" value="" style="endArrow=block;startArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;endFill=1;startFill=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="600" as="sourcePoint" />
+            <mxPoint x="400" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="arrow-label-2" value="SQL vaicājumi&lt;br&gt;(better-sqlite3)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="420" y="607" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ========== TIER 3: DATABASE ========== -->
+        <mxCell id="db-tier" value="DATU SLĀNIS (SQLite 3)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#333333;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=0;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="650" width="640" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- DB cylinder -->
+        <mxCell id="db-cylinder" value="eco_pakalpojumi.db" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=9;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Users table group -->
+        <mxCell id="db-users" value="&lt;b&gt;Lietotāji&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;users&lt;br&gt;notifications&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="200" y="685" width="100" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- E-commerce table group -->
+        <mxCell id="db-ecom" value="&lt;b&gt;E-komercija&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;products, cart&lt;br&gt;orders, order_items&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="685" width="115" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Forum table group -->
+        <mxCell id="db-forum" value="&lt;b&gt;Forums&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;posts, comments&lt;br&gt;post_likes, bookmarks&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="435" y="685" width="115" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Activities table group -->
+        <mxCell id="db-activities" value="&lt;b&gt;Aktivitātes&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;user_activities&lt;br&gt;challenges, education&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=9;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="685" width="110" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- DB table count -->
+        <mxCell id="db-count" value="13 tabulas" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="80" y="755" width="80" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ========== EXTERNAL SERVICES ========== -->
+        <mxCell id="ext-tier" value="Ārējie pakalpojumi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;strokeWidth=2;fontSize=13;fontStyle=1;verticalAlign=top;spacingTop=5;dashed=1;dashPattern=8 4;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="720" y="650" width="300" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- Google OAuth -->
+        <mxCell id="ext-google" value="&lt;b&gt;Google OAuth 2.0&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;Sociālā autentifikācija&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="745" y="690" width="160" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- File Storage -->
+        <mxCell id="ext-files" value="&lt;b&gt;Failu krātuve&lt;/b&gt;&lt;br&gt;&lt;font size=&quot;1&quot;&gt;backend/uploads/&lt;br&gt;JPEG, PNG, GIF, WebP (≤5MB)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=10;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="745" y="745" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Server → Google -->
+        <mxCell id="arrow-google" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;endFill=1;dashed=1;dashPattern=4 2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="825" y="600" as="sourcePoint" />
+            <mxPoint x="825" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow: Server → Files -->
+        <mxCell id="arrow-files" value="" style="endArrow=block;html=1;rounded=0;strokeWidth=1.5;strokeColor=#000000;endFill=1;dashed=1;dashPattern=4 2;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="900" y="600" as="sourcePoint" />
+            <mxPoint x="900" y="745" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

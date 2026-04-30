@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './components/Home.vue'
-import Login from './components/Login.vue'
-import Register from './components/Register.vue'
-import Products from './components/Products.vue'
-import Cart from './components/Cart.vue'
-import Footprint from './components/Footprint.vue'
-import Calculator from './components/Calculator.vue'
-import Forum from './components/Forum.vue'
-import Challenges from './components/Challenges.vue'
-import Education from './components/Education.vue'
-import Profile from './components/Profile.vue'
-import Admin from './components/Admin.vue'
 import { useAuthStore } from './stores/auth.js'
+
+// Lazy-load all route components for code splitting
+const Home = () => import('./components/Home.vue')
+const Login = () => import('./components/Login.vue')
+const Register = () => import('./components/Register.vue')
+const Products = () => import('./components/Products.vue')
+const Cart = () => import('./components/Cart.vue')
+const Footprint = () => import('./components/Footprint.vue')
+const Forum = () => import('./components/Forum.vue')
+const Education = () => import('./components/Education.vue')
+const Profile = () => import('./components/Profile.vue')
+const Admin = () => import('./components/Admin.vue')
+const Challenges = () => import('./components/Challenges.vue')
+const NotFound = () => import('./components/NotFound.vue')
 
 const routes = [
   { path: '/', component: Home },
@@ -20,12 +22,12 @@ const routes = [
   { path: '/products', component: Products },
   { path: '/cart', component: Cart, meta: { requiresAuth: true } },
   { path: '/footprint', component: Footprint, meta: { requiresAuth: true } },
-  { path: '/calculator', component: Calculator },
-  { path: '/forum', component: Forum },
   { path: '/challenges', component: Challenges, meta: { requiresAuth: true } },
+  { path: '/forum', component: Forum },
   { path: '/education', component: Education },
   { path: '/profile', component: Profile, meta: { requiresAuth: true } },
-  { path: '/admin', component: Admin, meta: { requiresAuth: true, requiresAdmin: true } }
+  { path: '/admin', component: Admin, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/:pathMatch(.*)*', component: NotFound }
 ]
 
 const router = createRouter({
@@ -42,7 +44,9 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  const requiresAuth = to.meta.requiresAuth
+  const publicPaths = ['/login', '/register']
+  const isPublicRoute = publicPaths.includes(to.path)
+  const requiresAuth = !isPublicRoute
   const requiresAdmin = to.meta.requiresAdmin
 
   // Initialize auth state if not already done
@@ -52,8 +56,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (requiresAuth && !authStore.isAuthenticated) {
     next('/login')
+  } else if (isPublicRoute && authStore.isAuthenticated) {
+    next('/products')
   } else if (requiresAdmin && (!authStore.isAuthenticated || authStore.user.role !== 'admin')) {
-    next('/')
+    next('/products')
   } else {
     next()
   }

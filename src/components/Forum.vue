@@ -6,22 +6,6 @@
         <h1>{{ t('forum.title') }}</h1>
         <p>{{ t('forum.subtitle') }}</p>
       </div>
-      <div class="forum-stats">
-        <div class="stat">
-          <span class="stat-number">{{ posts.length }}</span>
-          <span class="stat-label">{{ t('forum.discussions') }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">{{ totalComments }}</span>
-          <span class="stat-label">{{ t('forum.comments') }}</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-number">{{ uniqueUsers }}</span>
-          <span class="stat-label">{{ t('forum.members') }}</span>
-        </div>
-      </div>
     </div>
 
     <div class="forum-container">
@@ -41,32 +25,6 @@
               <span class="cat-count">{{ getCategoryCount(cat.id) }}</span>
             </button>
           </div>
-        </div>
-
-        <!-- Popular Tags -->
-        <div class="sidebar-section">
-          <h3>{{ t('forum.popularTags') }}</h3>
-          <div class="tags-cloud">
-            <span 
-              v-for="tag in popularTags" 
-              :key="tag"
-              :class="['tag', { active: selectedTag === tag }]"
-              @click="toggleTag(tag)"
-            >
-              #{{ tag }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Community Guidelines -->
-        <div class="sidebar-section guidelines">
-          <h3>{{ t('forum.guidelines') }}</h3>
-          <ul>
-            <li>{{ t('forum.guidelineRespect') }}</li>
-            <li>{{ t('forum.guidelineTopics') }}</li>
-            <li>{{ t('forum.guidelineResources') }}</li>
-            <li>{{ t('forum.guidelineSupport') }}</li>
-          </ul>
         </div>
       </aside>
 
@@ -112,7 +70,7 @@
               ></textarea>
               <div class="form-actions">
                 <button type="button" class="cancel-btn" @click="showCreateForm = false">{{ t('forum.cancel') }}</button>
-                <button type="submit" class="submit-btn">🌱 {{ t('forum.postDiscussion') }}</button>
+                <button type="submit" class="submit-btn">{{ t('forum.postDiscussion') }}</button>
               </div>
             </form>
           </div>
@@ -127,20 +85,6 @@
         <div v-if="!selectedPost" class="posts-section">
           <div class="posts-header">
             <h2>{{ getCurrentCategoryName }}</h2>
-            <div class="sort-options">
-              <button 
-                :class="['sort-btn', { active: sortBy === 'newest' }]"
-                @click="sortBy = 'newest'"
-              >
-                🕐 {{ t('forum.newest') }}
-              </button>
-              <button 
-                :class="['sort-btn', { active: sortBy === 'popular' }]"
-                @click="sortBy = 'popular'"
-              >
-                🔥 {{ t('forum.popular') }}
-              </button>
-            </div>
           </div>
 
           <!-- Empty State -->
@@ -181,13 +125,23 @@
                   <span v-for="tag in parseTags(post.tags)" :key="tag" class="tag-small">#{{ tag }}</span>
                 </div>
                 <div class="post-stats">
-                  <span class="stat-item">💬 {{ post.comment_count || 0 }}</span>
-                  <span class="stat-item">👁️ {{ post.views || Math.floor(Math.random() * 50) + 5 }}</span>
+                  <span class="stat-item">Comments {{ post.comment_count || 0 }}</span>
+                  <span class="stat-item">👁️ {{ post.views || 0 }}</span>
+                  <span class="stat-item" :class="{ active: post.liked }">
+                    Likes {{ post.like_count || 0 }}
+                  </span>
                 </div>
               </div>
             </article>
           </div>
         </div>
+
+        <!-- Share Toast -->
+        <transition name="toast">
+          <div v-if="shareToast" class="share-toast">
+            ✅ Link copied to clipboard!
+          </div>
+        </transition>
 
         <!-- Post Detail View -->
         <div v-if="selectedPost" class="post-detail">
@@ -219,26 +173,38 @@
             </div>
 
             <div class="detail-actions">
-              <button class="action-btn">👍 Like</button>
-              <button class="action-btn">🔗 Share</button>
-              <button class="action-btn">🔖 Save</button>
+              <button class="action-btn" :class="{ active: selectedPost.liked }" @click="toggleLike(selectedPost)">
+                {{ selectedPost.liked ? 'Liked' : 'Like' }}
+                <span v-if="selectedPost.like_count" class="action-count">{{ selectedPost.like_count }}</span>
+              </button>
+              <button class="action-btn" @click="sharePost(selectedPost)">
+                Share
+              </button>
+              <button class="action-btn" :class="{ active: selectedPost.bookmarked }" @click="toggleBookmark(selectedPost)">
+                {{ selectedPost.bookmarked ? 'Saved' : 'Save' }}
+              </button>
+              <span class="detail-views">Views: {{ selectedPost.views || 0 }}</span>
             </div>
           </article>
 
           <!-- Comments Section -->
           <div class="comments-section">
-            <h3>💬 Comments ({{ comments.length }})</h3>
+            <h3>Comments ({{ comments.length }})</h3>
 
             <!-- Add Comment -->
             <div v-if="user" class="add-comment">
               <div class="user-avatar small">{{ user.name ? user.name.charAt(0).toUpperCase() : '?' }}</div>
               <form @submit.prevent="addComment" class="comment-form">
+                <div v-if="replyingTo" class="reply-indicator">
+                  <span>Replying to <strong>{{ replyingTo.name }}</strong></span>
+                  <button type="button" class="cancel-reply" @click="cancelReply">✕</button>
+                </div>
                 <textarea 
                   v-model="newComment" 
-                  placeholder="Share your thoughts..."
+                  :placeholder="replyingTo ? `Reply to ${replyingTo.name}...` : 'Share your thoughts...'"
                   required
                 ></textarea>
-                <button type="submit" class="comment-submit">💬 Comment</button>
+                <button type="submit" class="comment-submit">{{ replyingTo ? 'Reply' : 'Comment' }}</button>
               </form>
             </div>
 
@@ -248,20 +214,46 @@
             </div>
 
             <div class="comments-list">
-              <div v-for="comment in comments" :key="comment.id" class="comment-card">
-                <div class="comment-header">
-                  <div class="author-avatar small" :style="{ background: getAvatarColor(comment.name) }">
-                    {{ comment.name ? comment.name.charAt(0).toUpperCase() : '?' }}
+              <div v-for="comment in topLevelComments()" :key="comment.id" class="comment-thread">
+                <div class="comment-card">
+                  <div class="comment-header">
+                    <div class="author-avatar small" :style="{ background: getAvatarColor(comment.name) }">
+                      {{ comment.name ? comment.name.charAt(0).toUpperCase() : '?' }}
+                    </div>
+                    <div class="comment-info">
+                      <span class="comment-author">{{ comment.name }}</span>
+                      <span class="comment-date">{{ formatDate(comment.date) }}</span>
+                    </div>
                   </div>
-                  <div class="comment-info">
-                    <span class="comment-author">{{ comment.name }}</span>
-                    <span class="comment-date">{{ formatDate(comment.date) }}</span>
+                  <p class="comment-content">{{ comment.content }}</p>
+                  <div class="comment-actions">
+                    <button class="mini-action" :class="{ active: comment.liked }" @click="toggleCommentLike(comment)">
+                      Like {{ comment.like_count || 0 }}
+                    </button>
+                    <button v-if="user" class="mini-action" @click="replyToComment(comment)">Reply</button>
                   </div>
                 </div>
-                <p class="comment-content">{{ comment.content }}</p>
-                <div class="comment-actions">
-                  <button class="mini-action">👍 Like</button>
-                  <button class="mini-action">↩️ Reply</button>
+
+                <!-- Replies -->
+                <div v-if="getReplies(comment.id).length" class="replies-list">
+                  <div v-for="reply in getReplies(comment.id)" :key="reply.id" class="comment-card reply-card">
+                    <div class="comment-header">
+                      <div class="author-avatar small" :style="{ background: getAvatarColor(reply.name) }">
+                        {{ reply.name ? reply.name.charAt(0).toUpperCase() : '?' }}
+                      </div>
+                      <div class="comment-info">
+                        <span class="comment-author">{{ reply.name }}</span>
+                        <span class="comment-date">{{ formatDate(reply.date) }}</span>
+                      </div>
+                    </div>
+                    <p class="comment-content">{{ reply.content }}</p>
+                    <div class="comment-actions">
+                      <button class="mini-action" :class="{ active: reply.liked }" @click="toggleCommentLike(reply)">
+                        Like {{ reply.like_count || 0 }}
+                      </button>
+                      <button v-if="user" class="mini-action" @click="replyToComment(comment)">Reply</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -274,6 +266,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
   name: 'Forum',
@@ -293,12 +286,11 @@ export default {
         tags: ''
       },
       newComment: '',
+      replyingTo: null,
       user: null,
       showCreateForm: false,
       selectedCategory: 'all',
-      selectedTag: null,
-      sortBy: 'newest',
-      popularTags: ['zerowaste', 'recycling', 'sustainable', 'organic', 'vegan', 'upcycling', 'garden', 'solar', 'compost', 'plastic-free']
+      shareToast: false
     }
   },
   computed: {
@@ -320,34 +312,14 @@ export default {
       if (this.selectedCategory !== 'all') {
         filtered = filtered.filter(p => p.category === this.selectedCategory);
       }
-      
-      // Filter by tag
-      if (this.selectedTag) {
-        filtered = filtered.filter(p => {
-          const tags = this.parseTags(p.tags);
-          return tags.includes(this.selectedTag);
-        });
-      }
-      
-      // Sort
-      if (this.sortBy === 'newest') {
-        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-      } else {
-        filtered.sort((a, b) => (b.comment_count || 0) - (a.comment_count || 0));
-      }
+
+      filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
       
       return filtered;
     },
     getCurrentCategoryName() {
       const cat = this.categories.find(c => c.id === this.selectedCategory);
-      return cat ? `${cat.icon} ${cat.name}` : 'Discussions';
-    },
-    totalComments() {
-      return this.posts.reduce((sum, p) => sum + (p.comment_count || 0), 0);
-    },
-    uniqueUsers() {
-      const users = new Set(this.posts.map(p => p.name));
-      return users.size;
+      return cat ? cat.name : 'Discussions';
     }
   },
   mounted() {
@@ -364,8 +336,7 @@ export default {
   methods: {
     async fetchPosts() {
       try {
-        const response = await fetch('http://localhost:3000/api/posts');
-        const data = await response.json();
+        const { data } = await api.get('/api/posts');
         this.posts = data.posts || [];
       } catch (error) {
         console.error('Error fetching posts:', error);
@@ -373,16 +344,8 @@ export default {
       }
     },
     async addPost() {
-      const token = localStorage.getItem('token');
       try {
-        await fetch('http://localhost:3000/api/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(this.newPost)
-        });
+        await api.post('/api/posts', this.newPost);
         this.newPost = { title: '', content: '', category: '', tags: '' };
         this.showCreateForm = false;
         this.fetchPosts();
@@ -392,9 +355,22 @@ export default {
     },
     async viewPost(id) {
       this.selectedPost = this.posts.find(p => p.id === id);
+      // Track the view
       try {
-        const response = await fetch(`http://localhost:3000/api/posts/${id}/comments`);
-        const data = await response.json();
+        const { data: viewData } = await api.post(`/api/posts/${id}/view`);
+        if (this.selectedPost) {
+          this.selectedPost.views = viewData.views;
+        }
+        const postInList = this.posts.find(p => p.id === id);
+        if (postInList) {
+          postInList.views = viewData.views;
+        }
+      } catch (e) {
+        console.error('Error tracking view:', e);
+      }
+      // Fetch comments
+      try {
+        const { data } = await api.get(`/api/posts/${id}/comments`);
         this.comments = data.comments || [];
       } catch (error) {
         console.error('Error fetching comments:', error);
@@ -402,17 +378,13 @@ export default {
       }
     },
     async addComment() {
-      const token = localStorage.getItem('token');
       try {
-        await fetch(`http://localhost:3000/api/posts/${this.selectedPost.id}/comments`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ content: this.newComment })
+        await api.post(`/api/posts/${this.selectedPost.id}/comments`, { 
+          content: this.newComment,
+          parent_id: this.replyingTo ? this.replyingTo.id : null
         });
         this.newComment = '';
+        this.replyingTo = null;
         this.viewPost(this.selectedPost.id);
       } catch (error) {
         console.error('Error adding comment:', error);
@@ -446,14 +418,110 @@ export default {
       const cat = this.categories.find(c => c.id === catId);
       return cat ? cat.icon : '📋';
     },
-    toggleTag(tag) {
-      this.selectedTag = this.selectedTag === tag ? null : tag;
+    async toggleLike(post) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in to like posts');
+        return;
+      }
+      try {
+        const { data } = await api.post(`/api/posts/${post.id}/like`);
+        post.liked = data.liked;
+        post.like_count = data.like_count;
+        const postInList = this.posts.find(p => p.id === post.id);
+        if (postInList && postInList !== post) {
+          postInList.liked = data.liked;
+          postInList.like_count = data.like_count;
+        }
+      } catch (error) {
+        console.error('Error toggling like:', error);
+      }
+    },
+    async toggleBookmark(post) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in to save posts');
+        return;
+      }
+      try {
+        const { data } = await api.post(`/api/posts/${post.id}/bookmark`);
+        post.bookmarked = data.bookmarked;
+        const postInList = this.posts.find(p => p.id === post.id);
+        if (postInList && postInList !== post) {
+          postInList.bookmarked = data.bookmarked;
+        }
+      } catch (error) {
+        console.error('Error toggling bookmark:', error);
+      }
+    },
+    sharePost(post) {
+      const url = `${window.location.origin}/forum?post=${post.id}`;
+      if (navigator.share) {
+        navigator.share({
+          title: post.title,
+          text: this.truncateContent(post.content),
+          url: url
+        }).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+          this.shareToast = true;
+          setTimeout(() => { this.shareToast = false; }, 2000);
+        }).catch(() => {
+          this.fallbackCopyShare(url);
+        });
+      } else {
+        this.fallbackCopyShare(url);
+      }
+    },
+    fallbackCopyShare(url) {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      this.shareToast = true;
+      setTimeout(() => { this.shareToast = false; }, 2000);
     },
     getAvatarColor(name) {
       if (!name) return '#2ecc71';
       const colors = ['#2ecc71', '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#1abc9c', '#e91e63', '#00bcd4'];
       const index = name.charCodeAt(0) % colors.length;
       return colors[index];
+    },
+    async toggleCommentLike(comment) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in to like comments');
+        return;
+      }
+      try {
+        const { data } = await api.post(`/api/comments/${comment.id}/like`);
+        comment.liked = data.liked;
+        comment.like_count = data.like_count;
+      } catch (error) {
+        console.error('Error toggling comment like:', error);
+      }
+    },
+    replyToComment(comment) {
+      this.replyingTo = comment;
+      this.newComment = '';
+      this.$nextTick(() => {
+        const textarea = this.$el.querySelector('.comment-form textarea');
+        if (textarea) textarea.focus();
+      });
+    },
+    cancelReply() {
+      this.replyingTo = null;
+      this.newComment = '';
+    },
+    topLevelComments() {
+      return this.comments.filter(c => !c.parent_id);
+    },
+    getReplies(commentId) {
+      return this.comments.filter(c => c.parent_id === commentId);
     }
   }
 }
@@ -462,15 +530,21 @@ export default {
 <style scoped>
 .forum-page {
   min-height: 100vh;
-  padding: 80px 24px 60px;
+  padding: 72px 20px 48px;
   background: var(--bg-color);
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Header */
 .forum-header {
   max-width: 1100px;
-  margin: 0 auto 24px;
-  padding: 32px;
+  margin: 0 auto 20px;
+  padding: 24px;
   background: var(--card-bg);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-color);
@@ -483,7 +557,7 @@ export default {
 
 .header-content h1 {
   margin: 0 0 6px;
-  font-size: 1.75rem;
+  font-size: 1.7rem;
   font-weight: 700;
   color: var(--text-color);
   letter-spacing: -0.02em;
@@ -495,41 +569,13 @@ export default {
   font-size: 0.95rem;
 }
 
-.forum-stats {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.stat {
-  text-align: center;
-}
-
-.stat-divider {
-  width: 1px;
-  height: 36px;
-  background: var(--border-color);
-}
-
-.stat-number {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-color);
-}
-
-.stat-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
 /* Container */
 .forum-container {
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 24px;
+  grid-template-columns: 220px 1fr;
+  gap: 20px;
 }
 
 /* Sidebar */
@@ -694,18 +740,37 @@ export default {
 
 .create-btn {
   padding: 10px 18px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
   font-weight: 500;
   font-size: 0.875rem;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.create-btn:hover::after {
+  left: 120%;
 }
 
 .create-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .create-post-form {
@@ -837,19 +902,20 @@ export default {
 }
 
 .submit-btn {
-  padding: 10px 20px;
-  background: var(--primary);
+  padding: 11px 20px;
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: var(--transition);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all 0.3s ease;
 }
 
 .submit-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
 /* Login Prompt */
@@ -880,33 +946,8 @@ export default {
 .posts-header h2 {
   margin: 0;
   color: var(--text-color);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
-}
-
-.sort-options {
-  display: flex;
-  gap: 6px;
-}
-
-.sort-btn {
-  padding: 6px 12px;
-  border: none;
-  background: var(--bg-color);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  color: var(--text-secondary);
-  font-size: 0.85rem;
-  transition: var(--transition);
-}
-
-.dark .sort-btn {
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.sort-btn.active {
-  background: var(--primary);
-  color: white;
 }
 
 /* Empty State */
@@ -948,12 +989,14 @@ export default {
   border-radius: var(--radius-lg);
   padding: 20px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   border: 1px solid var(--border-color);
 }
 
 .post-card:hover {
   border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.08);
 }
 
 .post-header {
@@ -1105,7 +1148,7 @@ export default {
 .detail-title {
   margin: 0 0 16px;
   color: var(--text-color);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1130,22 +1173,80 @@ export default {
   gap: 8px;
   padding-top: 16px;
   border-top: 1px solid var(--border-color);
+  align-items: center;
 }
 
 .action-btn {
-  padding: 8px 16px;
+  padding: 10px 16px;
   border: 1px solid var(--border-color);
   background: transparent;
   border-radius: var(--radius-md);
   cursor: pointer;
   color: var(--text-color);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .action-btn:hover {
   border-color: var(--primary);
   color: var(--primary);
+}
+
+.action-btn.active {
+  background: var(--primary-subtle);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.action-count {
+  padding: 2px 6px;
+  background: var(--primary-subtle);
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.detail-views {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.stat-item.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Share Toast */
+.share-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(16px);
 }
 
 /* Comments */
@@ -1198,19 +1299,20 @@ export default {
 
 .comment-submit {
   align-self: flex-end;
-  padding: 8px 16px;
-  background: var(--primary);
+  padding: 10px 16px;
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: var(--transition);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.3s ease;
 }
 
 .comment-submit:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
 .no-comments {
@@ -1272,12 +1374,12 @@ export default {
 }
 
 .mini-action {
-  padding: 4px 10px;
+  padding: 6px 10px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   border-radius: var(--radius-sm);
   transition: var(--transition);
 }
@@ -1285,6 +1387,62 @@ export default {
 .mini-action:hover {
   background: var(--primary-subtle);
   color: var(--primary);
+}
+
+.mini-action.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.reply-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-color);
+}
+
+.cancel-reply {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.cancel-reply:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+}
+
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+}
+
+.replies-list {
+  margin-left: 32px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.reply-card {
+  background: var(--bg-color);
+  opacity: 0.95;
+}
+
+.dark .reply-card {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* Responsive */
@@ -1321,14 +1479,6 @@ export default {
   
   .header-content h1 {
     font-size: 1.4rem;
-  }
-  
-  .forum-stats {
-    gap: 16px;
-  }
-  
-  .stat-number {
-    font-size: 1.25rem;
   }
   
   .post-card {

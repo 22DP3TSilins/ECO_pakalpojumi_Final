@@ -315,9 +315,9 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
-  name: 'Challenges',
   setup() {
     const { t } = useI18n()
     return { t }
@@ -337,20 +337,20 @@ export default {
   computed: {
     filterTabs() {
       return [
-        { id: 'all', icon: '📋', label: this.t('forum.all') },
-        { id: 'active', icon: '🎯', label: this.t('challenges.active') },
-        { id: 'completed', icon: '✅', label: this.t('challenges.completed') },
-        { id: 'available', icon: '🆕', label: this.t('challenges.available') }
+        { id: 'all', label: this.t('forum.all') },
+        { id: 'active', label: this.t('challenges.active') },
+        { id: 'completed', label: this.t('challenges.completed') },
+        { id: 'available', label: this.t('challenges.available') }
       ]
     },
     categories() {
       return [
-        { id: 'transport', name: this.t('footprint.categories.transport'), icon: '🚲' },
-        { id: 'energy', name: this.t('footprint.categories.energy'), icon: '⚡' },
-        { id: 'waste', name: this.t('footprint.categories.waste'), icon: '♻️' },
-        { id: 'food', name: this.t('footprint.categories.food'), icon: '🥗' },
-        { id: 'nature', name: this.t('footprint.categories.nature'), icon: '🌳' },
-        { id: 'lifestyle', name: this.t('calculator.lifestyle'), icon: '🛍️' }
+        { id: 'transport', name: this.t('footprint.categories.transport') },
+        { id: 'energy', name: this.t('footprint.categories.energy') },
+        { id: 'waste', name: this.t('footprint.categories.waste') },
+        { id: 'food', name: this.t('footprint.categories.food') },
+        { id: 'nature', name: this.t('footprint.categories.nature') },
+        { id: 'lifestyle', name: this.t('calculator.lifestyle') }
       ]
     },
     challenges() {
@@ -359,7 +359,6 @@ export default {
           id: 1,
           title: this.t('challenges.challengesList.plasticFreeTitle'),
           description: this.t('challenges.challengesList.plasticFreeDesc'),
-          icon: '🚫',
           category: 'waste',
           points: 150,
           participants: 1234,
@@ -379,7 +378,6 @@ export default {
           id: 2,
           title: this.t('challenges.challengesList.bikeTitle'),
           description: this.t('challenges.challengesList.bikeDesc'),
-          icon: '🚲',
           category: 'transport',
           points: 200,
           participants: 856,
@@ -399,7 +397,6 @@ export default {
           id: 3,
           title: this.t('challenges.challengesList.meatlessTitle'),
           description: this.t('challenges.challengesList.meatlessDesc'),
-          icon: '🥬',
           category: 'food',
           points: 100,
           participants: 2341,
@@ -419,7 +416,6 @@ export default {
           id: 4,
           title: this.t('challenges.challengesList.energySaverTitle'),
           description: this.t('challenges.challengesList.energySaverDesc'),
-          icon: '💡',
           category: 'energy',
           points: 175,
           participants: 678,
@@ -439,7 +435,6 @@ export default {
           id: 5,
           title: this.t('challenges.challengesList.zeroWasteTitle'),
           description: this.t('challenges.challengesList.zeroWasteDesc'),
-          icon: '🛒',
           category: 'waste',
           points: 125,
           participants: 1567,
@@ -459,7 +454,6 @@ export default {
           id: 6,
           title: this.t('challenges.challengesList.plantTreeTitle'),
           description: this.t('challenges.challengesList.plantTreeDesc'),
-          icon: '🌱',
           category: 'nature',
           points: 300,
           participants: 432,
@@ -479,7 +473,6 @@ export default {
           id: 7,
           title: this.t('challenges.challengesList.coldShowerTitle'),
           description: this.t('challenges.challengesList.coldShowerDesc'),
-          icon: '🚿',
           category: 'energy',
           points: 80,
           participants: 234,
@@ -499,7 +492,6 @@ export default {
           id: 8,
           title: this.t('challenges.challengesList.secondhandTitle'),
           description: this.t('challenges.challengesList.secondhandDesc'),
-          icon: '👕',
           category: 'lifestyle',
           points: 200,
           participants: 789,
@@ -528,12 +520,12 @@ export default {
     },
     badges() {
       return [
-        { id: 1, name: this.t('challenges.badges.firstStepName'), icon: '👣', description: this.t('challenges.badges.firstStepDesc'), unlocked: true },
-        { id: 2, name: this.t('challenges.badges.weekWarriorName'), icon: '📅', description: this.t('challenges.badges.weekWarriorDesc'), unlocked: true },
-        { id: 3, name: this.t('challenges.badges.ecoMasterName'), icon: '🌟', description: this.t('challenges.badges.ecoMasterDesc'), unlocked: true },
-        { id: 4, name: this.t('challenges.badges.communityHeroName'), icon: '🦸', description: this.t('challenges.badges.communityHeroDesc'), unlocked: false },
-        { id: 5, name: this.t('challenges.badges.planetSaverName'), icon: '🌍', description: this.t('challenges.badges.planetSaverDesc'), unlocked: false },
-        { id: 6, name: this.t('challenges.badges.legendName'), icon: '👑', description: this.t('challenges.badges.legendDesc'), unlocked: false }
+        { id: 1, name: this.t('challenges.badges.firstStepName'), description: this.t('challenges.badges.firstStepDesc'), unlocked: true },
+        { id: 2, name: this.t('challenges.badges.weekWarriorName'), description: this.t('challenges.badges.weekWarriorDesc'), unlocked: true },
+        { id: 3, name: this.t('challenges.badges.ecoMasterName'), description: this.t('challenges.badges.ecoMasterDesc'), unlocked: true },
+        { id: 4, name: this.t('challenges.badges.communityHeroName'), description: this.t('challenges.badges.communityHeroDesc'), unlocked: false },
+        { id: 5, name: this.t('challenges.badges.planetSaverName'), description: this.t('challenges.badges.planetSaverDesc'), unlocked: false },
+        { id: 6, name: this.t('challenges.badges.legendName'), description: this.t('challenges.badges.legendDesc'), unlocked: false }
       ]
     },
     completedCount() {
@@ -587,11 +579,8 @@ export default {
   methods: {
     async fetchChallenges() {
       try {
-        const response = await fetch('http://localhost:3000/api/challenges');
-        const data = await response.json();
-        // Merge fetched challenges with our rich demo data
+        const { data } = await api.get('/api/challenges');
         if (data.challenges && data.challenges.length > 0) {
-          // In real app, use fetched data properly
           console.log('Fetched challenges:', data.challenges);
         }
       } catch (error) {
@@ -600,7 +589,7 @@ export default {
     },
     getCategoryName(categoryId) {
       const cat = this.categories.find(c => c.id === categoryId);
-      return cat ? `${cat.icon} ${cat.name}` : categoryId;
+      return cat ? cat.name : categoryId;
     },
     toggleJoin(challenge) {
       challenge.joined = !challenge.joined;
@@ -636,13 +625,13 @@ export default {
       if (navigator.share) {
         navigator.share({
           title: challenge.title,
-          text: `Join me in the "${challenge.title}" eco challenge! 🌍`,
+          text: `Join me in the "${challenge.title}" eco challenge!`,
           url: window.location.href
         });
       } else {
         // Fallback - copy to clipboard
         navigator.clipboard.writeText(
-          `Join me in the "${challenge.title}" eco challenge! 🌍 ${window.location.href}`
+          `Join me in the "${challenge.title}" eco challenge! ${window.location.href}`
         );
         alert('Challenge link copied to clipboard!');
       }
@@ -656,6 +645,12 @@ export default {
   min-height: 100vh;
   padding: 80px 20px 60px;
   background: var(--bg-color);
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Hero Section */
@@ -663,7 +658,7 @@ export default {
   max-width: 1100px;
   margin: 0 auto 24px;
   padding: 32px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   border-radius: var(--radius-xl);
   color: white;
   display: flex;
@@ -671,6 +666,37 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.challenges-hero::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  top: -70px;
+  right: -30px;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.challenges-hero::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  bottom: -30px;
+  left: 15%;
+  animation: floatShape 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
 }
 
 .hero-content h1 {
@@ -694,9 +720,16 @@ export default {
 
 .hero-stat {
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-lg);
   padding: 12px 20px;
   text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.hero-stat:hover {
+  transform: translateY(-2px);
 }
 
 .stat-number {
@@ -811,7 +844,7 @@ export default {
 
 .progress-fill {
   height: 100%;
-  background: var(--primary);
+  background: var(--gradient-eco, var(--primary));
   border-radius: 3px;
   transition: width 0.5s ease;
 }
@@ -824,19 +857,38 @@ export default {
 
 .featured-btn {
   padding: 12px 24px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.featured-btn:hover::after {
+  left: 120%;
 }
 
 .featured-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .featured-btn.joined {
@@ -954,11 +1006,13 @@ export default {
   border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--border-color);
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .challenge-card:hover {
   border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(46, 204, 113, 0.1);
 }
 
 .challenge-card.completed {
@@ -1090,12 +1144,12 @@ export default {
 }
 
 .join-btn {
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
 }
 
 .join-btn:hover {
-  background: var(--primary-dark);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.25);
 }
 
 .progress-btn {
@@ -1413,7 +1467,9 @@ export default {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1568,12 +1624,13 @@ export default {
 }
 
 .modal-btn.confirm {
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
 }
 
 .modal-btn.confirm:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
 /* Responsive */

@@ -39,6 +39,8 @@
                   id="name"
                   v-model="user.name" 
                   type="text" 
+                  name="name"
+                  autocomplete="name"
                   :placeholder="t('register.namePlaceholder')"
                   required
                 />
@@ -56,30 +58,14 @@
                   id="email"
                   v-model="user.email" 
                   type="email" 
+                  name="email"
+                  autocomplete="email"
+                  autocapitalize="none"
+                  spellcheck="false"
                   :placeholder="t('register.emailPlaceholder')"
                   required
                 />
               </div>
-            </div>
-
-            <div class="input-group">
-              <label for="phone">{{ t('register.phone') }} <span class="optional">({{ t('register.optional') }})</span></label>
-              <div class="input-wrapper">
-                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
-                </svg>
-                <input 
-                  id="phone"
-                  v-model="user.phone" 
-                  type="tel" 
-                  :placeholder="t('register.phonePlaceholder')"
-                  @input="formatPhoneNumber"
-                  :class="{ 'phone-valid': isPhoneValid, 'phone-invalid': user.phone && !isPhoneValid }"
-                />
-              </div>
-              <span v-if="user.phone && !isPhoneValid" class="phone-hint">
-                {{ t('register.phoneHint') }}
-              </span>
             </div>
 
             <div class="input-group">
@@ -92,6 +78,8 @@
                   id="password"
                   v-model="user.password" 
                   :type="showPassword ? 'text' : 'password'" 
+                  name="new-password"
+                  autocomplete="new-password"
                   :placeholder="t('register.passwordPlaceholder')"
                   required
                 />
@@ -138,6 +126,8 @@
                   id="confirmPassword"
                   v-model="confirmPassword" 
                   :type="showConfirmPassword ? 'text' : 'password'" 
+                  name="confirm-password"
+                  autocomplete="new-password"
                   :placeholder="t('register.confirmPlaceholder')"
                   required
                   :class="{ 'password-match': passwordsMatch && confirmPassword, 'password-mismatch': !passwordsMatch && confirmPassword }"
@@ -189,16 +179,8 @@
           </div>
 
           <!-- Social Login -->
-          <div class="social-login">
+          <div class="social-login" style="grid-template-columns: 1fr">
             <div id="google-signup-btn" class="google-btn-wrapper"></div>
-            <button type="button" class="social-btn github" @click="githubSignup">
-              <span class="social-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-              </span>
-              <span>GitHub</span>
-            </button>
           </div>
 
           <!-- Login Link -->
@@ -214,47 +196,47 @@
 
       <!-- Right Panel - Branding -->
       <div class="branding-panel">
+        <div class="branding-shapes">
+          <div class="b-shape b-shape-1"></div>
+          <div class="b-shape b-shape-2"></div>
+          <div class="b-shape b-shape-3"></div>
+        </div>
         <div class="brand-content">
-          <div class="brand-logo">🌍</div>
+          <div class="brand-logo">
+            <svg viewBox="0 0 32 32" width="24" height="24" fill="none">
+              <path d="M16 4c-2 0-8 4-8 12s5 12 8 14c3-2 8-6 8-14s-6-12-8-12z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M16 8v14M12 14c2 3 6 3 8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
           <h1>{{ t('register.joinMovement') }}</h1>
           <p>{{ t('register.startMakingDifference') }}</p>
           
           <div class="benefits-list">
             <div class="benefit">
-              <span class="benefit-icon">🛒</span>
+              <span class="benefit-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 01-8 0"/>
+                </svg>
+              </span>
               <div>
                 <h4>{{ t('register.benefits.ecoShopping') }}</h4>
                 <p>{{ t('register.benefits.accessProducts') }}</p>
               </div>
             </div>
             <div class="benefit">
-              <span class="benefit-icon">📈</span>
+              <span class="benefit-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </span>
               <div>
                 <h4>{{ t('register.benefits.trackImpact') }}</h4>
                 <p>{{ t('register.benefits.monitorFootprint') }}</p>
               </div>
-            </div>
-            <div class="benefit">
-              <span class="benefit-icon">🎯</span>
-              <div>
-                <h4>{{ t('register.benefits.earnRewards') }}</h4>
-                <p>{{ t('register.benefits.completeChallenges') }}</p>
-              </div>
-            </div>
-            <div class="benefit">
-              <span class="benefit-icon">👥</span>
-              <div>
-                <h4>{{ t('register.benefits.community') }}</h4>
-                <p>{{ t('register.benefits.connectPeople') }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-mini">
-            <p>"{{ t('register.testimonial.quote') }}"</p>
-            <div class="testimonial-author">
-              <span class="author-avatar">🧑</span>
-              <span>{{ t('register.testimonial.author') }}</span>
             </div>
           </div>
         </div>
@@ -278,7 +260,6 @@ export default {
       user: {
         name: '',
         email: '',
-        phone: '',
         password: ''
       },
       confirmPassword: '',
@@ -311,17 +292,6 @@ export default {
     passwordsMatch() {
       return this.user.password === this.confirmPassword && this.user.password.length > 0;
     },
-    isPhoneValid() {
-      // Latvian phone numbers: +371 XXXXXXXX (8 digits after country code)
-      // Or just 8 digits starting with 2, 6, or 7 (mobile) or 6 (landline)
-      if (!this.user.phone) return true; // Phone is optional
-      const cleaned = this.user.phone.replace(/[\s\-\(\)]/g, '');
-      // +371 followed by 8 digits
-      if (/^\+371[267]\d{7}$/.test(cleaned)) return true;
-      // Just 8 digits starting with 2, 6, or 7
-      if (/^[267]\d{7}$/.test(cleaned)) return true;
-      return false;
-    },
     passwordStrength() {
       let score = 0;
       if (this.hasMinLength) score++;
@@ -344,31 +314,10 @@ export default {
              this.hasLowerCase &&
              this.hasNumber &&
              this.passwordsMatch &&
-             this.acceptTerms &&
-             this.isPhoneValid;
+             this.acceptTerms;
     }
   },
   methods: {
-    formatPhoneNumber() {
-      // Auto-format Latvian phone numbers
-      let phone = this.user.phone.replace(/[^\d+]/g, '');
-      
-      // If starts with just digits and is 8 chars, add +371
-      if (/^[267]\d{7}$/.test(phone)) {
-        this.user.phone = '+371 ' + phone;
-        return;
-      }
-      
-      // Format +371 XXXX XXXX
-      if (phone.startsWith('+371') && phone.length > 4) {
-        const digits = phone.substring(4);
-        if (digits.length <= 4) {
-          this.user.phone = '+371 ' + digits;
-        } else {
-          this.user.phone = '+371 ' + digits.substring(0, 4) + ' ' + digits.substring(4);
-        }
-      }
-    },
     async register() {
       this.error = '';
       this.success = '';
@@ -412,7 +361,7 @@ export default {
       this.loading = true;
 
       const authStore = useAuthStore()
-      const result = await authStore.register(this.user.name.trim(), this.user.email.trim(), this.user.password)
+      const result = await authStore.register(this.user.name.trim(), this.user.email.trim(), this.user.password, null)
 
       if (result.success) {
         this.success = result.message + ' Redirecting to login...';
@@ -488,10 +437,7 @@ export default {
       
       this.loading = false;
     },
-    githubSignup() {
-      // GitHub OAuth would require backend setup similar to Google
-      this.error = 'GitHub signup coming soon! Please use Google or email registration.';
-    }
+
   }
 }
 </script>
@@ -504,6 +450,12 @@ export default {
   justify-content: center;
   background: var(--bg-color);
   padding: 20px;
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Register Container */
@@ -514,7 +466,7 @@ export default {
   width: 100%;
   background: var(--card-bg);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   border: 1px solid var(--border-color);
 }
@@ -655,6 +607,7 @@ export default {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-subtle);
+  transform: translateY(-1px);
 }
 
 .input-wrapper input::placeholder {
@@ -811,7 +764,7 @@ export default {
 }
 
 .terms-checkbox input:checked + .checkbox-mark {
-  background: var(--primary);
+  background: var(--gradient-eco, var(--primary));
   border-color: var(--primary);
 }
 
@@ -835,7 +788,7 @@ export default {
 .register-btn {
   width: 100%;
   padding: 12px 16px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
@@ -844,10 +797,29 @@ export default {
   cursor: pointer;
   transition: var(--transition);
   margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.register-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.register-btn:hover:not(:disabled)::after {
+  left: 120%;
 }
 
 .register-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .register-btn:disabled {
@@ -963,16 +935,7 @@ export default {
   height: 18px;
 }
 
-.social-btn.github {
-  background: #24292e;
-  border-color: #24292e;
-  color: white;
-}
 
-.social-btn.github:hover {
-  background: #2f363d;
-  border-color: #2f363d;
-}
 
 /* Login Prompt */
 .login-prompt {
@@ -996,15 +959,59 @@ export default {
   text-decoration: underline;
 }
 
+/* Branding Shapes */
+.branding-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.b-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.b-shape-1 {
+  width: 200px;
+  height: 200px;
+  top: -60px;
+  right: -40px;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.b-shape-2 {
+  width: 140px;
+  height: 140px;
+  bottom: -30px;
+  left: -30px;
+  animation: floatShape 10s ease-in-out infinite reverse;
+}
+
+.b-shape-3 {
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  right: 20%;
+  animation: floatShape 6s ease-in-out infinite 1s;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
+}
+
 /* Branding Panel */
 .branding-panel {
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   padding: 48px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 .brand-content {
@@ -1016,6 +1023,8 @@ export default {
   width: 56px;
   height: 56px;
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
@@ -1061,12 +1070,19 @@ export default {
   width: 40px;
   height: 40px;
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.benefit:hover .benefit-icon {
+  transform: scale(1.1);
 }
 
 .benefit-icon svg {

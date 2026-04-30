@@ -1,5 +1,22 @@
 <template>
   <div class="tracker-page">
+    <!-- Page Tab Switcher -->
+    <div class="page-tabs">
+      <button :class="['page-tab', { active: activeView === 'tracker' }]" @click="activeView = 'tracker'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        {{ t('footprint.title') }}
+      </button>
+      <button :class="['page-tab', { active: activeView === 'calculator' }]" @click="activeView = 'calculator'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/></svg>
+        {{ t('calculator.title') }}
+      </button>
+    </div>
+
+    <!-- Calculator View -->
+    <Calculator v-show="activeView === 'calculator'" />
+
+    <!-- Tracker View -->
+    <div v-show="activeView === 'tracker'">
     <!-- Hero Stats Section -->
     <div class="tracker-hero">
       <div class="hero-left">
@@ -267,20 +284,25 @@
         </div>
       </aside>
     </div>
+    </div><!-- end tracker view -->
   </div>
 </template>
 
 <script>
 import { useI18n } from 'vue-i18n'
+import Calculator from './Calculator.vue'
+import api from '../utils/api.js'
 
 export default {
   name: 'Footprint',
+  components: { Calculator },
   setup() {
     const { t } = useI18n()
     return { t }
   },
   data() {
     return {
+      activeView: 'tracker',
       activities: [],
       showCustomForm: false,
       historyFilter: 'all',
@@ -455,8 +477,16 @@ export default {
     }
   },
   mounted() {
+    if (this.$route.query.tab === 'calculator') {
+      this.activeView = 'calculator';
+    }
     this.fetchActivities();
     this.updateAchievements();
+  },
+  watch: {
+    '$route.query.tab'(tab) {
+      this.activeView = tab === 'calculator' ? 'calculator' : 'tracker';
+    }
   },
   methods: {
     async fetchActivities() {
@@ -466,10 +496,7 @@ export default {
         return;
       }
       try {
-        const response = await fetch('http://localhost:3000/api/footprint', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await response.json();
+        const { data } = await api.get('/api/footprint');
         this.activities = data.activities || [];
         this.updateAchievements();
       } catch (error) {
@@ -478,16 +505,8 @@ export default {
       }
     },
     async addActivity() {
-      const token = localStorage.getItem('token');
       try {
-        await fetch('http://localhost:3000/api/footprint', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(this.newActivity)
-        });
+        await api.post('/api/footprint', this.newActivity);
         this.newActivity = { 
           activity: '', 
           impact: 0, 
@@ -502,20 +521,12 @@ export default {
       }
     },
     async quickLog(qa) {
-      const token = localStorage.getItem('token');
       try {
-        await fetch('http://localhost:3000/api/footprint', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            activity: qa.name,
-            impact: qa.impact,
-            category: qa.category,
-            date: new Date().toISOString().split('T')[0]
-          })
+        await api.post('/api/footprint', {
+          activity: qa.name,
+          impact: qa.impact,
+          category: qa.category,
+          date: new Date().toISOString().split('T')[0]
         });
         this.fetchActivities();
       } catch (error) {
@@ -598,10 +609,45 @@ export default {
 </script>
 
 <style scoped>
+/* Page Tabs */
+.page-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+.page-tab {
+  padding: 10px 28px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color, #e0e0e0);
+  background: var(--card-bg, #fff);
+  color: var(--text-color, #333);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.page-tab:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.page-tab.active {
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(46, 204, 113, 0.25);
+}
+
 .tracker-page {
   min-height: 100vh;
   padding: 80px 20px 60px;
   background: var(--bg-color);
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Hero Section */
@@ -609,7 +655,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto 30px;
   padding: 40px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   border-radius: var(--radius-xl);
   color: white;
   display: flex;
@@ -617,6 +663,37 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tracker-hero::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  top: -60px;
+  right: -40px;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.tracker-hero::after {
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  bottom: -40px;
+  left: 10%;
+  animation: floatShape 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
 }
 
 .hero-left h1 {
@@ -626,7 +703,7 @@ export default {
 
 .hero-left p {
   margin: 0;
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.96);
   font-size: 1rem;
 }
 
@@ -638,11 +715,19 @@ export default {
 
 .stat-card {
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--radius-lg);
   padding: 15px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
 }
 
 .stat-card.main-stat {
@@ -665,7 +750,7 @@ export default {
 
 .stat-label {
   font-size: 0.85rem;
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.96);
 }
 
 /* Container */
@@ -696,6 +781,7 @@ export default {
   margin: 0 0 20px;
   color: var(--text-secondary);
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .quick-activities {
@@ -714,13 +800,15 @@ export default {
   background: var(--card-bg);
   border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   color: var(--text-color);
 }
 
 .quick-activity-btn:hover {
   border-color: var(--primary);
   background: var(--primary-subtle);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.12);
 }
 
 .qa-icon {
@@ -730,6 +818,8 @@ export default {
 .qa-name {
   font-size: 0.9rem;
   text-align: center;
+  color: var(--text-color);
+  font-weight: 500;
 }
 
 .qa-impact {
@@ -806,8 +896,9 @@ export default {
 }
 
 .form-group label {
-  color: var(--text-secondary);
+  color: var(--text-color);
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .form-group input,
@@ -838,18 +929,37 @@ export default {
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.submit-btn:hover::after {
+  left: 120%;
 }
 
 .submit-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 /* Weekly Section */
@@ -896,7 +1006,7 @@ export default {
 
 .bar-fill {
   width: 100%;
-  background: var(--primary);
+  background: var(--gradient-eco, var(--primary));
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   transition: height 0.5s ease;
   min-height: 4px;
@@ -908,7 +1018,7 @@ export default {
 
 .day-label {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-color);
 }
 
 .day-value {
@@ -931,7 +1041,8 @@ export default {
 .summary-label {
   display: block;
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-color);
+  opacity: 0.85;
   margin-bottom: 4px;
 }
 
@@ -960,7 +1071,7 @@ export default {
   background: var(--bg-color);
   border-radius: var(--radius-md);
   cursor: pointer;
-  color: var(--text-secondary);
+  color: var(--text-color);
   font-size: 0.85rem;
   transition: var(--transition);
   border: 1px solid var(--border-color);
@@ -971,7 +1082,7 @@ export default {
 }
 
 .filter-btn.active {
-  background: var(--primary);
+  background: var(--gradient-eco, var(--primary));
   color: white;
   border-color: var(--primary);
 }
@@ -983,7 +1094,7 @@ export default {
 
 .empty-icon {
   color: var(--text-secondary);
-  opacity: 0.5;
+  opacity: 0.75;
   margin-bottom: 15px;
 }
 
@@ -1012,7 +1123,7 @@ export default {
   padding: 15px;
   background: var(--bg-color);
   border-radius: var(--radius-lg);
-  transition: var(--transition);
+  transition: all 0.3s ease;
   border: 1px solid var(--border-color);
 }
 
@@ -1022,6 +1133,7 @@ export default {
 
 .activity-card:hover {
   border-color: var(--primary);
+  transform: translateX(4px);
 }
 
 .activity-icon {
@@ -1047,7 +1159,8 @@ export default {
 
 .activity-date {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .activity-impact {
@@ -1063,7 +1176,8 @@ export default {
 
 .impact-unit {
   font-size: 0.8rem;
-  color: var(--text-secondary);
+  color: var(--text-color);
+  opacity: 0.75;
 }
 
 /* Sidebar */
@@ -1084,6 +1198,7 @@ export default {
   margin: 0 0 15px;
   color: var(--text-color);
   font-size: 1rem;
+  font-weight: 600;
 }
 
 /* Category Breakdown */
@@ -1116,7 +1231,8 @@ export default {
 }
 
 .cat-value {
-  color: var(--text-secondary);
+  color: var(--text-color);
+  opacity: 0.85;
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -1153,8 +1269,8 @@ export default {
   background: var(--bg-color);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
-  opacity: 0.5;
-  filter: grayscale(1);
+  opacity: 0.78;
+  filter: grayscale(0.35);
   transition: var(--transition);
 }
 
@@ -1287,16 +1403,17 @@ export default {
   width: 100%;
   padding: 10px;
   border: none;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 0.9rem;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .refresh-tip:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
 /* Responsive */

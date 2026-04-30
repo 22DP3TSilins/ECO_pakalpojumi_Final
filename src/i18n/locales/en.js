@@ -328,7 +328,19 @@ export default {
     tipClothingDesc: 'Buy second-hand or choose quality that lasts longer.',
     // Units
     tonnesYear: 'tonnes/year',
-    tonnesPerFlight: 't CO₂ per flight'
+    tonnesPerFlight: 't CO₂ per flight',
+    // Methodology section
+    methodologyTitle: 'How Are These Calculations Made?',
+    methodologyDesc: 'Our CO₂ estimates are based on peer-reviewed emission factors from recognised scientific sources. All values represent lifecycle emissions in kg CO₂-equivalent.',
+    methodologyTransportTitle: 'Transport',
+    methodologyTransportText: 'Car emissions use IPCC factors: petrol 0.21 kg CO₂/km, diesel 0.18, hybrid 0.12, electric 0.05. Flight emissions: short-haul 0.255 t, medium-haul 0.5 t, long-haul 1.5 t per return flight (ICAO). Public transport: 0.089 kg CO₂/hour (Eurostat average).',
+    methodologyHomeTitle: 'Home Energy',
+    methodologyHomeText: 'Electricity grid intensity: mixed grid 0.42 kg/kWh, renewable 0.05, coal-heavy 0.82 (IEA 2023). Heating: natural gas 2.0 kg/m³, heating oil 2.5, electric 0.5, heat pump 0.3, wood/biomass 0.4 (UK DEFRA). Water heating: 0.001 kg CO₂ per litre.',
+    methodologyFoodTitle: 'Food & Diet',
+    methodologyFoodText: 'Meat emission factors per kg: beef 27 kg CO₂e, pork 12, poultry 7, fish 6 (Our World in Data / Poore & Nemecek 2018). Dairy: 3 kg CO₂e per serving per day. Food waste multiplier adds proportional emissions based on wasted percentage.',
+    methodologyLifestyleTitle: 'Lifestyle & Shopping',
+    methodologyLifestyleText: 'New clothing item: 25 kg CO₂e average lifecycle (European Environment Agency). Online package delivery: 5 kg CO₂e per parcel. Recycling factor reduces total lifestyle emissions by 5–20% depending on intensity (Zero Waste Europe).',
+    methodologySources: 'Sources: IPCC AR6, IEA 2023, ICAO Carbon Emissions Calculator, Poore & Nemecek (2018) Science, UK DEFRA Conversion Factors, European Environment Agency.'
   },
 
   // Forum Page
@@ -538,6 +550,8 @@ export default {
     treesPlanted: 'Trees Planted',
     challengesDone: 'Challenges Done',
     todaysProgress: 'Today\'s Progress',
+    logYourProgress: 'Log your progress in this challenge:',
+    current: 'Current',
     logProgress: 'Log Progress',
     // Challenge content
     challengesList: {
@@ -784,6 +798,8 @@ export default {
     passwordPlaceholder: 'Enter your password',
     rememberMe: 'Remember me',
     forgotPassword: 'Forgot password?',
+    forgotDesc: 'Enter your email and we will send you a new temporary password.',
+    sendReset: 'Send Reset',
     signIn: 'Sign In',
     signingIn: 'Signing in...',
     noAccount: 'Don\'t have an account?',
@@ -864,24 +880,91 @@ export default {
   // Admin Page
   admin: {
     title: 'Admin Panel',
+    ecoAdmin: 'Eco Admin',
+    controlCenter: 'Control Center',
+    backToSite: 'Back to Site',
+    site: 'Site',
+    darkMode: 'Dark Mode',
+    lightMode: 'Light Mode',
+    myProfile: 'My Profile',
+    signOut: 'Sign Out',
+
+    // Sidebar
+    sidebarMain: 'Main',
+    sidebarContent: 'Content',
+    sidebarSettings: 'Settings',
     dashboard: 'Dashboard',
     users: 'Users',
     products: 'Products',
     orders: 'Orders',
     forum: 'Forum',
     settings: 'Settings',
-    totalUsers: 'Total Users',
-    totalProducts: 'Total Products',
-    totalOrders: 'Total Orders',
-    totalRevenue: 'Total Revenue',
+
+    // Dashboard
+    dashboardOverview: 'Dashboard Overview',
+    dashboardWelcome: 'Welcome back! Here\'s what\'s happening with your eco-store.',
+    today: 'Today',
+    thisWeek: 'This Week',
+    thisMonth: 'This Month',
+    thisYear: 'This Year',
+    newUsers: 'New Users',
+    total: 'Total',
+    activeListings: 'Active listings',
+    revenue: 'Revenue',
     recentOrders: 'Recent Orders',
-    recentUsers: 'Recent Users',
+    topProducts: 'Top Products',
+    recentActivity: 'Recent Activity',
+    atAGlance: 'At a glance',
+    totalUsers: 'Total users',
+    totalOrders: 'Total orders',
+    storeRevenue: 'Store revenue',
+    viewAll: 'View all',
+    noOrdersInPeriod: 'No orders in this period',
+    noProductsYet: 'No products yet',
+    noRecentActivity: 'No recent activity',
+    vsYesterday: 'vs yesterday',
+    vsLastWeek: 'vs last week',
+    vsLastMonth: 'vs last month',
+    vsLastYear: 'vs last year',
+    vsPreviousPeriod: 'vs previous period',
+
+    // Users tab
+    userManagement: 'User Management',
+    userManagementDesc: 'Manage user accounts and permissions',
+    searchUsers: 'Search users...',
+    user: 'User',
+    email: 'Email',
+    role: 'Role',
+    status: 'Status',
+    joined: 'Joined',
+    actions: 'Actions',
+    blocked: 'Blocked',
+    active: 'Active',
+    block: 'Block',
+    unblock: 'Unblock',
+    noUsersFound: 'No users found',
+
+    // Products tab
+    productManagement: 'Product Management',
+    productManagementDesc: 'Manage your eco-friendly product catalog',
+    searchProducts: 'Search products...',
     addProduct: 'Add Product',
     editProduct: 'Edit Product',
     deleteProduct: 'Delete Product',
-    addUser: 'Add User',
-    editUser: 'Edit User',
-    deleteUser: 'Delete User',
+    inStock: 'in stock',
+    noProductsFound: 'No products found',
+    addFirstProduct: 'Add First Product',
+
+    // Orders tab
+    orderManagement: 'Order Management',
+    orderManagementDesc: 'Track and manage customer orders',
+    all: 'All',
+    customer: 'Customer',
+    items: 'Items',
+    productsCount: 'products',
+    date: 'Date',
+    view: 'View',
+    noOrdersFound: 'No orders found',
     orderStatus: {
       pending: 'Pending',
       processing: 'Processing',
@@ -889,22 +972,70 @@ export default {
       delivered: 'Delivered',
       cancelled: 'Cancelled'
     },
+
+    // Forum tab
+    forumManagement: 'Forum Management',
+    forumManagementDesc: 'Moderate community discussions',
+    searchPosts: 'Search posts...',
+    by: 'By',
+    comments: 'comments',
+    noForumPosts: 'No forum posts found',
+
+    // Settings tab
+    configureAdmin: 'Configure your admin dashboard',
+    storeSettings: 'Store Settings',
+    storeName: 'Store Name',
+    storeNamePlaceholder: 'Enter store name...',
+    currency: 'Currency',
+    saveChanges: 'Save Changes',
+    notifications: 'Notifications',
+    emailOnNewOrders: 'Email on new orders',
+    emailOnNewUsers: 'Email on new users',
+    lowStockAlerts: 'Low stock alerts',
+
+    // User edit modal
+    editUser: 'Edit User',
+    name: 'Name',
     userRole: {
       user: 'User',
       admin: 'Admin'
     },
+    saving: 'Saving...',
+    cancel: 'Cancel',
+
+    // Product modal
+    productName: 'Product Name',
+    category: 'Category',
+    selectCategory: 'Select category',
+    description: 'Description',
+    price: 'Price (€)',
+    stock: 'Stock',
+    productImage: 'Product Image',
+    clickToUpload: 'Click to upload image',
+    uploadHint: 'JPG, PNG, GIF, WebP (max 5MB)',
+    uploading: 'Uploading...',
+    pasteImageUrl: 'Paste image URL here...',
+    lifecycleInfo: 'Lifecycle Info (Eco Impact)',
+    lifecyclePlaceholder: 'Environmental impact information...',
+    updateProduct: 'Update Product',
+    or: 'or',
+
+    // Category names
+    categorySolar: 'Solar',
+    categoryWater: 'Water',
+    categoryEnergy: 'Energy',
+    categoryGarden: 'Garden',
+    categoryHome: 'Home',
+    categoryTransport: 'Transport',
+
     search: 'Search...',
     noResults: 'No results',
-    actions: 'Actions',
-    status: 'Status',
-    date: 'Date',
-    price: 'Price',
-    stock: 'Stock',
-    category: 'Category',
     confirmDelete: 'Are you sure you want to delete?',
     ecoScore: 'Eco Score',
     systemHealth: 'System Health',
-    quickActions: 'Quick Actions'
+    quickActions: 'Quick Actions',
+    delete: 'Delete',
+    edit: 'Edit'
   },
 
   // Notifications

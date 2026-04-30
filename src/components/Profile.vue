@@ -1,5 +1,14 @@
 <template>
   <div class="profile-page">
+    <!-- Toast -->
+    <transition name="toast">
+      <div v-if="toast.visible" class="toast" :class="['toast-' + toast.type]">
+        <svg v-if="toast.type === 'success'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>{{ toast.message }}</span>
+      </div>
+    </transition>
+
     <!-- Profile Hero -->
     <div class="profile-hero">
       <div class="hero-bg"></div>
@@ -75,17 +84,17 @@
           <div class="section-card">
             <h2>{{ t('profile.quickActions') }}</h2>
             <div class="quick-actions">
-              <router-link to="/calculator" class="action-btn">
+              <router-link to="/footprint?tab=calculator" class="action-btn">
                 <span class="action-icon">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8" y2="10.01"/><line x1="12" y1="10" x2="12" y2="10.01"/><line x1="16" y1="10" x2="16" y2="10.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="8" y1="18" x2="8" y2="18.01"/><line x1="12" y1="18" x2="16" y2="18"/></svg>
                 </span>
                 <span class="action-text">{{ t('profile.calculateFootprint') }}</span>
               </router-link>
-              <router-link to="/challenges" class="action-btn">
+              <router-link to="/education" class="action-btn">
                 <span class="action-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                 </span>
-                <span class="action-text">{{ t('profile.joinChallenges') }}</span>
+                <span class="action-text">{{ t('profile.learnMore') || 'Learn' }}</span>
               </router-link>
               <router-link to="/footprint" class="action-btn">
                 <span class="action-icon">
@@ -143,7 +152,7 @@
               </div>
               <div class="form-actions">
                 <button type="submit" class="btn-save" :disabled="loading">
-                  {{ loading ? '⏳ ' + t('common.loading') : '💾 ' + t('profile.saveChanges') }}
+                  {{ loading ? t('common.loading') : t('profile.saveChanges') }}
                 </button>
               </div>
             </form>
@@ -151,7 +160,10 @@
 
           <!-- Achievements Section -->
           <div class="section-card">
-            <h2>🏆 {{ t('profile.achievements') }}</h2>
+            <h2>
+              <svg class="section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+              {{ t('profile.achievements') }}
+            </h2>
             <div class="achievements-grid">
               <div 
                 v-for="badge in achievements" 
@@ -159,7 +171,7 @@
                 :class="['achievement', { unlocked: badge.unlocked }]"
                 :title="badge.description"
               >
-                <span class="achievement-icon">{{ badge.icon }}</span>
+                <span class="achievement-icon" v-html="badge.icon"></span>
                 <span class="achievement-name">{{ badge.name }}</span>
                 <div v-if="!badge.unlocked" class="achievement-progress">
                   <div class="progress-fill" :style="{ width: badge.progress + '%' }"></div>
@@ -187,10 +199,13 @@
 
           <!-- Recent Activity -->
           <div class="sidebar-card">
-            <h3>📅 {{ t('profile.recentActivity') }}</h3>
+            <h3>
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              {{ t('profile.recentActivity') }}
+            </h3>
             <div class="activity-list">
               <div v-for="(activity, index) in recentActivity" :key="index" class="activity-item">
-                <span class="activity-icon">{{ activity.icon }}</span>
+                <span class="activity-icon" v-html="activity.icon"></span>
                 <div class="activity-content">
                   <span class="activity-text">{{ activity.text }}</span>
                   <span class="activity-time">{{ activity.time }}</span>
@@ -201,13 +216,18 @@
 
           <!-- Danger Zone -->
           <div class="sidebar-card danger-zone">
-            <h3>⚠️ {{ t('profile.accountSettings') }}</h3>
+            <h3>
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              {{ t('profile.accountSettings') }}
+            </h3>
             <p class="danger-text">{{ t('profile.dangerZone') }}</p>
             <button class="btn-logout" @click="logout">
-              🚪 {{ t('common.logout') }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              {{ t('common.logout') }}
             </button>
             <button class="btn-delete" @click="deleteAccount">
-              🗑️ {{ t('profile.deleteAccount') }}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
+              {{ t('profile.deleteAccount') }}
             </button>
           </div>
         </aside>
@@ -218,9 +238,9 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
-  name: 'Profile',
   setup() {
     const { t } = useI18n()
     return { t }
@@ -247,13 +267,14 @@ export default {
       currentXP: 0,
       nextLevelXP: 100,
       memberSinceDate: null,
+      toast: { message: '', type: 'success', visible: false },
       achievementsData: [
-        { id: 1, key: 'firstStep', icon: '👣', unlocked: false, progress: 0 },
-        { id: 2, key: 'ecoShopper', icon: '🛒', unlocked: false, progress: 0 },
-        { id: 3, key: 'carbonCutter', icon: '✂️', unlocked: false, progress: 0 },
-        { id: 4, key: 'challengeMaster', icon: '🎯', unlocked: false, progress: 0 },
-        { id: 5, key: 'streakHero', icon: '🔥', unlocked: false, progress: 0 },
-        { id: 6, key: 'planetGuardian', icon: '🌍', unlocked: false, progress: 0 }
+        { id: 1, key: 'firstStep', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-12a8 8 0 1 0-16 0c0 8 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg>', unlocked: false, progress: 0 },
+        { id: 2, key: 'ecoShopper', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>', unlocked: false, progress: 0 },
+        { id: 3, key: 'carbonCutter', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', unlocked: false, progress: 0 },
+        { id: 4, key: 'challengeMaster', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>', unlocked: false, progress: 0 },
+        { id: 5, key: 'streakHero', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', unlocked: false, progress: 0 },
+        { id: 6, key: 'planetGuardian', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>', unlocked: false, progress: 0 }
       ],
       recentActivity: []
     }
@@ -309,35 +330,24 @@ export default {
   methods: {
     async fetchUserStats() {
       try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:3000/api/user/stats', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          // Update stats
-          this.userStats = {
-            co2Saved: data.totalCo2Saved || 0,
-            challengesCompleted: data.challengesCompleted || 0,
-            ecoOrders: data.ordersCount || 0,
-            streak: data.streak || 0
-          };
-          this.userLevel = data.level || 1;
-          this.currentXP = data.currentXP || 0;
-          this.nextLevelXP = data.nextLevelXP || 100;
-          this.memberSinceDate = data.userCreatedAt;
-          
-          // Update achievements based on real data
-          this.updateAchievements(data);
-          
-          // Update recent activity
-          if (data.recentActivities && data.recentActivities.length > 0) {
-            this.recentActivity = data.recentActivities.map(a => ({
-              icon: this.getActivityIcon(a.activity),
-              text: a.activity,
-              time: this.formatActivityTime(a.date)
-            }));
-          }
+        const { data } = await api.get('/api/user/stats');
+        this.userStats = {
+          co2Saved: data.totalCo2Saved || 0,
+          challengesCompleted: data.challengesCompleted || 0,
+          ecoOrders: data.ordersCount || 0,
+          streak: data.streak || 0
+        };
+        this.userLevel = data.level || 1;
+        this.currentXP = data.currentXP || 0;
+        this.nextLevelXP = data.nextLevelXP || 100;
+        this.memberSinceDate = data.userCreatedAt;
+        this.updateAchievements(data);
+        if (data.recentActivities && data.recentActivities.length > 0) {
+          this.recentActivity = data.recentActivities.map(a => ({
+            icon: this.getActivityIcon(a.activity),
+            text: a.activity,
+            time: this.formatActivityTime(a.date)
+          }));
         }
       } catch (error) {
         console.error('Error fetching user stats:', error);
@@ -369,15 +379,16 @@ export default {
       this.achievementsData[5].unlocked = data.totalCo2Saved >= 500;
     },
     getActivityIcon(activity) {
+      const svg = (path) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
       const lower = activity.toLowerCase();
-      if (lower.includes('bike') || lower.includes('cycling')) return '🚲';
-      if (lower.includes('recycle')) return '♻️';
-      if (lower.includes('walk')) return '🚶';
-      if (lower.includes('public') || lower.includes('bus') || lower.includes('train')) return '🚌';
-      if (lower.includes('plant')) return '🌱';
-      if (lower.includes('solar') || lower.includes('energy')) return '☀️';
-      if (lower.includes('water')) return '💧';
-      return '🌍';
+      if (lower.includes('bike') || lower.includes('cycling')) return svg('<circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/>');
+      if (lower.includes('recycle')) return svg('<path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/>');
+      if (lower.includes('walk')) return svg('<circle cx="13" cy="4" r="2"/><path d="m15 22-1-7 1-2 4 4M9 22l3-9-3-3-3 5"/>');
+      if (lower.includes('public') || lower.includes('bus') || lower.includes('train')) return svg('<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/>');
+      if (lower.includes('plant')) return svg('<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>');
+      if (lower.includes('solar') || lower.includes('energy')) return svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>');
+      if (lower.includes('water')) return svg('<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>');
+      return svg('<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>');
     },
     formatActivityTime(dateStr) {
       const date = new Date(dateStr);
@@ -410,46 +421,54 @@ export default {
     },
     async updateProfile() {
       this.loading = true;
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:3000/api/user', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(this.editData)
-        });
-        if (response.ok) {
-          this.saveCustomizations();
-          alert('Profile updated successfully!');
-          this.showEdit = false;
-          location.reload();
-        } else {
-          const data = await response.json();
-          alert(data.error);
+        // Only send fields the user actually wants to change
+        const payload = {};
+        if (this.editData.name && this.editData.name.trim() && this.editData.name !== this.user?.name) {
+          payload.name = this.editData.name.trim();
         }
+        if (this.editData.password) {
+          payload.password = this.editData.password;
+        }
+        if (Object.keys(payload).length === 0) {
+          // Just save local customizations (bio/avatar)
+          this.saveCustomizations();
+          this.showEdit = false;
+          this.showToast(this.t('profile.savedLocally') || 'Saved');
+          this.loading = false;
+          return;
+        }
+        const { data } = await api.put('/api/user', payload);
+        // Backend now re-issues a JWT so the new name shows up immediately
+        if (data && data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        this.saveCustomizations();
+        this.editData.password = '';
+        this.showEdit = false;
+        this.showToast(this.t('profile.profileUpdated') || 'Profile updated');
+        // Force computed `user` to re-read the new token without a hard reload
+        this.$forceUpdate();
       } catch (error) {
-        alert('Error updating profile');
+        this.showToast(error.response?.data?.error || 'Error updating profile', 'error');
       } finally {
         this.loading = false;
       }
     },
+    showToast(message, type = 'success') {
+      this.toast = { message, type, visible: true };
+      clearTimeout(this._toastTimer);
+      this._toastTimer = setTimeout(() => {
+        this.toast.visible = false;
+      }, 3000);
+    },
     async deleteAccount() {
       if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) return;
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:3000/api/user', {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (response.ok) {
-          localStorage.removeItem('token');
-          this.$router.push('/');
-          location.reload();
-        } else {
-          alert('Error deleting account');
-        }
+        await api.delete('/api/user');
+        localStorage.removeItem('token');
+        this.$router.push('/');
+        location.reload();
       } catch (error) {
         alert('Error deleting account');
       }
@@ -474,17 +493,49 @@ export default {
   min-height: 100vh;
   background: var(--bg-color);
   padding-bottom: 60px;
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Hero Section */
 .profile-hero {
   position: relative;
   padding: 100px 20px 60px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
+  overflow: hidden;
 }
 
-.hero-bg {
-  display: none;
+.profile-hero::before,
+.profile-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.profile-hero::before {
+  width: 150px;
+  height: 150px;
+  top: -40px;
+  right: 80px;
+}
+
+.profile-hero::after {
+  width: 100px;
+  height: 100px;
+  bottom: -30px;
+  left: 50px;
+  animation-delay: -4s;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
 }
 
 .profile-avatar-section {
@@ -505,7 +556,9 @@ export default {
   height: 110px;
   border-radius: 50%;
   padding: 4px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .avatar-img {
@@ -573,6 +626,8 @@ export default {
   gap: 6px;
   padding: 6px 12px;
   background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius-md);
   font-size: 0.8rem;
 }
@@ -607,6 +662,12 @@ export default {
   gap: 12px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(46, 204, 113, 0.12);
 }
 
 .stat-icon {
@@ -623,6 +684,11 @@ export default {
 .stat-icon.blue { background: #e8f4fd; color: #3b82f6; }
 .stat-icon.purple { background: #f3e8ff; color: #8b5cf6; }
 .stat-icon.orange { background: #fef3e2; color: #f59e0b; }
+
+/* Dark-mode tints so coloured icons stay readable without going pure white */
+.dark .stat-icon.blue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+.dark .stat-icon.purple { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; }
+.dark .stat-icon.orange { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
 
 .stat-content {
   display: flex;
@@ -655,6 +721,11 @@ export default {
   margin-bottom: 16px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.section-card:hover {
+  box-shadow: 0 8px 24px rgba(46, 204, 113, 0.08);
 }
 
 .section-card h2 {
@@ -662,6 +733,14 @@ export default {
   color: var(--text-color);
   font-size: 1.1rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-icon {
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 .section-header {
@@ -719,6 +798,7 @@ export default {
   border-color: var(--primary);
   color: var(--primary);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.15);
 }
 
 .action-icon {
@@ -799,18 +879,37 @@ export default {
 .btn-save {
   width: 100%;
   padding: 12px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-save::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.5s ease;
 }
 
 .btn-save:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
+}
+
+.btn-save:hover::after {
+  left: 100%;
 }
 
 /* Achievements */
@@ -845,9 +944,11 @@ export default {
 }
 
 .achievement-icon {
-  font-size: 1.5rem;
   margin-bottom: 8px;
   color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .achievement-name {
@@ -872,7 +973,7 @@ export default {
 
 .achievement-progress .progress-fill {
   height: 100%;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   border-radius: 2px;
 }
 
@@ -896,11 +997,14 @@ export default {
   color: var(--text-color);
   font-size: 1rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* Level Card */
 .level-card {
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
 }
@@ -1022,6 +1126,10 @@ export default {
   cursor: pointer;
   transition: var(--transition);
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-logout {
@@ -1089,6 +1197,56 @@ export default {
 
   .achievements-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  font-size: 0.9rem;
+  font-weight: 500;
+  max-width: 360px;
+}
+
+.toast-success {
+  border-left: 3px solid var(--primary);
+  color: var(--primary);
+}
+
+.toast-error {
+  border-left: 3px solid #dc2626;
+  color: #dc2626;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+@media (max-width: 600px) {
+  .toast {
+    top: 70px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
   }
 }
 </style>

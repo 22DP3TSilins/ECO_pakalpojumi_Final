@@ -2,9 +2,21 @@
   <div class="home-page">
     <!-- Hero Section -->
     <div class="hero-section">
+      <!-- Organic decorative shapes -->
+      <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+      </div>
       <div class="hero-content">
-        <span class="hero-badge">{{ t('home.heroTitle') }}</span>
-        <h1>Eco Pakalpojumi</h1>
+        <span class="hero-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C9 2 4 7 4 14c0 4 3 8 8 8s8-4 8-8c0-7-5-12-8-12z"/><path d="M12 6v10M9 12c1.5 2 4.5 2 6 0"/></svg>
+          {{ t('home.heroTitle') }}
+        </span>
+        <h1>
+          <span class="hero-title-line">Eco</span>
+          <span class="hero-title-line accent">Pakalpojumi</span>
+        </h1>
         <p class="hero-subtitle">
           {{ t('home.heroSubtitle') }}
         </p>
@@ -13,23 +25,24 @@
             {{ t('home.shopProducts') }}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </router-link>
-          <router-link to="/calculator" class="hero-btn secondary">
+          <router-link to="/footprint?tab=calculator" class="hero-btn secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/></svg>
             {{ t('home.calculateFootprint') }}
           </router-link>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
-            <span class="stat-value">{{ formatNumber(globalStats.totalUsers) }}+</span>
+            <span class="stat-value">{{ animatedUsers }}+</span>
             <span class="stat-text">{{ t('home.activeUsers') }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="hero-stat">
-            <span class="stat-value">{{ formatNumber(globalStats.totalCo2Saved) }}</span>
+            <span class="stat-value">{{ animatedCo2 }}</span>
             <span class="stat-text">{{ t('home.co2Saved') }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="hero-stat">
-            <span class="stat-value">{{ formatNumber(globalStats.treesPlanted) }}</span>
+            <span class="stat-value">{{ animatedTrees }}</span>
             <span class="stat-text">{{ t('home.treesPlanted') }}</span>
           </div>
         </div>
@@ -38,127 +51,97 @@
 
     <!-- Features Section -->
     <div class="features-section">
-      <div class="section-header">
+      <div class="section-header reveal">
+        <span class="section-badge">Features</span>
         <h2>{{ t('home.whyChooseUs') }}</h2>
         <p>{{ t('home.joinThousands') }}</p>
       </div>
       <div class="features-grid">
-        <router-link to="/products" class="feature-card">
-          <div class="feature-icon">
+        <router-link to="/products" class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon green">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           </div>
           <h3>{{ t('home.sustainableProducts') }}</h3>
           <p>{{ t('home.sustainableProductsDesc') }}</p>
-          <span class="feature-link">{{ t('home.browseProducts') }} →</span>
+          <span class="feature-link">
+            {{ t('home.browseProducts') }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </span>
         </router-link>
 
-        <router-link to="/calculator" class="feature-card">
-          <div class="feature-icon">
+        <router-link to="/footprint?tab=calculator" class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon blue">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
           </div>
           <h3>{{ t('home.carbonCalculator') }}</h3>
           <p>{{ t('home.carbonCalculatorDesc') }}</p>
-          <span class="feature-link">{{ t('home.tryCalculator') }} →</span>
+          <span class="feature-link">
+            {{ t('home.tryCalculator') }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </span>
         </router-link>
 
-        <router-link to="/forum" class="feature-card">
-          <div class="feature-icon">
+        <router-link to="/forum" class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon purple">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
           <h3>{{ t('home.communityForum') }}</h3>
           <p>{{ t('home.communityForumDesc') }}</p>
-          <span class="feature-link">{{ t('home.joinDiscussion') }} →</span>
+          <span class="feature-link">
+            {{ t('home.joinDiscussion') }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </span>
         </router-link>
 
-        <router-link to="/challenges" class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-          </div>
-          <h3>{{ t('home.ecoChallenges') }}</h3>
-          <p>{{ t('home.ecoChallengesDesc') }}</p>
-          <span class="feature-link">{{ t('home.viewChallenges') }} →</span>
-        </router-link>
-
-        <router-link to="/education" class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-          </div>
-          <h3>{{ t('home.educationHub') }}</h3>
-          <p>{{ t('home.educationHubDesc') }}</p>
-          <span class="feature-link">{{ t('home.startLearning') }} →</span>
-        </router-link>
-
-        <router-link to="/footprint" class="feature-card">
-          <div class="feature-icon">
+        <router-link to="/footprint" class="feature-card reveal reveal-delay-4">
+          <div class="feature-icon amber">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
           </div>
           <h3>{{ t('home.footprintTracker') }}</h3>
           <p>{{ t('home.footprintTrackerDesc') }}</p>
-          <span class="feature-link">{{ t('home.trackProgress') }} →</span>
+          <span class="feature-link">
+            {{ t('home.trackProgress') }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </span>
         </router-link>
-      </div>
-    </div>
-
-    <!-- Impact Section -->
-    <div class="impact-section">
-      <div class="section-header">
-        <h2>{{ t('home.ourImpact') }}</h2>
-        <p>{{ t('home.impactSubtitle') }}</p>
-      </div>
-      <div class="impact-grid">
-        <div class="impact-card">
-          <div class="impact-value">{{ globalStats.treesPlanted.toLocaleString() }}</div>
-          <div class="impact-label">{{ t('home.treesPlantedImpact') }}</div>
-          <div class="impact-bar">
-            <div class="bar-fill" :style="{ width: Math.min((globalStats.treesPlanted / 5000) * 100, 100) + '%' }"></div>
-          </div>
-        </div>
-
-        <div class="impact-card">
-          <div class="impact-value">{{ Math.floor(globalStats.totalActivities / 10) }} t</div>
-          <div class="impact-label">{{ t('home.plasticDiverted') }}</div>
-          <div class="impact-bar">
-            <div class="bar-fill" :style="{ width: Math.min((globalStats.totalActivities / 1000) * 100, 100) + '%' }"></div>
-          </div>
-        </div>
-
-        <div class="impact-card">
-          <div class="impact-value">{{ formatNumber(globalStats.totalCo2Saved * 2) }} kWh</div>
-          <div class="impact-label">{{ t('home.cleanEnergy') }}</div>
-          <div class="impact-bar">
-            <div class="bar-fill" :style="{ width: Math.min((globalStats.totalCo2Saved / 50000) * 100, 100) + '%' }"></div>
-          </div>
-        </div>
-
-        <div class="impact-card">
-          <div class="impact-value">{{ globalStats.totalCo2Saved.toLocaleString() }} kg</div>
-          <div class="impact-label">{{ t('home.co2SavedImpact') }}</div>
-          <div class="impact-bar">
-            <div class="bar-fill" :style="{ width: Math.min((globalStats.totalCo2Saved / 100000) * 100, 100) + '%' }"></div>
-          </div>
-        </div>
       </div>
     </div>
 
     <!-- How It Works Section -->
     <div class="how-section">
-      <div class="section-header">
+      <div class="section-header reveal">
+        <span class="section-badge">Process</span>
         <h2>{{ t('home.howItWorks') }}</h2>
         <p>{{ t('home.howItWorksSubtitle') }}</p>
       </div>
       <div class="steps-grid">
-        <div class="step-card">
+        <div class="step-card reveal reveal-delay-1">
           <div class="step-number">1</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/></svg>
+          </div>
           <h3>{{ t('home.stepCalculate') }}</h3>
           <p>{{ t('home.stepCalculateDesc') }}</p>
         </div>
-        <div class="step-card">
+        <div class="step-connector reveal reveal-delay-1">
+          <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h32m-6-6 6 6-6 6" stroke="var(--primary)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="step-card reveal reveal-delay-2">
           <div class="step-number">2</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C9 2 4 7 4 14c0 4 3 8 8 8s8-4 8-8c0-7-5-12-8-12z"/><path d="M12 6v10"/></svg>
+          </div>
           <h3>{{ t('home.stepTakeAction') }}</h3>
           <p>{{ t('home.stepTakeActionDesc') }}</p>
         </div>
-        <div class="step-card">
+        <div class="step-connector reveal reveal-delay-2">
+          <svg width="40" height="24" viewBox="0 0 40 24"><path d="M0 12h32m-6-6 6 6-6 6" stroke="var(--primary)" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="step-card reveal reveal-delay-3">
           <div class="step-number">3</div>
+          <div class="step-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
           <h3>{{ t('home.stepTrackProgress') }}</h3>
           <p>{{ t('home.stepTrackProgressDesc') }}</p>
         </div>
@@ -166,13 +149,16 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="cta-section">
+    <div class="cta-section reveal">
+      <div class="cta-glow"></div>
       <div class="cta-content">
+        <svg class="cta-leaf" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><path d="M12 2C9 2 4 7 4 14c0 4 3 8 8 8s8-4 8-8c0-7-5-12-8-12z"/><path d="M12 6v10M9 12c1.5 2 4.5 2 6 0"/></svg>
         <h2>{{ t('home.readyToMakeDifference') }}</h2>
         <p>{{ t('home.ctaSubtitle') }}</p>
         <div class="cta-actions">
           <router-link to="/register" class="cta-btn primary">
             {{ t('home.getStartedFree') }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
           </router-link>
           <router-link to="/education" class="cta-btn secondary">
             {{ t('home.learnMore') }}
@@ -181,53 +167,14 @@
       </div>
     </div>
 
-    <!-- Testimonials Section -->
-    <div class="testimonials-section">
-      <div class="section-header">
-        <h2>{{ t('home.testimonials') }}</h2>
-        <p>{{ t('home.testimonialsSubtitle') }}</p>
-      </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="quote">"{{ t('home.testimonial1') }}"</div>
-          <div class="author">
-            <div class="avatar">👩</div>
-            <div class="author-info">
-              <span class="name">Anna K.</span>
-              <span class="role">Eko Karotāja kopš 2024</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quote">"{{ t('home.testimonial2') }}"</div>
-          <div class="author">
-            <div class="avatar">👨</div>
-            <div class="author-info">
-              <span class="name">Jānis M.</span>
-              <span class="role">150 izaicinājumi pabeigti</span>
-            </div>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="quote">"{{ t('home.testimonial3') }}"</div>
-          <div class="author">
-            <div class="avatar">👩‍🦰</div>
-            <div class="author-info">
-              <span class="name">Līga B.</span>
-              <span class="role">Foruma moderatore</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
-  name: 'HomePage',
   setup() {
     const { t } = useI18n()
     return { t }
@@ -239,16 +186,28 @@ export default {
         totalCo2Saved: 0,
         treesPlanted: 0,
         totalActivities: 0
-      }
+      },
+      displayedUsers: 0,
+      displayedCo2: 0,
+      displayedTrees: 0
+    }
+  },
+  computed: {
+    animatedUsers() {
+      return this.formatNumber(this.displayedUsers)
+    },
+    animatedCo2() {
+      return this.formatNumber(this.displayedCo2)
+    },
+    animatedTrees() {
+      return this.formatNumber(this.displayedTrees)
     }
   },
   async mounted() {
     try {
-      const response = await fetch('http://localhost:3000/api/stats/global')
-      if (response.ok) {
-        const data = await response.json()
-        this.globalStats = data
-      }
+      const { data } = await api.get('/api/stats/global')
+      this.globalStats = data
+      this.animateCounters()
     } catch (error) {
       console.error('Error fetching global stats:', error)
     }
@@ -259,6 +218,30 @@ export default {
         return (num / 1000).toFixed(1) + 'K'
       }
       return num.toString()
+    },
+    animateCounters() {
+      const duration = 1500
+      const steps = 40
+      const interval = duration / steps
+
+      const targets = {
+        users: this.globalStats.totalUsers,
+        co2: this.globalStats.totalCo2Saved,
+        trees: this.globalStats.treesPlanted
+      }
+
+      let step = 0
+      const timer = setInterval(() => {
+        step++
+        const progress = this.easeOutCubic(step / steps)
+        this.displayedUsers = Math.round(targets.users * progress)
+        this.displayedCo2 = Math.round(targets.co2 * progress)
+        this.displayedTrees = Math.round(targets.trees * progress)
+        if (step >= steps) clearInterval(timer)
+      }, interval)
+    },
+    easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3)
     }
   }
 }
@@ -267,97 +250,185 @@ export default {
 <style scoped>
 .home-page {
   background: var(--bg-color);
+  overflow: hidden;
 }
 
-/* Hero Section */
+/* ===== Hero Section ===== */
 .hero-section {
-  padding: 120px 24px 80px;
+  padding: 130px 24px 90px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-color);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--gradient-hero);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Organic floating shapes */
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(13, 124, 95, 0.12) 0%, transparent 70%);
+  top: -100px;
+  right: -80px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
+  bottom: -60px;
+  left: -60px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(16, 163, 127, 0.08) 0%, transparent 70%);
+  top: 30%;
+  left: 15%;
+  animation: float 12s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
 }
 
 .hero-content {
-  max-width: 640px;
+  max-width: 680px;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: heroFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .hero-badge {
-  display: inline-block;
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
   background: var(--primary-subtle);
   color: var(--primary);
-  border-radius: 100px;
+  border-radius: var(--radius-full);
   font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 24px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  border: 1px solid rgba(13, 124, 95, 0.12);
+  backdrop-filter: blur(10px);
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin: 0 0 16px;
-  letter-spacing: -0.03em;
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 0 0 20px;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.hero-title-line {
+  display: block;
   color: var(--text-color);
-  line-height: 1.1;
+}
+
+.hero-title-line.accent {
+  background: var(--gradient-eco);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-subtitle {
-  font-size: 1.125rem;
+  font-size: 1.15rem;
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-actions {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 56px;
 }
 
 .hero-btn {
-  padding: 14px 28px;
-  border-radius: 10px;
+  padding: 13px 26px;
+  border-radius: var(--radius);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-btn.primary {
-  background: var(--primary);
+  background: var(--gradient-eco);
   color: white;
+  box-shadow: 0 4px 16px rgba(13, 124, 95, 0.3);
 }
 
 .hero-btn.primary:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(13, 124, 95, 0.4);
 }
 
 .hero-btn.secondary {
-  background: var(--bg-secondary);
+  background: var(--card-bg);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .hero-btn.secondary:hover {
-  background: var(--border-color);
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  color: var(--primary);
+  transform: translateY(-2px);
 }
 
+/* Stats */
 .hero-stats {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 36px;
   flex-wrap: wrap;
+  padding: 24px 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  max-width: 520px;
+  margin: 0 auto;
 }
 
 .hero-stat {
@@ -366,79 +437,144 @@ export default {
 
 .stat-divider {
   width: 1px;
-  height: 40px;
+  height: 36px;
   background: var(--border-color);
 }
 
 .stat-value {
   display: block;
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-color);
-}
-
-.stat-text {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-/* Section Header */
-.section-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.section-header h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-color);
-  margin: 0 0 8px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: var(--gradient-eco);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: -0.02em;
 }
 
-.section-header p {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin: 0;
+.stat-text {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
 }
 
-/* Features Section */
+/* ===== Section Styles ===== */
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  background: var(--primary-subtle);
+  color: var(--primary);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin: 0 0 10px;
+  letter-spacing: -0.03em;
+}
+
+.section-header p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== Features Section ===== */
 .features-section {
-  padding: 80px 24px;
+  padding: 100px 24px;
   max-width: 1100px;
   margin: 0 auto;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
 
 .feature-card {
-  background: var(--card-bg);
-  padding: 28px;
+  background: var(--gradient-card);
+  padding: 32px 28px;
   border-radius: var(--radius-lg);
   text-decoration: none;
   border: 1px solid var(--border-color);
-  transition: all 0.2s;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-eco);
+  transform: scaleX(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: left;
 }
 
 .feature-card:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(13, 124, 95, 0.2);
+}
+
+.feature-card:hover::before {
+  transform: scaleX(1);
 }
 
 .feature-icon {
-  width: 48px;
-  height: 48px;
-  background: var(--primary-subtle);
-  border-radius: var(--radius-md);
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  color: var(--primary);
+  margin-bottom: 20px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+.feature-icon.green {
+  background: rgba(13, 124, 95, 0.1);
+  color: #0d7c5f;
+}
+
+.feature-icon.blue {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.feature-icon.purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+.feature-icon.amber {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
 }
 
 .feature-icon svg {
@@ -450,11 +586,11 @@ export default {
   margin: 0 0 8px;
   color: var(--text-color);
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .feature-card p {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   color: var(--text-secondary);
   line-height: 1.6;
   font-size: 0.9rem;
@@ -462,142 +598,97 @@ export default {
 
 .feature-link {
   color: var(--primary);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.875rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  transition: gap 0.25s ease;
 }
 
-/* Impact Section */
-.impact-section {
-  padding: 80px 24px;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+.feature-card:hover .feature-link {
+  gap: 10px;
 }
 
-.impact-grid {
-  max-width: 900px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.impact-card {
-  background: var(--card-bg);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  text-align: center;
-  border: 1px solid var(--border-color);
-}
-
-.impact-icon {
-  width: 44px;
-  height: 44px;
-  margin: 0 auto 12px;
-  background: var(--primary-subtle);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary);
-}
-
-.impact-icon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.impact-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 4px;
-}
-
-.impact-label {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 12px;
-}
-
-.impact-bar {
-  height: 4px;
-  background: var(--border-color);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.bar-fill {
-  height: 100%;
-  background: var(--primary);
-  border-radius: 2px;
-  transition: width 1s ease;
-}
-
-/* How It Works Section */
+/* ===== How It Works ===== */
 .how-section {
-  padding: 80px 24px;
+  padding: 100px 24px;
   max-width: 1000px;
   margin: 0 auto;
 }
 
 .steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.step-connector {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  opacity: 0.5;
 }
 
 .step-card {
-  background: var(--card-bg);
-  padding: 28px 24px;
+  background: var(--gradient-card);
+  padding: 32px 28px;
   border-radius: var(--radius-lg);
   text-align: center;
   border: 1px solid var(--border-color);
   position: relative;
+  flex: 1;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: rgba(13, 124, 95, 0.2);
 }
 
 .step-number {
   position: absolute;
-  top: -12px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  width: 28px;
-  height: 28px;
-  background: var(--primary);
+  width: 30px;
+  height: 30px;
+  background: var(--gradient-eco);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.85rem;
+  box-shadow: 0 2px 10px rgba(13, 124, 95, 0.3);
 }
 
-.step-icon {
-  width: 48px;
-  height: 48px;
+.step-icon-wrap {
+  width: 56px;
+  height: 56px;
   margin: 8px auto 16px;
   background: var(--primary-subtle);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--primary);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.step-icon svg {
-  width: 24px;
-  height: 24px;
+.step-card:hover .step-icon-wrap {
+  transform: scale(1.08);
+  background: rgba(13, 124, 95, 0.15);
 }
 
 .step-card h3 {
   margin: 0 0 8px;
   color: var(--text-color);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .step-card p {
@@ -607,30 +698,56 @@ export default {
   font-size: 0.875rem;
 }
 
-/* CTA Section */
+/* ===== CTA Section ===== */
 .cta-section {
-  padding: 80px 24px;
+  padding: 100px 24px;
   background: var(--bg-color);
+  position: relative;
+}
+
+.cta-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(13, 124, 95, 0.08) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 50%;
 }
 
 .cta-content {
   max-width: 560px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  padding: 56px 40px;
+  background: var(--gradient-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+}
+
+.cta-leaf {
+  margin-bottom: 20px;
+  opacity: 0.6;
+  animation: float 6s ease-in-out infinite;
 }
 
 .cta-content h2 {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--text-color);
   margin: 0 0 12px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .cta-content p {
   font-size: 1rem;
   color: var(--text-secondary);
-  margin: 0 0 28px;
+  margin: 0 0 32px;
   line-height: 1.6;
 }
 
@@ -642,116 +759,53 @@ export default {
 }
 
 .cta-btn {
-  padding: 14px 28px;
-  border-radius: 10px;
+  padding: 13px 26px;
+  border-radius: var(--radius);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .cta-btn.primary {
-  background: var(--primary);
+  background: var(--gradient-eco);
   color: white;
+  box-shadow: 0 4px 16px rgba(13, 124, 95, 0.3);
 }
 
 .cta-btn.primary:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(13, 124, 95, 0.4);
 }
 
 .cta-btn.secondary {
   background: var(--bg-secondary);
   color: var(--text-color);
-  border: 1px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
 }
 
 .cta-btn.secondary:hover {
-  background: var(--border-color);
-}
-
-/* Testimonials Section */
-.testimonials-section {
-  padding: 80px 24px;
-  max-width: 1000px;
-  margin: 0 auto;
-  border-top: 1px solid var(--border-color);
-}
-
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.testimonial-card {
-  background: var(--card-bg);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-}
-
-.quote {
-  font-size: 0.95rem;
-  color: var(--text-color);
-  line-height: 1.7;
-  margin-bottom: 16px;
-  position: relative;
-  padding-left: 16px;
-  border-left: 2px solid var(--primary);
-}
-
-.author {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  background: var(--primary-subtle);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-color: var(--primary);
   color: var(--primary);
-  font-weight: 600;
-  font-size: 0.9rem;
+  transform: translateY(-2px);
 }
 
-.author-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.name {
-  font-weight: 600;
-  color: var(--text-color);
-  font-size: 0.9rem;
-}
-
-.role {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .hero-section {
-    padding: 100px 20px 60px;
+    padding: 110px 20px 70px;
   }
 
   .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 
   .hero-stats {
     gap: 20px;
+    padding: 20px 24px;
   }
 
   .stat-divider {
@@ -759,17 +813,32 @@ export default {
   }
 
   .features-section,
-  .impact-section,
   .how-section,
-  .cta-section,
-  .testimonials-section {
-    padding: 60px 20px;
+  .cta-section {
+    padding: 70px 20px;
+  }
+
+  .steps-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .step-connector {
+    display: none;
+  }
+
+  .step-card {
+    width: 100%;
+  }
+
+  .cta-content {
+    padding: 40px 24px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .hero-subtitle {
@@ -791,13 +860,10 @@ export default {
   }
 
   .section-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
-  .features-grid,
-  .impact-grid,
-  .steps-grid,
-  .testimonials-grid {
+  .features-grid {
     grid-template-columns: 1fr;
   }
 

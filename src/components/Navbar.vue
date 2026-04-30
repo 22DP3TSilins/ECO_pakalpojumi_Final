@@ -4,7 +4,12 @@
       <!-- Desktop Layout -->
       <div class="nav-left desktop-only">
         <router-link to="/" class="brand-link">
-          <span class="brand-icon">EP</span>
+          <span class="brand-icon">
+            <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
+              <path d="M16 4c-2 0-8 4-8 12s5 12 8 14c3-2 8-6 8-14s-6-12-8-12z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+              <path d="M16 8v14M12 14c2 3 6 3 8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
           <span class="brand-text">Eco Pakalpojumi</span>
         </router-link>
       </div>
@@ -142,88 +147,15 @@
           <router-link to="/products" class="nav-link">
             {{ t('common.products') }}
           </router-link>
-          <router-link to="/calculator" class="nav-link">
-            {{ t('common.calculator') }}
+          <router-link to="/footprint" class="nav-link">
+            {{ t('common.footprint') }}
           </router-link>
-
-          <!-- Community Dropdown -->
-          <div class="dropdown" :class="{ active: communityDropdownOpen }" @mouseenter="openCommunityDropdown" @mouseleave="closeCommunityDropdown">
-            <button class="nav-link dropdown-toggle" @click="toggleCommunityDropdown">
-              {{ t('common.community') }}
-              <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="dropdown-menu">
-              <div class="dropdown-header">{{ t('navbar.connectLearn') }}</div>
-              <router-link to="/forum" class="dropdown-item" @click="closeCommunityDropdown">
-                <div class="dropdown-item-content">
-                  <span class="dropdown-item-title">{{ t('common.forum') }}</span>
-                  <span class="dropdown-item-desc">{{ t('navbar.joinDiscussions') }}</span>
-                </div>
-              </router-link>
-              <router-link to="/education" class="dropdown-item" @click="closeCommunityDropdown">
-                <div class="dropdown-item-content">
-                  <span class="dropdown-item-title">{{ t('common.education') }}</span>
-                  <span class="dropdown-item-desc">{{ t('navbar.learnEcoLiving') }}</span>
-                </div>
-              </router-link>
-            </div>
-          </div>
-
-          <!-- More Dropdown -->
-          <div class="dropdown" :class="{ active: moreDropdownOpen }" @mouseenter="openMoreDropdown" @mouseleave="closeMoreDropdown">
-            <button class="nav-link dropdown-toggle" @click="toggleMoreDropdown">
-              <svg class="nav-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-              {{ t('common.more') }}
-              <svg class="dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-            <div class="dropdown-menu dropdown-menu-wide">
-              <div class="dropdown-header">{{ t('navbar.ecoTools') }}</div>
-              <div class="dropdown-grid">
-                <router-link to="/calculator" class="dropdown-item-card" @click="closeMoreDropdown">
-                  <span class="card-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="14" y1="18" x2="16" y2="18"/>
-                    </svg>
-                  </span>
-                  <span class="card-title">{{ t('common.calculator') }}</span>
-                </router-link>
-                <router-link v-if="user" to="/footprint" class="dropdown-item-card" @click="closeMoreDropdown">
-                  <span class="card-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                    </svg>
-                  </span>
-                  <span class="card-title">{{ t('common.footprint') }}</span>
-                </router-link>
-                <router-link v-if="user" to="/challenges" class="dropdown-item-card" @click="closeMoreDropdown">
-                  <span class="card-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                      <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-                    </svg>
-                  </span>
-                  <span class="card-title">{{ t('common.challenges') }}</span>
-                </router-link>
-                <router-link v-if="user && user.role === 'admin'" to="/admin" class="dropdown-item-card admin-card" @click="closeMoreDropdown">
-                  <span class="card-icon">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                      <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
-                    </svg>
-                  </span>
-                  <span class="card-title">{{ t('common.admin') }}</span>
-                </router-link>
-              </div>
-              <div v-if="!user" class="dropdown-footer">
-                <span class="footer-icon">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
-                  </svg>
-                </span>
-                <span>{{ t('navbar.loginToAccess') }}</span>
-              </div>
-            </div>
-          </div>
+          <router-link to="/forum" class="nav-link">
+            {{ t('common.forum') }}
+          </router-link>
+          <router-link v-if="user && user.role === 'admin'" to="/admin" class="nav-link admin-link">
+            {{ t('common.admin') }}
+          </router-link>
         </div>
       </div>
 
@@ -302,10 +234,6 @@
                 <span class="stat-value">{{ userStats.ecoPoints || 0 }}</span>
                 <span class="stat-label">{{ t('navbar.ecoPoints') }}</span>
               </div>
-              <div class="stat-item">
-                <span class="stat-value">{{ userStats.challengesCompleted || 0 }}</span>
-                <span class="stat-label">{{ t('navbar.challenges') }}</span>
-              </div>
             </div>
             <div class="user-dropdown-links">
               <router-link to="/profile" class="dropdown-item" @click="closeUserDropdown">
@@ -324,14 +252,6 @@
                   </svg>
                 </span>
                 {{ t('navbar.myCart') }}
-              </router-link>
-              <router-link to="/footprint" class="dropdown-item" @click="closeUserDropdown">
-                <span class="dropdown-icon">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                  </svg>
-                </span>
-                {{ t('navbar.myFootprint') }}
               </router-link>
             </div>
             <div class="user-dropdown-footer">
@@ -565,22 +485,13 @@
               </span>
               <span class="link-text">Products</span>
             </router-link>
-            <router-link v-if="user" to="/cart" @click="closeMobileMenu" class="mobile-nav-link">
+            <router-link to="/footprint" @click="closeMobileMenu" class="mobile-nav-link">
               <span class="link-icon">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
                 </svg>
               </span>
-              <span class="link-text">Cart</span>
-            </router-link>
-            <router-link to="/calculator" @click="closeMobileMenu" class="mobile-nav-link">
-              <span class="link-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/>
-                </svg>
-              </span>
-              <span class="link-text">Calculator</span>
+              <span class="link-text">Footprint</span>
             </router-link>
             <router-link to="/forum" @click="closeMobileMenu" class="mobile-nav-link">
               <span class="link-icon">
@@ -589,30 +500,6 @@
                 </svg>
               </span>
               <span class="link-text">Forum</span>
-            </router-link>
-            <router-link to="/education" @click="closeMobileMenu" class="mobile-nav-link">
-              <span class="link-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-                </svg>
-              </span>
-              <span class="link-text">Education</span>
-            </router-link>
-            <router-link v-if="user" to="/footprint" @click="closeMobileMenu" class="mobile-nav-link">
-              <span class="link-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-                </svg>
-              </span>
-              <span class="link-text">Footprint</span>
-            </router-link>
-            <router-link v-if="user" to="/challenges" @click="closeMobileMenu" class="mobile-nav-link">
-              <span class="link-icon">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
-                </svg>
-              </span>
-              <span class="link-text">Challenges</span>
             </router-link>
             <router-link v-if="user && user.role === 'admin'" to="/admin" @click="closeMobileMenu" class="mobile-nav-link">
               <span class="link-icon">
@@ -644,6 +531,26 @@
             </router-link>
           </div>
 
+          <!-- Mobile Sign Out -->
+          <div v-if="user" class="mobile-auth-actions">
+            <button @click="handleLogout" class="mobile-auth-btn logout">
+              <span class="btn-icon">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+              </span>
+              <span class="btn-text">{{ t('common.signOut') }}</span>
+            </button>
+          </div>
+
+          <!-- Language Toggle -->
+          <div class="mobile-theme-toggle">
+            <button @click="toggleLanguage" class="theme-toggle-btn">
+              <span class="toggle-icon lang-mobile-icon">{{ currentLanguage === 'lv' ? 'LV' : 'EN' }}</span>
+              <span class="toggle-text">{{ currentLanguage === 'lv' ? 'Pārslēgt uz English' : 'Switch to Latvian' }}</span>
+            </button>
+          </div>
+
           <!-- Theme Toggle -->
           <div class="mobile-theme-toggle">
             <button @click="toggleTheme" class="theme-toggle-btn">
@@ -667,6 +574,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth.js'
+import api from '../utils/api.js'
 
 export default {
   name: 'Navbar',
@@ -702,14 +610,8 @@ export default {
     const fetchUserStats = async () => {
       if (!user.value) return
       try {
-        const token = localStorage.getItem('token')
-        const response = await fetch('http://localhost:3000/api/user/stats', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        })
-        if (response.ok) {
-          const data = await response.json()
-          userStats.value = data
-        }
+        const { data } = await api.get('/api/user/stats')
+        userStats.value = data
       } catch (error) {
         console.error('Error fetching user stats:', error)
       }
@@ -755,14 +657,42 @@ export default {
     
     // Notifications
     const notificationsOpen = ref(false)
-    const notifications = ref([])  // Will be populated from backend in future
+    const notifications = ref([])  // Fetched from backend
+    
+    const fetchNotifications = async () => {
+      const storedToken = localStorage.getItem('token')
+      if (!storedToken) return
+      try {
+        const { data } = await api.get('/api/notifications')
+        notifications.value = data.map(n => ({
+          id: n.id,
+          message: n.message,
+          icon: n.icon || '🔔',
+          read: !!n.read,
+          time: formatTimeAgo(n.created_at),
+          link: n.link
+        }))
+      } catch (e) {
+        console.error('Failed to fetch notifications:', e)
+      }
+    }
+
+    const formatTimeAgo = (dateStr) => {
+      if (!dateStr) return ''
+      const diff = Date.now() - new Date(dateStr).getTime()
+      const mins = Math.floor(diff / 60000)
+      if (mins < 1) return 'Just now'
+      if (mins < 60) return `${mins}m ago`
+      const hours = Math.floor(mins / 60)
+      if (hours < 24) return `${hours}h ago`
+      const days = Math.floor(hours / 24)
+      return `${days}d ago`
+    }
     
     // Cart count from userStats
     const cartCount = computed(() => userStats.value.cartCount || 0)
 
     // Dropdown states
-    const communityDropdownOpen = ref(false)
-    const moreDropdownOpen = ref(false)
     const userDropdownOpen = ref(false)
     
     // Computed
@@ -834,9 +764,9 @@ export default {
       try {
         // Fetch from all endpoints in parallel
         const [productsRes, postsRes, educationRes] = await Promise.all([
-          fetch('http://localhost:3000/api/products').then(r => r.json()).catch(() => []),
-          fetch('http://localhost:3000/api/posts').then(r => r.json()).catch(() => ({ posts: [] })),
-          fetch('http://localhost:3000/api/education').then(r => r.json()).catch(() => [])
+          api.get('/api/products').then(r => r.data).catch(() => []),
+          api.get('/api/posts').then(r => r.data).catch(() => ({ posts: [] })),
+          api.get('/api/education').then(r => r.data).catch(() => [])
         ])
         
         const searchLower = query.toLowerCase()
@@ -936,20 +866,26 @@ export default {
     const toggleNotifications = () => {
       notificationsOpen.value = !notificationsOpen.value
       if (notificationsOpen.value) {
-        communityDropdownOpen.value = false
-        moreDropdownOpen.value = false
         userDropdownOpen.value = false
       }
     }
     
-    const markAllRead = () => {
+    const markAllRead = async () => {
       notifications.value.forEach(n => n.read = true)
+      try {
+        await api.put('/api/notifications/read-all')
+      } catch (e) { /* ignore */ }
     }
     
-    const handleNotification = (notif) => {
+    const handleNotification = async (notif) => {
       notif.read = true
       notificationsOpen.value = false
-      // Navigate based on notification type
+      try {
+        await api.put(`/api/notifications/${notif.id}/read`)
+      } catch (e) { /* ignore */ }
+      if (notif.link) {
+        router.push(notif.link)
+      }
     }
     
     // User level functions
@@ -967,54 +903,8 @@ export default {
     }
 
     // Dropdown functions
-    const toggleCommunityDropdown = () => {
-      communityDropdownOpen.value = !communityDropdownOpen.value
-      moreDropdownOpen.value = false
-      userDropdownOpen.value = false
-      notificationsOpen.value = false
-    }
-
-    const openCommunityDropdown = () => {
-      if (window.innerWidth > 768) {
-        communityDropdownOpen.value = true
-        moreDropdownOpen.value = false
-        userDropdownOpen.value = false
-        notificationsOpen.value = false
-      }
-    }
-
-    const closeCommunityDropdown = () => {
-      if (window.innerWidth > 768) {
-        communityDropdownOpen.value = false
-      }
-    }
-
-    const toggleMoreDropdown = () => {
-      moreDropdownOpen.value = !moreDropdownOpen.value
-      communityDropdownOpen.value = false
-      userDropdownOpen.value = false
-      notificationsOpen.value = false
-    }
-
-    const openMoreDropdown = () => {
-      if (window.innerWidth > 768) {
-        moreDropdownOpen.value = true
-        communityDropdownOpen.value = false
-        userDropdownOpen.value = false
-        notificationsOpen.value = false
-      }
-    }
-
-    const closeMoreDropdown = () => {
-      if (window.innerWidth > 768) {
-        moreDropdownOpen.value = false
-      }
-    }
-
     const toggleUserDropdown = () => {
       userDropdownOpen.value = !userDropdownOpen.value
-      communityDropdownOpen.value = false
-      moreDropdownOpen.value = false
       notificationsOpen.value = false
     }
 
@@ -1045,6 +935,7 @@ export default {
       // Fetch user stats
       if (user.value) {
         fetchUserStats()
+        fetchNotifications()
       }
       
       // Add scroll listener
@@ -1085,8 +976,6 @@ export default {
       notifications,
       unreadCount,
       cartCount,
-      communityDropdownOpen,
-      moreDropdownOpen,
       userDropdownOpen,
       toggleMobileMenu,
       closeMobileMenu,
@@ -1103,12 +992,6 @@ export default {
       handleNotification,
       getUserLevel,
       getUserLevelName,
-      toggleCommunityDropdown,
-      openCommunityDropdown,
-      closeCommunityDropdown,
-      toggleMoreDropdown,
-      openMoreDropdown,
-      closeMoreDropdown,
       toggleUserDropdown,
       closeUserDropdown,
       logout,
@@ -1121,16 +1004,18 @@ export default {
 <style scoped>
 .app-header {
   background: var(--nav-bg);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .app-header.scrolled {
-  box-shadow: var(--shadow);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.06);
+  border-bottom-color: var(--border-color);
 }
 
 .navbar {
@@ -1140,7 +1025,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  height: 68px;
   gap: 24px;
 }
 
@@ -1156,30 +1041,38 @@ export default {
   color: var(--text-color) !important;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .brand-link:hover {
-  opacity: 0.8;
+  transform: scale(1.02);
+}
+
+.brand-link:hover .brand-icon {
+  box-shadow: 0 4px 16px rgba(13, 124, 95, 0.35);
+  transform: rotate(-5deg);
 }
 
 .brand-icon {
-  width: 32px;
-  height: 32px;
-  background: var(--primary);
+  width: 36px;
+  height: 36px;
+  background: var(--gradient-eco);
   color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
   font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(13, 124, 95, 0.25);
 }
 
 .brand-text {
   font-size: 1.1rem;
   color: var(--text-color);
   letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
 .nav-center {
@@ -1423,9 +1316,9 @@ export default {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: flex;
   align-items: center;
@@ -1433,185 +1326,41 @@ export default {
   font-size: 0.9rem;
 }
 
-.nav-link:hover,
-.nav-link.router-link-active {
-  background: var(--primary-subtle);
-  color: var(--primary);
-}
-
-/* Dropdown Styles */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: var(--text-secondary);
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-  font-size: 0.9rem;
-}
-
-.dropdown-toggle:hover {
-  background: var(--primary-subtle);
-  color: var(--primary);
-}
-
-.dropdown-arrow {
-  transition: transform 0.2s ease;
-  opacity: 0.5;
-}
-
-.dropdown.active .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
+.nav-link::after {
+  content: '';
   position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  min-width: 220px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  z-index: 1000;
-  overflow: hidden;
+  bottom: 2px;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: var(--gradient-eco);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dropdown.active .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+.nav-link:hover {
+  color: var(--primary);
+  background: var(--primary-subtle);
 }
 
-.dropdown-header {
-  padding: 12px 16px 8px;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
+.nav-link.router-link-active {
+  color: var(--primary);
+  background: var(--primary-subtle);
   font-weight: 600;
 }
 
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
-  color: var(--text-color);
-  text-decoration: none;
-  transition: all 0.15s ease;
+.nav-link.router-link-active::after {
+  transform: scaleX(1);
 }
 
-.dropdown-item:hover {
-  background: var(--bg-secondary);
+.admin-link {
+  color: #9b59b6;
 }
 
-.dropdown-item-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown-item-title {
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.dropdown-item-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Wide dropdown with grid */
-.dropdown-menu-wide {
-  min-width: 280px;
-}
-
-.dropdown-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  padding: 12px;
-}
-
-.dropdown-item-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 16px 12px;
-  background: rgba(46, 204, 113, 0.05);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--text-color);
-  transition: all 0.2s ease;
-}
-
-.dropdown-item-card:hover {
-  background: rgba(46, 204, 113, 0.15);
-  transform: translateY(-2px);
-}
-
-.dropdown-item-card.admin-card {
+.admin-link:hover {
   background: rgba(155, 89, 182, 0.1);
-}
-
-.dropdown-item-card.admin-card:hover {
-  background: rgba(155, 89, 182, 0.2);
-}
-
-.card-icon {
-  font-size: 1.8em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary);
-}
-
-.card-icon svg {
-  stroke: var(--primary);
-}
-
-.card-title {
-  font-size: 0.85em;
-  font-weight: 500;
-}
-
-.dropdown-footer {
-  padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.03);
-  font-size: 0.85em;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.dark .dropdown-footer {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.footer-icon {
-  font-size: 1.1em;
-  display: flex;
-  align-items: center;
-}
-
-.footer-icon svg {
-  stroke: var(--text-secondary);
+  color: #8e44ad;
 }
 
 .nav-right {
@@ -1628,23 +1377,28 @@ export default {
 
 .notification-btn {
   background: none;
-  border: 2px solid var(--border-color);
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  border: 1.5px solid var(--border-color);
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 1.2em;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.notification-btn:hover,
+.notification-btn:hover {
+  background: var(--primary-subtle);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
 .notification-btn.active {
-  background: rgba(46, 204, 113, 0.1);
-  border-color: #2ecc71;
+  background: var(--primary-subtle);
+  border-color: var(--primary);
 }
 
 .notification-badge {
@@ -1788,14 +1542,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  background: var(--gradient-eco);
+  border-radius: var(--radius);
   font-size: 1.2em;
   text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(13, 124, 95, 0.25);
   position: relative;
   color: white;
 }
@@ -1805,8 +1559,8 @@ export default {
 }
 
 .cart-button:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.5);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(13, 124, 95, 0.4);
 }
 
 .cart-badge {
@@ -1835,16 +1589,17 @@ export default {
   align-items: center;
   gap: 10px;
   background: none;
-  border: 2px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   cursor: pointer;
-  padding: 6px 12px 6px 6px;
-  border-radius: 30px;
-  transition: all 0.3s ease;
+  padding: 5px 12px 5px 5px;
+  border-radius: var(--radius-full);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .user-button:hover {
-  border-color: #2ecc71;
-  background: rgba(46, 204, 113, 0.05);
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  transform: translateY(-1px);
 }
 
 .user-avatar {
@@ -1970,8 +1725,8 @@ export default {
 }
 
 .user-dropdown-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: center;
   padding: 12px 20px;
   gap: 12px;
   border-bottom: 1px solid var(--border-color);
@@ -1997,6 +1752,20 @@ export default {
   padding: 8px 0;
 }
 
+.user-dropdown-links .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.user-dropdown-links .dropdown-item:hover {
+  background: var(--bg-secondary);
+}
+
 .user-dropdown-links .dropdown-icon,
 .user-dropdown-footer .dropdown-icon {
   display: flex;
@@ -2015,12 +1784,18 @@ export default {
 }
 
 .logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
   background: none;
   border: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
   color: #e74c3c !important;
+  font-size: 0.95em;
+  transition: all 0.15s ease;
 }
 
 .logout-btn .dropdown-icon svg {
@@ -2049,48 +1824,52 @@ export default {
 
 .auth-link:not(.primary) {
   color: var(--text-color);
-  border: 2px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
 }
 
 .auth-link:not(.primary):hover {
-  border-color: #2ecc71;
-  color: #2ecc71;
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-subtle);
 }
 
 .auth-link.primary {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  background: var(--gradient-eco);
   color: white;
+  box-shadow: 0 2px 10px rgba(13, 124, 95, 0.25);
 }
 
 .auth-link.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+  box-shadow: 0 6px 20px rgba(13, 124, 95, 0.4);
 }
 
 /* Language Toggle */
 .lang-toggle {
   background: none;
-  border: 2px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   color: var(--text-color);
   padding: 0;
-  border-radius: 12px;
+  border-radius: var(--radius);
   cursor: pointer;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .lang-icon {
-  font-size: 1.3em;
-  transition: transform 0.3s ease;
+  font-size: 0.85em;
+  font-weight: 700;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .lang-toggle:hover {
-  border-color: #2ecc71;
-  background: rgba(46, 204, 113, 0.1);
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  transform: translateY(-1px);
 }
 
 .lang-toggle:hover .lang-icon {
@@ -2100,31 +1879,32 @@ export default {
 /* Theme Toggle */
 .theme-toggle {
   background: none;
-  border: 2px solid var(--border-color);
+  border: 1.5px solid var(--border-color);
   color: var(--text-color);
   padding: 0;
-  border-radius: 12px;
+  border-radius: var(--radius);
   cursor: pointer;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .theme-icon {
   font-size: 1.2em;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .theme-toggle:hover {
-  border-color: #2ecc71;
-  background: rgba(46, 204, 113, 0.1);
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  transform: translateY(-1px);
 }
 
 .theme-toggle:hover .theme-icon {
-  transform: rotate(20deg) scale(1.1);
+  transform: rotate(30deg) scale(1.15);
 }
 
 /* Mobile Layout */
@@ -2462,6 +2242,31 @@ export default {
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
 }
 
+.mobile-auth-btn.logout {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+}
+
+.mobile-auth-btn.logout .btn-icon svg {
+  stroke: #e74c3c;
+}
+
+.mobile-auth-btn.logout:hover {
+  background: #e74c3c;
+  color: white;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.mobile-auth-btn.logout:hover .btn-icon svg {
+  stroke: white;
+}
+
+.lang-mobile-icon {
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
 .mobile-auth-btn .btn-icon {
   font-size: 1.4em;
   width: 28px;
@@ -2582,14 +2387,9 @@ export default {
     gap: 2px;
   }
 
-  .nav-link,
-  .dropdown-toggle {
+  .nav-link {
     padding: 8px 12px;
     font-size: 0.85em;
-  }
-
-  .nav-link .nav-icon {
-    display: none;
   }
 
   .auth-link {

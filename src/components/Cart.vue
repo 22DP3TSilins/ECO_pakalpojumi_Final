@@ -2,6 +2,10 @@
   <div class="cart-page">
     <!-- Hero Section -->
     <div class="cart-hero">
+      <div class="hero-shapes">
+        <div class="h-shape h-shape-1"></div>
+        <div class="h-shape h-shape-2"></div>
+      </div>
       <div class="hero-content">
         <h1>{{ t('cart.title') }}</h1>
         <p v-if="cart.length > 0">{{ cart.length }} {{ t('cart.itemsReady') }}</p>
@@ -354,6 +358,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
   name: 'CartPage',
@@ -392,17 +397,12 @@ export default {
       
       this.loading = true;
       try {
-        const response = await fetch('http://localhost:3000/api/cart', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          this.cart = data.cart || [];
-        } else if (response.status === 401 || response.status === 403) {
+        const { data } = await api.get('/api/cart');
+        this.cart = data.cart || [];
+      } catch (error) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
           this.$router.push('/login');
         }
-      } catch (error) {
         console.error('Error fetching cart:', error);
       } finally {
         this.loading = false;
@@ -412,25 +412,14 @@ export default {
     async updateQuantity(id, newQuantity) {
       if (newQuantity < 1) return;
       
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch(`http://localhost:3000/api/cart/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ quantity: newQuantity })
-        });
-        
-        if (response.ok) {
-          const item = this.cart.find(i => i.id === id);
-          if (item) {
-            if (newQuantity <= 0) {
-              this.cart = this.cart.filter(i => i.id !== id);
-            } else {
-              item.quantity = newQuantity;
-            }
+        await api.put(`/api/cart/${id}`, { quantity: newQuantity });
+        const item = this.cart.find(i => i.id === id);
+        if (item) {
+          if (newQuantity <= 0) {
+            this.cart = this.cart.filter(i => i.id !== id);
+          } else {
+            item.quantity = newQuantity;
           }
         }
       } catch (error) {
@@ -439,16 +428,9 @@ export default {
     },
     
     async removeItem(id) {
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch(`http://localhost:3000/api/cart/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          this.cart = this.cart.filter(item => item.id !== id);
-        }
+        await api.delete(`/api/cart/${id}`);
+        this.cart = this.cart.filter(item => item.id !== id);
       } catch (error) {
         console.error('Error removing item:', error);
       }
@@ -457,16 +439,9 @@ export default {
     async clearCart() {
       if (!confirm('Are you sure you want to clear your cart?')) return;
       
-      const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:3000/api/cart', {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        if (response.ok) {
-          this.cart = [];
-        }
+        await api.delete('/api/cart');
+        this.cart = [];
       } catch (error) {
         console.error('Error clearing cart:', error);
       }
@@ -489,34 +464,20 @@ export default {
     },
     
     async checkout() {
-      const token = localStorage.getItem('token');
       this.processing = true;
       
       try {
-        const response = await fetch('http://localhost:3000/api/checkout', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          this.lastOrderId = data.orderId;
-          this.treesPlanted = Math.ceil(data.total / 10);
-          this.showCheckoutModal = false;
-          this.showSuccessModal = true;
-          this.cart = [];
-          this.discount = 0;
-          this.promoCode = '';
-        } else {
-          alert(data.error || 'Checkout failed');
-        }
+        const { data } = await api.post('/api/checkout', { promoCode: this.promoCode || null });
+        this.lastOrderId = data.orderId;
+        this.treesPlanted = Math.ceil(data.total / 10);
+        this.showCheckoutModal = false;
+        this.showSuccessModal = true;
+        this.cart = [];
+        this.discount = 0;
+        this.promoCode = '';
       } catch (error) {
         console.error('Error during checkout:', error);
-        alert('Checkout failed. Please try again.');
+        alert(error.response?.data?.error || 'Checkout failed. Please try again.');
       } finally {
         this.processing = false;
       }
@@ -534,14 +495,60 @@ export default {
   min-height: 100vh;
   background: var(--bg-color);
   padding-bottom: 60px;
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Hero Section */
 .cart-hero {
   padding: 100px 20px 50px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.h-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.h-shape-1 {
+  width: 250px;
+  height: 250px;
+  top: -80px;
+  right: -40px;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.h-shape-2 {
+  width: 180px;
+  height: 180px;
+  bottom: -50px;
+  left: -30px;
+  animation: floatShape 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content h1 {
@@ -553,7 +560,8 @@ export default {
 
 .hero-content p {
   margin: 0;
-  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.96);
+  opacity: 1;
   font-size: 1rem;
 }
 
@@ -577,7 +585,8 @@ export default {
 
 .stat-label {
   font-size: 0.85rem;
-  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.92);
+  opacity: 1;
 }
 
 /* Container */
@@ -656,17 +665,36 @@ export default {
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   text-decoration: none;
   border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.95rem;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.shop-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.shop-btn:hover::after {
+  left: 120%;
 }
 
 .shop-btn:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .empty-suggestions {
@@ -771,7 +799,7 @@ export default {
   background: var(--bg-color);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .dark .cart-item {
@@ -780,6 +808,8 @@ export default {
 
 .cart-item:hover {
   border-color: var(--primary);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.08);
+  transform: translateY(-2px);
 }
 
 .item-checkbox input {
@@ -1129,23 +1159,42 @@ export default {
 .checkout-btn {
   width: 100%;
   padding: 14px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.checkout-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.checkout-btn:hover:not(:disabled)::after {
+  left: 120%;
 }
 
 .checkout-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .checkout-btn:disabled {
@@ -1204,7 +1253,9 @@ export default {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1227,11 +1278,11 @@ export default {
 @keyframes modalIn {
   from {
     opacity: 0;
-    transform: scale(0.97);
+    transform: translateY(20px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1402,18 +1453,19 @@ export default {
 
 .confirm-btn {
   padding: 14px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .confirm-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .confirm-btn:disabled {
@@ -1455,7 +1507,7 @@ export default {
 .success-circle {
   width: 72px;
   height: 72px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1557,17 +1609,18 @@ export default {
 
 .primary-action {
   padding: 14px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   text-decoration: none;
   border-radius: var(--radius-md);
   font-weight: 500;
   font-size: 0.95rem;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .primary-action:hover {
-  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .secondary-action {

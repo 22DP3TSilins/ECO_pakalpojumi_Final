@@ -2,7 +2,13 @@
   <div class="products-page">
     <!-- Hero Section -->
     <div class="products-hero">
+      <div class="hero-shapes">
+        <div class="h-shape h-shape-1"></div>
+        <div class="h-shape h-shape-2"></div>
+        <div class="h-shape h-shape-3"></div>
+      </div>
       <div class="hero-content">
+        <span class="hero-badge">🌿 Eco Marketplace</span>
         <h1>{{ t('products.title') }}</h1>
         <p>{{ t('products.subtitle') }}</p>
         <div class="hero-search">
@@ -252,6 +258,7 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import api from '../utils/api.js'
 
 export default {
   name: 'ProductsPage',
@@ -332,17 +339,13 @@ export default {
     async loadProducts() {
       this.loading = true;
       try {
-        const response = await fetch('http://localhost:3000/api/products');
-        if (response.ok) {
-          const data = await response.json();
-          this.products = Array.isArray(data) ? data : (data.products || []);
-          this.categories = [...new Set(this.products.map(p => p.category).filter(Boolean))];
-          // Set price limit based on actual product prices
-          if (this.products.length > 0) {
-            const highestPrice = Math.max(...this.products.map(p => p.price || 0));
-            this.priceLimit = Math.ceil(highestPrice / 100) * 100; // Round up to nearest 100
-            this.maxPrice = this.priceLimit;
-          }
+        const { data } = await api.get('/api/products');
+        this.products = Array.isArray(data) ? data : (data.products || []);
+        this.categories = [...new Set(this.products.map(p => p.category).filter(Boolean))];
+        if (this.products.length > 0) {
+          const highestPrice = Math.max(...this.products.map(p => p.price || 0));
+          this.priceLimit = Math.ceil(highestPrice / 100) * 100;
+          this.maxPrice = this.priceLimit;
         }
       } catch (error) {
         console.error('Error loading products:', error);
@@ -400,18 +403,7 @@ export default {
 
       this.addingToCart = product.id;
       try {
-        const response = await fetch('http://localhost:3000/api/cart', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ product_id: product.id, quantity: 1 })
-        });
-
-        if (response.ok) {
-          // Success feedback could be added here
-        }
+        await api.post('/api/cart', { product_id: product.id, quantity: 1 });
       } catch (error) {
         console.error('Error adding to cart:', error);
       } finally {
@@ -428,16 +420,9 @@ export default {
       }
 
       try {
-        await fetch('http://localhost:3000/api/cart', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ 
-            product_id: this.selectedProduct.id, 
-            quantity: this.modalQuantity 
-          })
+        await api.post('/api/cart', { 
+          product_id: this.selectedProduct.id, 
+          quantity: this.modalQuantity 
         });
         this.showQuickView = false;
       } catch (error) {
@@ -453,44 +438,119 @@ export default {
   min-height: 100vh;
   background: var(--bg-color);
   padding-bottom: 60px;
+  animation: pageFadeIn 0.5s ease;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Hero Section */
 .products-hero {
   padding: 100px 24px 60px;
-  background: var(--bg-color);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.h-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.h-shape-1 {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  right: -50px;
+  animation: floatShape 8s ease-in-out infinite;
+}
+
+.h-shape-2 {
+  width: 200px;
+  height: 200px;
+  bottom: -60px;
+  left: -40px;
+  animation: floatShape 10s ease-in-out infinite reverse;
+}
+
+.h-shape-3 {
+  width: 120px;
+  height: 120px;
+  top: 40%;
+  left: 20%;
+  animation: floatShape 6s ease-in-out infinite 1s;
+}
+
+@keyframes floatShape {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content h1 {
   margin: 0 0 8px;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: white;
   letter-spacing: -0.02em;
 }
 
 .hero-content p {
   margin: 0 0 24px;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.05rem;
 }
 
 .hero-search {
   display: flex;
   align-items: center;
-  max-width: 400px;
+  max-width: 440px;
   margin: 0 auto 32px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.hero-search:focus-within {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .hero-search .search-icon {
   margin-left: 16px;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
 }
 
@@ -499,12 +559,12 @@ export default {
   padding: 14px 16px;
   border: none;
   font-size: 0.95rem;
-  color: var(--text-color);
+  color: white;
   background: transparent;
 }
 
 .hero-search input::placeholder {
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .hero-stats {
@@ -522,18 +582,18 @@ export default {
 .stat-divider {
   width: 1px;
   height: 40px;
-  background: var(--border-color);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .stat-number {
   display: block;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: white;
 }
 
 .stat-label {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
 }
 
@@ -874,13 +934,14 @@ export default {
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-color);
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   position: relative;
 }
 
 .product-card:hover {
   border-color: var(--primary);
-  box-shadow: var(--shadow);
+  box-shadow: 0 12px 32px rgba(46, 204, 113, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
 }
 
 .product-card.list {
@@ -916,7 +977,7 @@ export default {
 }
 
 .badge.featured {
-  background: var(--primary);
+  background: var(--gradient-eco, var(--primary));
   color: white;
 }
 
@@ -979,7 +1040,12 @@ export default {
   font-weight: 500;
   font-size: 0.875rem;
   transform: translateY(10px);
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  color: var(--primary-dark, #1a8a4a);
+}
+
+.quick-view-btn:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .product-card:hover .quick-view-btn {
@@ -1060,19 +1126,37 @@ export default {
 .add-to-cart-btn {
   width: 100%;
   padding: 12px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+}
+
+.add-to-cart-btn:hover:not(:disabled)::after {
+  left: 120%;
 }
 
 .add-to-cart-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
-  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .add-to-cart-btn:disabled {
@@ -1084,7 +1168,9 @@ export default {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1107,11 +1193,11 @@ export default {
 @keyframes modalIn {
   from {
     opacity: 0;
-    transform: scale(0.98);
+    transform: translateY(20px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1254,19 +1340,19 @@ export default {
 .modal-add-btn {
   flex: 1;
   padding: 12px 20px;
-  background: var(--primary);
+  background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
   border: none;
   border-radius: var(--radius-md);
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 
 .modal-add-btn:hover:not(:disabled) {
-  background: var(--primary-dark);
-  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
 .modal-add-btn:disabled {
