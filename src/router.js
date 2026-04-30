@@ -16,7 +16,13 @@ const Challenges = () => import('./components/Challenges.vue')
 const NotFound = () => import('./components/NotFound.vue')
 
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', redirect: () => {
+      // Send unauthenticated visitors to login, authenticated to products
+      const token = localStorage.getItem('token')
+      return token ? '/products' : '/login'
+    }
+  },
+  { path: '/home', component: Home, meta: { requiresAuth: true } },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/products', component: Products },
