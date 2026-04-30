@@ -807,7 +807,7 @@ export default {
     createAccount: 'Create account',
     orContinueWith: 'or continue with',
     googleSignIn: 'Continue with Google',
-    demo: 'Demo: demo@ecopakalpojumi.lv / Demo123!',
+    demo: "Demo: demo{'@'}ecopakalpojumi.lv / Demo123!",
     features: {
       shop: 'Shop Eco-Friendly Products',
       track: 'Track Your Carbon Footprint',

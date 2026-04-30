@@ -811,7 +811,7 @@ export default {
     createAccount: 'Izveidot kontu',
     orContinueWith: 'vai turpināt ar',
     googleSignIn: 'Turpināt ar Google',
-    demo: 'Demo: demo@ecopakalpojumi.lv / Demo123!',
+    demo: "Demo: demo{'@'}ecopakalpojumi.lv / Demo123!",
     features: {
       shop: 'Iepērcies Ekoloģiskos Produktos',
       track: 'Izseko Savu Oglekļa Pēdu',
