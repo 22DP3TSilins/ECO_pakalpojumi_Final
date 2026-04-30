@@ -843,11 +843,11 @@ app.get('/api/posts', (req, res) => {
   db.all(`
     SELECT posts.id, posts.title, posts.content, posts.category, posts.tags, posts.date,
     posts.views,
-    users.name,
+    COALESCE(users.name, 'Deleted user') as name,
     (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count,
     (SELECT COUNT(*) FROM post_likes WHERE post_likes.post_id = posts.id) as like_count
     FROM posts 
-    JOIN users ON posts.user_id = users.id 
+    LEFT JOIN users ON posts.user_id = users.id 
     ORDER BY date DESC
   `, [], (err, rows) => {
     if (err) {
