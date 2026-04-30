@@ -1,10 +1,8 @@
 // Seed the products catalog with eco-friendly items.
-// Run: node backend/seed-products.cjs
+// Can be run standalone:    node backend/seed-products.cjs
+// Or imported & called as:  require('./seed-products.cjs').seedProducts(db)
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-
-const dbPath = path.join(__dirname, 'eco_pakalpojumi.db');
-const db = new sqlite3.Database(dbPath);
 
 const products = [
   // Home
@@ -168,43 +166,56 @@ const products = [
   }
 ];
 
-db.serialize(() => {
-  // Remove the test product if present
-  db.run("DELETE FROM products WHERE name = 'ER Diagramma'", function (err) {
-    if (err) console.error('Delete error:', err.message);
-    else if (this.changes > 0) console.log(`Removed ${this.changes} test product(s).`);
-  });
+function seedProducts(db, { closeWhenDone = false } = {}) {
+  return new Promise((resolve) => {
+    db.serialize(() => {
+      db.run("DELETE FROM products WHERE name = 'ER Diagramma'", function (err) {
+        if (err) console.error('Delete error:', err.message);
+        else if (this.changes > 0) console.log(`Removed ${this.changes} test product(s).`);
+      });
 
-  const stmt = db.prepare(
-    'INSERT INTO products (name, description, price, category, stock, image_url, lifecycle_info) VALUES (?, ?, ?, ?, ?, ?, ?)'
-  );
+      const stmt = db.prepare(
+        'INSERT INTO products (name, description, price, category, stock, image_url, lifecycle_info) VALUES (?, ?, ?, ?, ?, ?, ?)'
+      );
 
-  let inserted = 0;
-  let skipped = 0;
-  let pending = products.length;
+      let inserted = 0;
+      let skipped = 0;
+      let pending = products.length;
 
-  products.forEach((p) => {
-    db.get('SELECT id FROM products WHERE name = ?', [p.name], (err, row) => {
-      if (err) {
-        console.error('Lookup error:', err.message);
-      } else if (row) {
-        skipped++;
-      } else {
-        stmt.run(p.name, p.description, p.price, p.category, p.stock, p.image_url, p.lifecycle_info, (e) => {
-          if (e) console.error('Insert error for', p.name, e.message);
+      products.forEach((p) => {
+        db.get('SELECT id FROM products WHERE name = ?', [p.name], (err, row) => {
+          if (err) {
+            console.error('Lookup error:', err.message);
+          } else if (row) {
+            skipped++;
+          } else {
+            stmt.run(p.name, p.description, p.price, p.category, p.stock, p.image_url, p.lifecycle_info, (e) => {
+              if (e) console.error('Insert error for', p.name, e.message);
+            });
+            inserted++;
+          }
+          pending--;
+          if (pending === 0) {
+            stmt.finalize(() => {
+              console.log(`[seed-products] Inserted: ${inserted}, skipped: ${skipped}.`);
+              db.all('SELECT COUNT(*) AS c FROM products', (e, rs) => {
+                if (!e) console.log(`[seed-products] Total products: ${rs[0].c}`);
+                if (closeWhenDone) db.close();
+                resolve({ inserted, skipped });
+              });
+            });
+          }
         });
-        inserted++;
-      }
-      pending--;
-      if (pending === 0) {
-        stmt.finalize(() => {
-          console.log(`Done. Inserted: ${inserted}, skipped (already exist): ${skipped}.`);
-          db.all('SELECT COUNT(*) AS c FROM products', (e, rs) => {
-            if (!e) console.log(`Total products in catalog: ${rs[0].c}`);
-            db.close();
-          });
-        });
-      }
+      });
     });
   });
-});
+}
+
+module.exports = { seedProducts };
+
+// Standalone CLI usage:  node backend/seed-products.cjs
+if (require.main === module) {
+  const dbPath = process.env.DB_PATH || path.join(__dirname, 'eco_pakalpojumi.db');
+  const db = new sqlite3.Database(dbPath);
+  seedProducts(db, { closeWhenDone: true });
+}

@@ -327,6 +327,18 @@ db.serialize(() => {
   db.run(`ALTER TABLE users ADD COLUMN phone TEXT`, () => {});
 });
 
+// Auto-seed the products catalog on startup (idempotent — skips items that already exist).
+// Useful on hosts with ephemeral disks where the SQLite DB is wiped on restart.
+try {
+  const { seedProducts } = require('./seed-products.cjs');
+  // Defer briefly to ensure CREATE TABLE statements above have flushed
+  setTimeout(() => {
+    seedProducts(db).catch((e) => console.error('[seed-products] failed:', e));
+  }, 500);
+} catch (e) {
+  console.warn('[seed-products] module not available:', e.message);
+}
+
 // Routes
 // Password validation function
 const validatePassword = (password) => {
