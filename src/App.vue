@@ -425,22 +425,24 @@ button {
   border-top: 1px solid var(--border-color);
   margin-top: auto;
   position: relative;
-  overflow: hidden;
 }
 
 .footer-wave {
   position: absolute;
-  top: -1px;
+  top: -59px;
   left: 0;
   right: 0;
   height: 60px;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .footer-wave svg {
   width: 100%;
   height: 100%;
-  fill: var(--bg-color);
+  fill: var(--bg-secondary);
+  transform: scaleY(-1);
+  display: block;
 }
 
 .footer-container {
