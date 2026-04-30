@@ -898,8 +898,9 @@ export default {
     
     const getUserLevelName = () => {
       const level = userStats.value.level || 1
-      const titles = ['Beginner', 'Explorer', 'Advocate', 'Champion', 'Master', 'Legend', 'Guardian', 'Champion', 'Hero', 'Legend']
-      return titles[Math.min(level - 1, titles.length - 1)] || 'Eco Warrior'
+      const keys = ['beginner', 'explorer', 'advocate', 'champion', 'master', 'legend']
+      const key = keys[Math.min(level - 1, keys.length - 1)]
+      return t(`profile.levelTitles.${key}`)
     }
 
     // Dropdown functions

@@ -745,6 +745,7 @@ export default {
     joinChallenges: 'Pievienoties Izaicinājumiem',
     logActivity: 'Reģistrēt Aktivitāti',
     shopProducts: 'Iepirkties Produktos',
+    learnMore: 'Mācīties',
     profileInfo: 'Profila Informācija',
     name: 'Vārds',
     email: 'E-pasts',

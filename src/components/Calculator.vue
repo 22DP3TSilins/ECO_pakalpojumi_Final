@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="calculator-page">
     <div class="calculator-container">
 
@@ -459,22 +459,22 @@
           <p class="methodology-intro">{{ t('calculator.methodologyDesc') }}</p>
           <div class="methodology-grid">
             <div class="methodology-card">
-              <div class="methodology-card-icon">ðŸš—</div>
+              <div class="methodology-card-icon">🚗</div>
               <h4>{{ t('calculator.methodologyTransportTitle') }}</h4>
               <p>{{ t('calculator.methodologyTransportText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">ðŸ </div>
+              <div class="methodology-card-icon">🏠</div>
               <h4>{{ t('calculator.methodologyHomeTitle') }}</h4>
               <p>{{ t('calculator.methodologyHomeText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">ðŸ¥¦</div>
+              <div class="methodology-card-icon">🥦</div>
               <h4>{{ t('calculator.methodologyFoodTitle') }}</h4>
               <p>{{ t('calculator.methodologyFoodText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">ðŸ›ï¸</div>
+              <div class="methodology-card-icon">🛍️</div>
               <h4>{{ t('calculator.methodologyLifestyleTitle') }}</h4>
               <p>{{ t('calculator.methodologyLifestyleText') }}</p>
             </div>

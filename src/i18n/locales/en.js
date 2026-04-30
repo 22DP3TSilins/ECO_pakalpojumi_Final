@@ -742,6 +742,7 @@ export default {
     joinChallenges: 'Join Challenges',
     logActivity: 'Log Activity',
     shopProducts: 'Shop Products',
+    learnMore: 'Learn',
     profileInfo: 'Profile Information',
     name: 'Name',
     email: 'Email',
