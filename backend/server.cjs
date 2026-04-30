@@ -11,11 +11,23 @@ const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key';
 
-// Middleware
-app.use(cors());
+// CORS: allow local dev + the deployed frontend (FRONTEND_URL env var)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow no-origin requests (curl, mobile apps) and any origin in the list
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Create uploads directory if it doesn't exist
@@ -168,7 +180,7 @@ app.post('/api/auth/google', async (req, res) => {
 });
 
 // Database setup
-const dbPath = path.join(__dirname, 'eco_pakalpojumi.db');
+const dbPath = process.env.DB_PATH || path.join(__dirname, 'eco_pakalpojumi.db');
 const db = new sqlite3.Database(dbPath);
 
 // Create tables if not exist
