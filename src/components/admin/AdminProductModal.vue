@@ -2,7 +2,10 @@
   <div v-if="show" class="modal-overlay" @click.self="$emit('close')">
     <div class="modal modal-lg">
       <div class="modal-header">
-        <h3>{{ form.id ? ('✏️ ' + $t('admin.editProduct')) : ('➕ ' + $t('admin.addProduct')) }}</h3>
+        <h3>
+          <Icon :name="form.id ? 'edit' : 'plus'" :size="18" />
+          {{ form.id ? $t('admin.editProduct') : $t('admin.addProduct') }}
+        </h3>
         <button @click="$emit('close')" class="modal-close">×</button>
       </div>
       <div class="modal-body">
@@ -15,12 +18,12 @@
             <label>{{ $t('admin.category') }} *</label>
             <select :value="form.category" @change="update('category', $event.target.value)" class="form-input" required>
               <option value="">{{ $t('admin.selectCategory') }}</option>
-              <option value="Solar">☀️ {{ $t('admin.categorySolar') }}</option>
-              <option value="Water">💧 {{ $t('admin.categoryWater') }}</option>
-              <option value="Energy">⚡ {{ $t('admin.categoryEnergy') }}</option>
-              <option value="Garden">🌱 {{ $t('admin.categoryGarden') }}</option>
-              <option value="Home">🏠 {{ $t('admin.categoryHome') }}</option>
-              <option value="Transport">🚲 {{ $t('admin.categoryTransport') }}</option>
+              <option value="Solar">{{ $t('admin.categorySolar') }}</option>
+              <option value="Water">{{ $t('admin.categoryWater') }}</option>
+              <option value="Energy">{{ $t('admin.categoryEnergy') }}</option>
+              <option value="Garden">{{ $t('admin.categoryGarden') }}</option>
+              <option value="Home">{{ $t('admin.categoryHome') }}</option>
+              <option value="Transport">{{ $t('admin.categoryTransport') }}</option>
             </select>
           </div>
         </div>
@@ -55,7 +58,7 @@
                 id="product-image"
               />
               <label for="product-image" class="upload-label">
-                <span class="upload-icon">📁</span>
+                <span class="upload-icon"><Icon name="folder" :size="20" /></span>
                 <span>{{ $t('admin.clickToUpload') }}</span>
                 <span class="upload-hint">{{ $t('admin.uploadHint') }}</span>
               </label>
@@ -85,8 +88,11 @@
 </template>
 
 <script>
+import Icon from '../common/Icon.vue'
+
 export default {
   name: 'AdminProductModal',
+  components: { Icon },
   props: {
     show: Boolean,
     form: Object,

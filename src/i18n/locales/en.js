@@ -310,7 +310,7 @@ export default {
     tip3: 'Use renewable energy',
     tip4: 'Buy less, choose sustainable',
     // Footprint messages
-    msgExcellent: 'Excellent! You are a green hero! 🌟',
+    msgExcellent: 'Excellent! You are a green hero!',
     msgGreat: 'Great! Well below average.',
     msgAverage: 'Good. You are average.',
     msgAbove: 'Room for improvement.',

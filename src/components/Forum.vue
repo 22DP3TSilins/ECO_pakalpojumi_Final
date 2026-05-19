@@ -78,7 +78,7 @@
 
         <!-- Login Prompt -->
         <div v-if="!user && !selectedPost" class="login-prompt">
-          <p>🔐 <router-link to="/login">{{ t('common.login') }}</router-link> {{ t('common.or') }} <router-link to="/register">{{ t('common.register') }}</router-link> {{ t('forum.loginToJoin') }}</p>
+          <p><Icon name="lock" :size="16" /> <router-link to="/login">{{ t('common.login') }}</router-link> {{ t('common.or') }} <router-link to="/register">{{ t('common.register') }}</router-link> {{ t('forum.loginToJoin') }}</p>
         </div>
 
         <!-- Posts List -->
@@ -89,7 +89,7 @@
 
           <!-- Empty State -->
           <div v-if="filteredPosts.length === 0" class="empty-state">
-            <div class="empty-icon">🌿</div>
+            <div class="empty-icon"><Icon name="leaf" :size="48" /></div>
             <h3>{{ t('forum.noDiscussionsYet') }}</h3>
             <p>{{ t('forum.beFirstToStart') }}</p>
           </div>
@@ -113,7 +113,7 @@
                   </div>
                 </div>
                 <span v-if="post.category" class="post-category">
-                  {{ getCategoryIcon(post.category) }} {{ post.category }}
+                  <Icon :name="getCategoryIcon(post.category)" :size="14" /> {{ post.category }}
                 </span>
               </div>
 
@@ -126,7 +126,7 @@
                 </div>
                 <div class="post-stats">
                   <span class="stat-item">Comments {{ post.comment_count || 0 }}</span>
-                  <span class="stat-item">👁️ {{ post.views || 0 }}</span>
+                  <span class="stat-item"><Icon name="eye" :size="14" /> {{ post.views || 0 }}</span>
                   <span class="stat-item" :class="{ active: post.liked }">
                     Likes {{ post.like_count || 0 }}
                   </span>
@@ -139,7 +139,7 @@
         <!-- Share Toast -->
         <transition name="toast">
           <div v-if="shareToast" class="share-toast">
-            ✅ Link copied to clipboard!
+            <Icon name="check" :size="16" /> Link copied to clipboard!
           </div>
         </transition>
 
@@ -161,7 +161,7 @@
                 </div>
               </div>
               <span v-if="selectedPost.category" class="post-category">
-                {{ getCategoryIcon(selectedPost.category) }} {{ selectedPost.category }}
+                <Icon :name="getCategoryIcon(selectedPost.category)" :size="14" /> {{ selectedPost.category }}
               </span>
             </div>
 
@@ -197,7 +197,7 @@
               <form @submit.prevent="addComment" class="comment-form">
                 <div v-if="replyingTo" class="reply-indicator">
                   <span>Replying to <strong>{{ replyingTo.name }}</strong></span>
-                  <button type="button" class="cancel-reply" @click="cancelReply">✕</button>
+                  <button type="button" class="cancel-reply" @click="cancelReply"><Icon name="x" :size="14" /></button>
                 </div>
                 <textarea 
                   v-model="newComment" 
@@ -267,9 +267,11 @@
 <script>
 import { useI18n } from 'vue-i18n'
 import api from '../utils/api.js'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'Forum',
+  components: { Icon },
   setup() {
     const { t } = useI18n()
     return { t }
@@ -296,13 +298,13 @@ export default {
   computed: {
     categories() {
       return [
-        { id: 'all', name: this.t('forum.allDiscussions'), icon: '📋' },
-        { id: 'tips', name: this.t('forum.ecoTips'), icon: '💡' },
-        { id: 'diy', name: this.t('forum.diyProjects'), icon: '🔧' },
-        { id: 'news', name: this.t('forum.greenNews'), icon: '📰' },
-        { id: 'questions', name: this.t('forum.questions'), icon: '❓' },
-        { id: 'success', name: this.t('forum.successStories'), icon: '🏆' },
-        { id: 'products', name: this.t('forum.productReviews'), icon: '⭐' }
+        { id: 'all', name: this.t('forum.allDiscussions'), icon: 'clipboard' },
+        { id: 'tips', name: this.t('forum.ecoTips'), icon: 'lightbulb' },
+        { id: 'diy', name: this.t('forum.diyProjects'), icon: 'wrench' },
+        { id: 'news', name: this.t('forum.greenNews'), icon: 'newspaper' },
+        { id: 'questions', name: this.t('forum.questions'), icon: 'help' },
+        { id: 'success', name: this.t('forum.successStories'), icon: 'trophy' },
+        { id: 'products', name: this.t('forum.productReviews'), icon: 'sparkles' }
       ]
     },
     filteredPosts() {
@@ -416,7 +418,7 @@ export default {
     },
     getCategoryIcon(catId) {
       const cat = this.categories.find(c => c.id === catId);
-      return cat ? cat.icon : '📋';
+      return cat ? cat.icon : 'clipboard';
     },
     async toggleLike(post) {
       const token = localStorage.getItem('token');

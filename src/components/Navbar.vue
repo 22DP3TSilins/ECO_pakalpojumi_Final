@@ -181,7 +181,7 @@
                 :class="{ unread: !notif.read }"
                 @click="handleNotification(notif)"
               >
-                <span class="notif-item-icon">{{ notif.icon }}</span>
+                <span class="notif-item-icon"><Icon :name="notif.icon" :size="18" /></span>
                 <div class="notif-content">
                   <p class="notif-text">{{ notif.message }}</p>
                   <span class="notif-time">{{ notif.time }}</span>
@@ -575,9 +575,11 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth.js'
 import api from '../utils/api.js'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'Navbar',
+  components: { Icon },
   emits: ['theme-changed'],
   setup(props, { emit }) {
     const { t, locale } = useI18n()
@@ -667,7 +669,7 @@ export default {
         notifications.value = data.map(n => ({
           id: n.id,
           message: n.message,
-          icon: n.icon || '🔔',
+          icon: n.icon || 'bell',
           read: !!n.read,
           time: formatTimeAgo(n.created_at),
           link: n.link

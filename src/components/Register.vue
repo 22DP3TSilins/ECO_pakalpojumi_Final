@@ -111,17 +111,17 @@
                 </span>
               </div>
               <div class="password-requirements">
-                <span :class="{ met: hasMinLength }">✓ {{ t('register.requirements.minLength') }}</span>
-                <span :class="{ met: hasUpperCase }">✓ {{ t('register.requirements.uppercase') }}</span>
-                <span :class="{ met: hasLowerCase }">✓ {{ t('register.requirements.lowercase') }}</span>
-                <span :class="{ met: hasNumber }">✓ {{ t('register.requirements.number') }}</span>
+                <span :class="{ met: hasMinLength }"><Icon name="check" :size="14" /> {{ t('register.requirements.minLength') }}</span>
+                <span :class="{ met: hasUpperCase }"><Icon name="check" :size="14" /> {{ t('register.requirements.uppercase') }}</span>
+                <span :class="{ met: hasLowerCase }"><Icon name="check" :size="14" /> {{ t('register.requirements.lowercase') }}</span>
+                <span :class="{ met: hasNumber }"><Icon name="check" :size="14" /> {{ t('register.requirements.number') }}</span>
               </div>
             </div>
 
             <div class="input-group">
               <label for="confirmPassword">{{ t('register.confirmPassword') }}</label>
               <div class="input-wrapper">
-                <span class="input-icon">🔐</span>
+                <span class="input-icon"><Icon name="lock" :size="16" /></span>
                 <input 
                   id="confirmPassword"
                   v-model="confirmPassword" 
@@ -150,7 +150,7 @@
                 {{ t('register.passwordsDontMatch') }}
               </span>
               <span v-if="confirmPassword && passwordsMatch" class="match-success">
-                ✓ {{ t('register.passwordsMatch') }}
+                <Icon name="check" :size="14" /> {{ t('register.passwordsMatch') }}
               </span>
             </div>
 
@@ -248,9 +248,11 @@
 <script>
 import { useAuthStore } from '../stores/auth.js'
 import { useI18n } from 'vue-i18n'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'RegisterPage',
+  components: { Icon },
   setup() {
     const { t } = useI18n()
     return { t }

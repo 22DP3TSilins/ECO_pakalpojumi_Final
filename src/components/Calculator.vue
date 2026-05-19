@@ -459,22 +459,22 @@
           <p class="methodology-intro">{{ t('calculator.methodologyDesc') }}</p>
           <div class="methodology-grid">
             <div class="methodology-card">
-              <div class="methodology-card-icon">🚗</div>
+              <div class="methodology-card-icon"><Icon name="car" :size="32" /></div>
               <h4>{{ t('calculator.methodologyTransportTitle') }}</h4>
               <p>{{ t('calculator.methodologyTransportText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">🏠</div>
+              <div class="methodology-card-icon"><Icon name="home" :size="32" /></div>
               <h4>{{ t('calculator.methodologyHomeTitle') }}</h4>
               <p>{{ t('calculator.methodologyHomeText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">🥦</div>
+              <div class="methodology-card-icon"><Icon name="leaf" :size="32" /></div>
               <h4>{{ t('calculator.methodologyFoodTitle') }}</h4>
               <p>{{ t('calculator.methodologyFoodText') }}</p>
             </div>
             <div class="methodology-card">
-              <div class="methodology-card-icon">🛍️</div>
+              <div class="methodology-card-icon"><Icon name="bag" :size="32" /></div>
               <h4>{{ t('calculator.methodologyLifestyleTitle') }}</h4>
               <p>{{ t('calculator.methodologyLifestyleText') }}</p>
             </div>
@@ -492,9 +492,11 @@
 
 <script>
 import { useI18n } from 'vue-i18n'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'CarbonCalculator',
+  components: { Icon },
   setup() {
     const { t } = useI18n()
     return { t }

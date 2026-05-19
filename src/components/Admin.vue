@@ -4,7 +4,7 @@
     <header class="admin-topbar">
       <div class="topbar-left">
         <button class="sidebar-toggle" @click="sidebarCollapsed = !sidebarCollapsed">
-          <span>☰</span>
+          <Icon name="menu" :size="20" />
         </button>
         <div class="admin-branding">
           <span class="admin-logo">EP</span>
@@ -216,7 +216,7 @@
                       </div>
                     </div>
                     <div v-else class="empty-card">
-                      <span>📭</span>
+                      <Icon name="inbox" :size="32" />
                       <p>{{ $t('admin.noOrdersInPeriod') }}</p>
                     </div>
                   </div>
@@ -233,7 +233,7 @@
                         <span class="product-rank">{{ index + 1 }}</span>
                         <div class="product-thumb">
                           <img v-if="product.image_url" :src="product.image_url" :alt="product.name" />
-                          <span v-else>🌱</span>
+                          <Icon v-else name="sprout" :size="20" />
                         </div>
                         <div class="product-details">
                           <span class="product-name">{{ product.name }}</span>
@@ -243,7 +243,7 @@
                       </div>
                     </div>
                     <div v-else class="empty-card">
-                      <span>📦</span>
+                      <Icon name="package" :size="32" />
                       <p>{{ $t('admin.noProductsYet') }}</p>
                     </div>
                   </div>
@@ -259,14 +259,14 @@
                 <div class="card-body">
                   <div class="activity-timeline">
                     <div v-for="activity in recentActivity" :key="activity.id" class="timeline-item">
-                      <span class="timeline-icon">{{ activity.icon }}</span>
+                      <span class="timeline-icon"><Icon :name="activity.icon" :size="16" /></span>
                       <div class="timeline-content">
                         <p>{{ activity.text }}</p>
                         <span class="timeline-time">{{ activity.time }}</span>
                       </div>
                     </div>
                     <div v-if="recentActivity.length === 0" class="empty-card">
-                      <span>📝</span>
+                      <Icon name="fileText" :size="32" />
                       <p>{{ $t('admin.noRecentActivity') }}</p>
                     </div>
                   </div>
@@ -363,7 +363,7 @@
                 <tr v-if="filteredUsers.length === 0">
                   <td colspan="6" class="empty-table">
                     <div class="empty-state">
-                      <span>👥</span>
+                      <Icon name="users" :size="36" />
                       <p>{{ $t('admin.noUsersFound') }}</p>
                     </div>
                   </td>
@@ -395,10 +395,10 @@
             <div v-for="product in filteredProducts" :key="product.id" class="product-card-admin">
               <div class="product-image-admin">
                 <img v-if="product.image_url" :src="product.image_url" :alt="product.name" loading="lazy" />
-                <div v-else class="no-image-admin">🌱</div>
+                <div v-else class="no-image-admin"><Icon name="sprout" :size="32" /></div>
                 <div class="product-overlay-admin">
-                  <button @click="openProductModal(product)" class="overlay-btn">✏️ {{ $t('admin.edit') }}</button>
-                  <button @click="deleteProduct(product.id)" class="overlay-btn danger">🗑️ {{ $t('admin.delete') }}</button>
+                  <button @click="openProductModal(product)" class="overlay-btn"><Icon name="edit" :size="14" /> {{ $t('admin.edit') }}</button>
+                  <button @click="deleteProduct(product.id)" class="overlay-btn danger"><Icon name="trash" :size="14" /> {{ $t('admin.delete') }}</button>
                 </div>
               </div>
               <div class="product-info-admin">
@@ -414,7 +414,7 @@
               </div>
             </div>
             <div v-if="filteredProducts.length === 0" class="empty-products">
-              <span>📦</span>
+              <Icon name="package" :size="36" />
               <p>{{ $t('admin.noProductsFound') }}</p>
               <button @click="openProductModal()" class="btn-primary">{{ $t('admin.addFirstProduct') }}</button>
             </div>
@@ -478,7 +478,7 @@
               </div>
             </div>
             <div v-if="filteredOrders.length === 0" class="empty-orders">
-              <span>📭</span>
+              <Icon name="inbox" :size="36" />
               <p>{{ $t('admin.noOrdersFound') }}</p>
             </div>
           </div>
@@ -518,7 +518,7 @@
               </div>
             </div>
             <div v-if="filteredPosts.length === 0" class="empty-posts">
-              <span>💬</span>
+              <Icon name="message" :size="36" />
               <p>{{ $t('admin.noForumPosts') }}</p>
             </div>
           </div>
@@ -611,10 +611,11 @@
 import api from '../utils/api.js'
 import AdminUserModal from './admin/AdminUserModal.vue'
 import AdminProductModal from './admin/AdminProductModal.vue'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'Admin',
-  components: { AdminUserModal, AdminProductModal },
+  components: { AdminUserModal, AdminProductModal, Icon },
   data() {
     return {
       activeTab: 'dashboard',
@@ -955,7 +956,7 @@ export default {
         const latestUser = this.users[this.users.length - 1]
         this.recentActivity.push({
           id: 'user-' + latestUser.id,
-          icon: '👤',
+          icon: 'user',
           text: `New user registered: ${latestUser.name}`,
           time: 'Recently'
         })
@@ -965,7 +966,7 @@ export default {
         const latestOrder = this.orders[0]
         this.recentActivity.push({
           id: 'order-' + latestOrder?.id,
-          icon: '📦',
+          icon: 'package',
           text: `New order #${latestOrder?.id} - €${latestOrder?.total?.toFixed(2)}`,
           time: 'Recently'
         })

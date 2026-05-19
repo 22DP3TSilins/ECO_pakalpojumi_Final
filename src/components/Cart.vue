@@ -137,7 +137,7 @@
               </div>
               
               <button class="remove-btn" @click="removeItem(item.id)" title="Remove item">
-                <span class="remove-icon">✕</span>
+                <Icon name="x" :size="16" class="remove-icon" />
               </button>
             </div>
           </div>
@@ -243,7 +243,7 @@
     <!-- Checkout Modal -->
     <div v-if="showCheckoutModal" class="modal-overlay" @click.self="showCheckoutModal = false">
       <div class="checkout-modal">
-        <button class="close-modal" @click="showCheckoutModal = false">✕</button>
+        <button class="close-modal" @click="showCheckoutModal = false"><Icon name="x" :size="20" /></button>
         
         <div class="modal-header">
           <div class="modal-icon">
@@ -290,7 +290,7 @@
           </div>
           
           <div class="eco-commitment">
-            <div class="commitment-icon">🌱</div>
+            <div class="commitment-icon"><Icon name="sprout" :size="28" /></div>
             <p>By completing this purchase, you're supporting sustainable practices and helping plant <strong>{{ Math.ceil(subtotal / 10) }} trees</strong>!</p>
           </div>
         </div>
@@ -298,7 +298,7 @@
         <div class="modal-footer">
           <button class="confirm-btn" @click="checkout" :disabled="processing">
             <span v-if="processing">Processing...</span>
-            <span v-else>✓ Confirm Order • €{{ (subtotal - discount).toFixed(2) }}</span>
+            <span v-else><Icon name="check" :size="16" /> Confirm Order • €{{ (subtotal - discount).toFixed(2) }}</span>
           </button>
           <button class="back-btn" @click="showCheckoutModal = false" :disabled="processing">
             ← Back to Cart
@@ -312,7 +312,7 @@
       <div class="success-modal">
         <div class="success-animation">
           <div class="success-circle">
-            <span class="success-check">✓</span>
+            <Icon name="check" :size="36" class="success-check" />
           </div>
         </div>
         <h3>Order Placed Successfully!</h3>
@@ -330,7 +330,7 @@
         </div>
         
         <div class="impact-summary">
-          <h4>🌍 Your Impact</h4>
+          <h4><Icon name="globe" :size="18" /> Your Impact</h4>
           <div class="impact-grid">
             <div class="impact-box">
               <span class="impact-num">{{ treesPlanted }}</span>
@@ -345,10 +345,10 @@
         
         <div class="success-actions">
           <router-link to="/products" class="primary-action" @click="showSuccessModal = false">
-            🛍️ Continue Shopping
+            <Icon name="bag" :size="16" /> Continue Shopping
           </router-link>
           <router-link to="/profile" class="secondary-action" @click="showSuccessModal = false">
-            📦 View Orders
+            <Icon name="package" :size="16" /> View Orders
           </router-link>
         </div>
       </div>
@@ -359,9 +359,11 @@
 <script>
 import { useI18n } from 'vue-i18n'
 import api from '../utils/api.js'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'CartPage',
+  components: { Icon },
   setup() {
     const { t } = useI18n()
     return { t }

@@ -320,46 +320,46 @@ export default {
   computed: {
     categories() {
       return [
-        { id: 'transport', name: this.t('footprint.categories.transport'), icon: '🚲', color: '#3498db' },
-        { id: 'energy', name: this.t('footprint.categories.energy'), icon: '⚡', color: '#f39c12' },
-        { id: 'waste', name: this.t('footprint.categories.waste'), icon: '♻️', color: '#2ecc71' },
-        { id: 'food', name: this.t('footprint.categories.food'), icon: '🥗', color: '#e74c3c' },
-        { id: 'water', name: this.t('footprint.categories.water'), icon: '💧', color: '#9b59b6' },
-        { id: 'nature', name: this.t('footprint.categories.nature'), icon: '🌳', color: '#1abc9c' }
+        { id: 'transport', name: this.t('footprint.categories.transport'), icon: 'bike', color: '#3498db' },
+        { id: 'energy', name: this.t('footprint.categories.energy'), icon: 'zap', color: '#f39c12' },
+        { id: 'waste', name: this.t('footprint.categories.waste'), icon: 'recycle', color: '#2ecc71' },
+        { id: 'food', name: this.t('footprint.categories.food'), icon: 'leaf', color: '#e74c3c' },
+        { id: 'water', name: this.t('footprint.categories.water'), icon: 'droplet', color: '#9b59b6' },
+        { id: 'nature', name: this.t('footprint.categories.nature'), icon: 'tree', color: '#1abc9c' }
       ]
     },
     quickActivities() {
       return [
-        { id: 1, name: this.t('footprint.quickActivities.bikedToWork'), icon: '🚲', impact: 2.5, category: 'transport' },
-        { id: 2, name: this.t('footprint.quickActivities.recycledWaste'), icon: '♻️', impact: 1.0, category: 'waste' },
-        { id: 3, name: this.t('footprint.quickActivities.meatlessMeal'), icon: '🥗', impact: 1.5, category: 'food' },
-        { id: 4, name: this.t('footprint.quickActivities.publicTransit'), icon: '🚌', impact: 1.8, category: 'transport' },
-        { id: 5, name: this.t('footprint.quickActivities.coldWash'), icon: '👕', impact: 0.5, category: 'energy' },
-        { id: 6, name: this.t('footprint.quickActivities.composted'), icon: '🌱', impact: 0.8, category: 'waste' },
-        { id: 7, name: this.t('footprint.quickActivities.shortShower'), icon: '🚿', impact: 0.3, category: 'water' },
-        { id: 8, name: this.t('footprint.quickActivities.noCarToday'), icon: '🚗', impact: 3.0, category: 'transport' }
+        { id: 1, name: this.t('footprint.quickActivities.bikedToWork'), icon: 'bike', impact: 2.5, category: 'transport' },
+        { id: 2, name: this.t('footprint.quickActivities.recycledWaste'), icon: 'recycle', impact: 1.0, category: 'waste' },
+        { id: 3, name: this.t('footprint.quickActivities.meatlessMeal'), icon: 'leaf', impact: 1.5, category: 'food' },
+        { id: 4, name: this.t('footprint.quickActivities.publicTransit'), icon: 'bus', impact: 1.8, category: 'transport' },
+        { id: 5, name: this.t('footprint.quickActivities.coldWash'), icon: 'shirt', impact: 0.5, category: 'energy' },
+        { id: 6, name: this.t('footprint.quickActivities.composted'), icon: 'sprout', impact: 0.8, category: 'waste' },
+        { id: 7, name: this.t('footprint.quickActivities.shortShower'), icon: 'shower', impact: 0.3, category: 'water' },
+        { id: 8, name: this.t('footprint.quickActivities.noCarToday'), icon: 'car', impact: 3.0, category: 'transport' }
       ]
     },
     achievements() {
       return [
-        { id: 1, name: this.t('footprint.achievementsList.firstStepName'), icon: '👣', description: this.t('footprint.achievementsList.firstStepDesc'), unlocked: false, progress: 0 },
-        { id: 2, name: this.t('footprint.achievementsList.weekWarriorName'), icon: '🗓️', description: this.t('footprint.achievementsList.weekWarriorDesc'), unlocked: false, progress: 0 },
-        { id: 3, name: this.t('footprint.achievementsList.carbonCutterName'), icon: '✂️', description: this.t('footprint.achievementsList.carbonCutterDesc'), unlocked: false, progress: 0 },
-        { id: 4, name: this.t('footprint.achievementsList.ecoChampionName'), icon: '🏆', description: this.t('footprint.achievementsList.ecoChampionDesc'), unlocked: false, progress: 0 },
-        { id: 5, name: this.t('footprint.achievementsList.greenMasterName'), icon: '🌿', description: this.t('footprint.achievementsList.greenMasterDesc'), unlocked: false, progress: 0 },
-        { id: 6, name: this.t('footprint.achievementsList.planetHeroName'), icon: '🌍', description: this.t('footprint.achievementsList.planetHeroDesc'), unlocked: false, progress: 0 }
+        { id: 1, name: this.t('footprint.achievementsList.firstStepName'), icon: 'footprints', description: this.t('footprint.achievementsList.firstStepDesc'), unlocked: false, progress: 0 },
+        { id: 2, name: this.t('footprint.achievementsList.weekWarriorName'), icon: 'calendar', description: this.t('footprint.achievementsList.weekWarriorDesc'), unlocked: false, progress: 0 },
+        { id: 3, name: this.t('footprint.achievementsList.carbonCutterName'), icon: 'scissors', description: this.t('footprint.achievementsList.carbonCutterDesc'), unlocked: false, progress: 0 },
+        { id: 4, name: this.t('footprint.achievementsList.ecoChampionName'), icon: 'trophy', description: this.t('footprint.achievementsList.ecoChampionDesc'), unlocked: false, progress: 0 },
+        { id: 5, name: this.t('footprint.achievementsList.greenMasterName'), icon: 'leaf', description: this.t('footprint.achievementsList.greenMasterDesc'), unlocked: false, progress: 0 },
+        { id: 6, name: this.t('footprint.achievementsList.planetHeroName'), icon: 'globe', description: this.t('footprint.achievementsList.planetHeroDesc'), unlocked: false, progress: 0 }
       ]
     },
     tips() {
       return [
-        { icon: '🚲', text: this.t('footprint.tipsList.cycling') },
-        { icon: '💡', text: this.t('footprint.tipsList.led') },
-        { icon: '🥗', text: this.t('footprint.tipsList.meatless') },
-        { icon: '🚿', text: this.t('footprint.tipsList.shower') },
-        { icon: '♻️', text: this.t('footprint.tipsList.recycle') },
-        { icon: '🌳', text: this.t('footprint.tipsList.tree') },
-        { icon: '👕', text: this.t('footprint.tipsList.coldWash') },
-        { icon: '📦', text: this.t('footprint.tipsList.orders') }
+        { icon: 'bike', text: this.t('footprint.tipsList.cycling') },
+        { icon: 'lightbulb', text: this.t('footprint.tipsList.led') },
+        { icon: 'leaf', text: this.t('footprint.tipsList.meatless') },
+        { icon: 'shower', text: this.t('footprint.tipsList.shower') },
+        { icon: 'recycle', text: this.t('footprint.tipsList.recycle') },
+        { icon: 'tree', text: this.t('footprint.tipsList.tree') },
+        { icon: 'shirt', text: this.t('footprint.tipsList.coldWash') },
+        { icon: 'package', text: this.t('footprint.tipsList.orders') }
       ]
     },
     totalImpact() {
@@ -439,11 +439,11 @@ export default {
     },
     goalMessage() {
       const percent = (this.monthlyTotal / this.monthlyGoal * 100).toFixed(0);
-      if (percent >= 100) return '🎉 ' + this.t('footprint.goalMessages.achieved');
-      if (percent >= 75) return '🔥 ' + this.t('footprint.goalMessages.almost');
-      if (percent >= 50) return '💪 ' + this.t('footprint.goalMessages.halfWay');
-      if (percent >= 25) return '🌱 ' + this.t('footprint.goalMessages.goodStart');
-      return '🚀 ' + this.t('footprint.goalMessages.justStarted');
+      if (percent >= 100) return this.t('footprint.goalMessages.achieved');
+      if (percent >= 75) return this.t('footprint.goalMessages.almost');
+      if (percent >= 50) return this.t('footprint.goalMessages.halfWay');
+      if (percent >= 25) return this.t('footprint.goalMessages.goodStart');
+      return this.t('footprint.goalMessages.justStarted');
     },
     filteredActivities() {
       let filtered = [...this.activities];
@@ -572,19 +572,19 @@ export default {
     },
     getCategoryIcon(activityName) {
       const iconMap = {
-        'bike': '🚲', 'cycl': '🚲', 'transport': '🚌', 'bus': '🚌',
-        'recycl': '♻️', 'compost': '🌱', 'waste': '🗑️',
-        'meat': '🥗', 'vegan': '🥗', 'food': '🍽️',
-        'water': '💧', 'shower': '🚿',
-        'energy': '⚡', 'light': '💡', 'laundry': '👕',
-        'tree': '🌳', 'plant': '🌱', 'car': '🚗'
+        'bike': 'bike', 'cycl': 'bike', 'transport': 'bus', 'bus': 'bus',
+        'recycl': 'recycle', 'compost': 'sprout', 'waste': 'trash',
+        'meat': 'leaf', 'vegan': 'leaf', 'food': 'utensils',
+        'water': 'droplet', 'shower': 'shower',
+        'energy': 'zap', 'light': 'lightbulb', 'laundry': 'shirt',
+        'tree': 'tree', 'plant': 'sprout', 'car': 'car'
       };
       
       const lower = (activityName || '').toLowerCase();
       for (const [key, icon] of Object.entries(iconMap)) {
         if (lower.includes(key)) return icon;
       }
-      return '🌍';
+      return 'globe';
     },
     getCategoryColor(activityName) {
       const cat = this.getActivityCategory(activityName);

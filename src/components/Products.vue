@@ -8,7 +8,7 @@
         <div class="h-shape h-shape-3"></div>
       </div>
       <div class="hero-content">
-        <span class="hero-badge">🌿 Eco Marketplace</span>
+        <span class="hero-badge"><Icon name="leaf" :size="16" /> Eco Marketplace</span>
         <h1>{{ t('products.title') }}</h1>
         <p>{{ t('products.subtitle') }}</p>
         <div class="hero-search">
@@ -187,7 +187,7 @@
               </div>
 
               <div v-if="product.lifecycle_info" class="eco-badge">
-                <span class="eco-icon">🌱</span>
+                <Icon name="sprout" :size="14" class="eco-icon" />
                 {{ truncateText(product.lifecycle_info, 50) }}
               </div>
               
@@ -198,7 +198,7 @@
               >
                 <span v-if="product.stock === 0">Out of Stock</span>
                 <span v-else-if="addingToCart === product.id">Adding...</span>
-                <span v-else>🛒 Add to Cart</span>
+                <span v-else><Icon name="cart" :size="16" /> Add to Cart</span>
               </button>
             </div>
           </div>
@@ -209,7 +209,7 @@
     <!-- Quick View Modal -->
     <div v-if="showQuickView" class="modal-overlay" @click.self="showQuickView = false">
       <div class="quick-view-modal">
-        <button class="close-modal" @click="showQuickView = false">✕</button>
+        <button class="close-modal" @click="showQuickView = false"><Icon name="x" :size="20" /></button>
         <div class="modal-content">
           <div class="modal-image">
             <img 
@@ -217,7 +217,7 @@
               :src="selectedProduct.image_url" 
               :alt="selectedProduct.name"
             />
-            <div v-else class="no-image large">🌱</div>
+            <div v-else class="no-image large"><Icon name="sprout" :size="48" /></div>
           </div>
           <div class="modal-info">
             <span class="modal-category">{{ selectedProduct.category }}</span>
@@ -225,7 +225,7 @@
             <p class="modal-description">{{ selectedProduct.description }}</p>
             
             <div v-if="selectedProduct.lifecycle_info" class="modal-lifecycle">
-              <h4>🌱 {{ t('products.lifecycle') }}</h4>
+              <h4><Icon name="sprout" :size="18" /> {{ t('products.lifecycle') }}</h4>
               <p>{{ selectedProduct.lifecycle_info }}</p>
             </div>
             
@@ -246,7 +246,7 @@
                 @click="addToCartFromModal"
                 :disabled="selectedProduct.stock === 0"
               >
-                🛒 Add to Cart
+                <Icon name="cart" :size="16" /> Add to Cart
               </button>
             </div>
           </div>
@@ -259,9 +259,11 @@
 <script>
 import { useI18n } from 'vue-i18n'
 import api from '../utils/api.js'
+import Icon from './common/Icon.vue'
 
 export default {
   name: 'ProductsPage',
+  components: { Icon },
   setup() {
     const { t } = useI18n()
     return { t }
@@ -362,16 +364,16 @@ export default {
     },
     getCategoryIcon(category) {
       const icons = {
-        'Home': '🏠',
-        'Kitchen': '🍳',
-        'Garden': '🌱',
-        'Beauty': '✨',
-        'Fashion': '👕',
-        'Electronics': '📱',
-        'Office': '📎',
-        'Food': '🥗'
+        'Home': 'home',
+        'Kitchen': 'utensils',
+        'Garden': 'sprout',
+        'Beauty': 'sparkles',
+        'Fashion': 'shirt',
+        'Electronics': 'smartphone',
+        'Office': 'paperclip',
+        'Food': 'leaf'
       };
-      return icons[category] || '📦';
+      return icons[category] || 'package';
     },
     getCategoryCount(category) {
       return this.products.filter(p => p.category === category).length;

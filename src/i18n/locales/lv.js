@@ -312,7 +312,7 @@ export default {
     tip3: 'Izmanto atjaunojamo enerģiju',
     tip4: 'Pērc mazāk, izvēlies ilgtspējīgi',
     // Footprint messages
-    msgExcellent: 'Izcili! Tu esi zaļais varonis! 🌟',
+    msgExcellent: 'Izcili! Tu esi zaļais varonis!',
     msgGreat: 'Lieliski! Daudz zem vidējā.',
     msgAverage: 'Labi. Tu esi vidējais.',
     msgAbove: 'Ir kur uzlabot.',
