@@ -1601,6 +1601,44 @@ app.put('/api/notifications/:id/read', authenticateToken, (req, res) => {
   });
 });
 
+// Administratora konta bootstrap no vides mainīgajiem (ADMIN_EMAIL / ADMIN_PASSWORD)
+// Ja lietotājs ar ADMIN_EMAIL eksistē — paaugstina lomu uz 'admin' (un atjauno paroli, ja norādīta).
+// Ja neeksistē un ir norādīta ADMIN_PASSWORD — izveido jaunu administratora kontu.
+(function bootstrapAdmin() {
+  const email = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
+  const password = process.env.ADMIN_PASSWORD || '';
+  if (!email) return;
+  db.get('SELECT id FROM users WHERE LOWER(email) = ?', [email], async (err, row) => {
+    if (err) { console.error('Admin bootstrap kļūda:', err); return; }
+    try {
+      if (row) {
+        if (password) {
+          const hash = await bcrypt.hash(password, 10);
+          db.run('UPDATE users SET role = ?, password = ?, blocked = 0 WHERE id = ?', ['admin', hash, row.id]);
+          console.log(`👑 Admin bootstrap: ${email} paaugstināts un parole atjaunota.`);
+        } else {
+          db.run('UPDATE users SET role = ?, blocked = 0 WHERE id = ?', ['admin', row.id]);
+          console.log(`👑 Admin bootstrap: ${email} paaugstināts par administratoru.`);
+        }
+      } else if (password) {
+        const hash = await bcrypt.hash(password, 10);
+        db.run(
+          'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+          ['Administrator', email, hash, 'admin'],
+          (e) => {
+            if (e) console.error('Admin bootstrap insert kļūda:', e);
+            else console.log(`👑 Admin bootstrap: izveidots jauns administrators ${email}.`);
+          }
+        );
+      } else {
+        console.log(`⚠️  Admin bootstrap: ${email} neeksistē, un ADMIN_PASSWORD nav norādīts.`);
+      }
+    } catch (e) {
+      console.error('Admin bootstrap izņēmums:', e);
+    }
+  });
+})();
+
 const server = app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
