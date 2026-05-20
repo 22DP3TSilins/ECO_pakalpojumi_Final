@@ -1,6 +1,6 @@
 <template>
   <div class="profile-page">
-    <!-- Toast -->
+    <!-- Paziņojums -->
     <transition name="toast">
       <div v-if="toast.visible" class="toast" :class="['toast-' + toast.type]">
         <svg v-if="toast.type === 'success'" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -9,7 +9,7 @@
       </div>
     </transition>
 
-    <!-- Profile Hero -->
+    <!-- Profila galvene -->
     <div class="profile-hero">
       <div class="hero-bg"></div>
       <div class="profile-avatar-section">
@@ -37,7 +37,7 @@
     </div>
 
     <div class="profile-container">
-      <!-- Stats Overview -->
+      <!-- Statistikas pārskats -->
       <div class="stats-section">
         <div class="stat-card">
           <div class="stat-icon green">
@@ -78,9 +78,9 @@
       </div>
 
       <div class="profile-grid">
-        <!-- Main Content -->
+        <!-- Galvenais saturs -->
         <div class="profile-main">
-          <!-- Quick Actions -->
+          <!-- Ātrās darbības -->
           <div class="section-card">
             <h2>{{ t('profile.quickActions') }}</h2>
             <div class="quick-actions">
@@ -111,7 +111,7 @@
             </div>
           </div>
 
-          <!-- Edit Profile Section -->
+          <!-- Profila rediģēšanas sekcija -->
           <div class="section-card">
             <div class="section-header">
               <h2>{{ t('profile.profileInfo') }}</h2>
@@ -158,7 +158,7 @@
             </form>
           </div>
 
-          <!-- Achievements Section -->
+          <!-- Sasniegumu sekcija -->
           <div class="section-card">
             <h2>
               <svg class="section-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
@@ -181,9 +181,9 @@
           </div>
         </div>
 
-        <!-- Sidebar -->
+        <!-- Sānjosla -->
         <aside class="profile-sidebar">
-          <!-- Level Progress -->
+          <!-- Līmeņa progress -->
           <div class="sidebar-card level-card">
             <div class="level-header">
               <span class="level-badge">{{ t('profile.level') }} {{ userLevel }}</span>
@@ -197,7 +197,7 @@
             </div>
           </div>
 
-          <!-- Recent Activity -->
+          <!-- Nesenā aktivitāte -->
           <div class="sidebar-card">
             <h3>
               <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -214,7 +214,7 @@
             </div>
           </div>
 
-          <!-- Danger Zone -->
+          <!-- Bīstamā zona -->
           <div class="sidebar-card danger-zone">
             <h3>
               <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -318,12 +318,12 @@ export default {
   async mounted() {
     if (this.user) {
       this.editData.name = this.user.name;
-      // Load customizations using user-specific key
+      // Ielādēt pielāgojumus, izmantojot lietotājam specifisku atslēgu
       const saved = localStorage.getItem(`customizations_${this.user.id}`);
       if (saved) {
         this.customizations = JSON.parse(saved);
       }
-      // Fetch real stats from backend
+      // Ielādēt patieso statistiku no aizmugurpuses
       await this.fetchUserStats();
     }
   },
@@ -354,27 +354,27 @@ export default {
       }
     },
     updateAchievements(data) {
-      // First Step - has any activity
+      // Pirmais solis — jebkura aktivitāte
       this.achievementsData[0].progress = data.activitiesCount > 0 ? 100 : 0;
       this.achievementsData[0].unlocked = data.activitiesCount > 0;
       
-      // Eco Shopper - 5 orders
+      // Eko pircējs — 5 pasūtījumi
       this.achievementsData[1].progress = Math.min((data.ordersCount / 5) * 100, 100);
       this.achievementsData[1].unlocked = data.ordersCount >= 5;
       
-      // Carbon Cutter - 50kg CO2
+      // Oglekļa griezējs — 50 kg CO2
       this.achievementsData[2].progress = Math.min((data.totalCo2Saved / 50) * 100, 100);
       this.achievementsData[2].unlocked = data.totalCo2Saved >= 50;
       
-      // Challenge Master - 10 challenges
+      // Izaicinājumu meistars — 10 izaicinājumi
       this.achievementsData[3].progress = Math.min((data.challengesCompleted / 10) * 100, 100);
       this.achievementsData[3].unlocked = data.challengesCompleted >= 10;
       
-      // Streak Hero - 30 day streak
+      // Sērijas varonis — 30 dienu sērija
       this.achievementsData[4].progress = Math.min((data.streak / 30) * 100, 100);
       this.achievementsData[4].unlocked = data.streak >= 30;
       
-      // Planet Guardian - 500kg CO2
+      // Planētas sargs — 500 kg CO2
       this.achievementsData[5].progress = Math.min((data.totalCo2Saved / 500) * 100, 100);
       this.achievementsData[5].unlocked = data.totalCo2Saved >= 500;
     },
@@ -422,7 +422,7 @@ export default {
     async updateProfile() {
       this.loading = true;
       try {
-        // Only send fields the user actually wants to change
+        // Sūtīt tikai laukus, kurus lietotājs patiešām vēlas mainīt
         const payload = {};
         if (this.editData.name && this.editData.name.trim() && this.editData.name !== this.user?.name) {
           payload.name = this.editData.name.trim();
@@ -431,7 +431,7 @@ export default {
           payload.password = this.editData.password;
         }
         if (Object.keys(payload).length === 0) {
-          // Just save local customizations (bio/avatar)
+          // Vienkārši saglabāt lokālos pielāgojumus (bio/avatāru)
           this.saveCustomizations();
           this.showEdit = false;
           this.showToast(this.t('profile.savedLocally') || 'Saved');
@@ -439,7 +439,7 @@ export default {
           return;
         }
         const { data } = await api.put('/api/user', payload);
-        // Backend now re-issues a JWT so the new name shows up immediately
+        // Aizmugurpuse tagad atkārtoti izsniedz JWT, lai jaunais vārds parādītos uzreiz
         if (data && data.token) {
           localStorage.setItem('token', data.token);
         }
@@ -447,7 +447,7 @@ export default {
         this.editData.password = '';
         this.showEdit = false;
         this.showToast(this.t('profile.profileUpdated') || 'Profile updated');
-        // Force computed `user` to re-read the new token without a hard reload
+        // Piespiest aprēķināto `user` atkārtoti nolasīt jauno pilnvaru bez pilnas pārlādes
         this.$forceUpdate();
       } catch (error) {
         this.showToast(error.response?.data?.error || 'Error updating profile', 'error');
@@ -475,7 +475,7 @@ export default {
     },
     saveCustomizations() {
       if (this.user) {
-        // Save customizations with user-specific key
+        // Saglabāt pielāgojumus ar lietotājam specifisku atslēgu
         localStorage.setItem(`customizations_${this.user.id}`, JSON.stringify(this.customizations));
       }
     },
@@ -501,7 +501,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .profile-hero {
   position: relative;
   padding: 100px 20px 60px;
@@ -636,7 +636,7 @@ export default {
   opacity: 0.9;
 }
 
-/* Container */
+/* Konteiners */
 .profile-container {
   max-width: 1000px;
   margin: -24px auto 0;
@@ -645,7 +645,7 @@ export default {
   z-index: 10;
 }
 
-/* Stats Section */
+/* Statistikas sekcija */
 .stats-section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -685,7 +685,7 @@ export default {
 .stat-icon.purple { background: #f3e8ff; color: #8b5cf6; }
 .stat-icon.orange { background: #fef3e2; color: #f59e0b; }
 
-/* Dark-mode tints so coloured icons stay readable without going pure white */
+/* Tumšā režīma toņi, lai krāsainas ikonas paliek lasāmas, nepārvēršoties pilnīgi baltas */
 .dark .stat-icon.blue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
 .dark .stat-icon.purple { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; }
 .dark .stat-icon.orange { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
@@ -706,14 +706,14 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Profile Grid */
+/* Profila režģis */
 .profile-grid {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 20px;
 }
 
-/* Section Cards */
+/* Sekciju kartītes */
 .section-card {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -770,7 +770,7 @@ export default {
   color: var(--primary);
 }
 
-/* Quick Actions */
+/* Ātrās darbības */
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -810,7 +810,7 @@ export default {
   font-size: 0.9rem;
 }
 
-/* Profile Display */
+/* Profila attēlojums */
 .profile-display {
   display: flex;
   flex-direction: column;
@@ -834,7 +834,7 @@ export default {
   font-weight: 500;
 }
 
-/* Edit Form */
+/* Rediģēšanas forma */
 .edit-form {
   display: flex;
   flex-direction: column;
@@ -912,7 +912,7 @@ export default {
   left: 100%;
 }
 
-/* Achievements */
+/* Sasniegumi */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -977,7 +977,7 @@ export default {
   border-radius: 2px;
 }
 
-/* Sidebar */
+/* Sānjosla */
 .profile-sidebar {
   display: flex;
   flex-direction: column;
@@ -1002,7 +1002,7 @@ export default {
   gap: 8px;
 }
 
-/* Level Card */
+/* Līmeņa kartīte */
 .level-card {
   background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   color: white;
@@ -1054,7 +1054,7 @@ export default {
   opacity: 0.9;
 }
 
-/* Activity List */
+/* Aktivitāšu saraksts */
 .activity-list {
   display: flex;
   flex-direction: column;
@@ -1098,7 +1098,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Danger Zone */
+/* Bīstamā zona */
 .danger-zone {
   border: 1px solid #fecaca;
   background: #fef2f2;
@@ -1154,7 +1154,7 @@ export default {
   color: white;
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .profile-grid {
     grid-template-columns: 1fr;
@@ -1200,7 +1200,7 @@ export default {
   }
 }
 
-/* Toast notification */
+/* Paziņojuma izlēciens */
 .toast {
   position: fixed;
   top: 80px;

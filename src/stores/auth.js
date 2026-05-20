@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
 
-// Configure axios baseURL (use VITE_API_URL in production, fall back to localhost in dev)
+// Konfigurēt axios baseURL (izmanto VITE_API_URL ražošanā, izstrādes lāpos atgriežas pie localhost)
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -11,7 +11,7 @@ export const useAuthStore = defineStore('auth', () => {
   const initialized = ref(false)
   const isAuthenticated = computed(() => !!user.value)
 
-  // Set axios default authorization header
+  // Iestatīt axios noklusēto autorizācijas galveni
   if (token.value) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token.value}`
   }
@@ -24,10 +24,10 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = newToken
       user.value = userData
 
-      // Store token in localStorage
+      // Saglabāt pilnvaru localStorage
       localStorage.setItem('token', newToken)
 
-      // Set axios default header
+      // Iestatīt axios noklusēto galveni
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`
 
       return { success: true }
@@ -59,10 +59,10 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = newToken
       user.value = userData
 
-      // Store token in localStorage
+      // Saglabāt pilnvaru localStorage
       localStorage.setItem('token', newToken)
 
-      // Set axios default header
+      // Iestatīt axios noklusēto galveni
       axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`
 
       return { success: true, isNewUser }
@@ -88,7 +88,7 @@ export const useAuthStore = defineStore('auth', () => {
     const storedToken = localStorage.getItem('token')
     if (storedToken) {
       try {
-        // Decode token to get user info (simple decode, not verify)
+        // Dekodēt pilnvaru, lai iegūtu lietotāja datus (vienkārša dekodēšana, bez pārbaudes)
         const payload = JSON.parse(atob(storedToken.split('.')[1]))
         user.value = {
           id: payload.id,
@@ -99,7 +99,7 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = storedToken
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`
       } catch (error) {
-        // Invalid token, clear it
+        // Nederīga pilnvara, noņemt to
         logout()
       }
     }

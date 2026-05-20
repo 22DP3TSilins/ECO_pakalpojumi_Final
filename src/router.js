@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from './stores/auth.js'
 
-// Lazy-load all route components for code splitting
+// Visu maršruta komponentu slēptā ielāde koda sadalīšanai
 const Home = () => import('./components/Home.vue')
 const Login = () => import('./components/Login.vue')
 const Register = () => import('./components/Register.vue')
@@ -17,7 +17,7 @@ const NotFound = () => import('./components/NotFound.vue')
 
 const routes = [
   { path: '/', redirect: () => {
-      // Send unauthenticated visitors to login, authenticated to products
+      // Neautentificētos apmeklētājus sūtīt uz pieteikšanās lapu, autentificētos — uz produktiem
       const token = localStorage.getItem('token')
       return token ? '/products' : '/login'
     }
@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
   const requiresAuth = !isPublicRoute
   const requiresAdmin = to.meta.requiresAdmin
 
-  // Initialize auth state if not already done
+  // Inicializēt autentifikācijas stāvokli, ja tā vēl nav izdarīts
   if (!authStore.user && localStorage.getItem('token')) {
     authStore.initializeAuth()
   }

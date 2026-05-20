@@ -1,6 +1,6 @@
 <template>
   <div class="tracker-page">
-    <!-- Page Tab Switcher -->
+    <!-- Lapas ciļņu pārslēdzējs -->
     <div class="page-tabs">
       <button :class="['page-tab', { active: activeView === 'tracker' }]" @click="activeView = 'tracker'">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
@@ -12,12 +12,12 @@
       </button>
     </div>
 
-    <!-- Calculator View -->
+    <!-- Kalkulatora skats -->
     <Calculator v-show="activeView === 'calculator'" />
 
-    <!-- Tracker View -->
+    <!-- Sekotāja skats -->
     <div v-show="activeView === 'tracker'">
-    <!-- Hero Stats Section -->
+    <!-- Galvenās statistikas sekcija -->
     <div class="tracker-hero">
       <div class="hero-left">
         <h1><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>{{ t('footprint.title') }}</h1>
@@ -56,9 +56,9 @@
     </div>
 
     <div class="tracker-container">
-      <!-- Left Column - Log Activity -->
+      <!-- Kreisā kolonna — aktivitātes reģistrēšana -->
       <div class="tracker-main">
-        <!-- Quick Log Section -->
+        <!-- Ātrās reģistrēšanas sekcija -->
         <div class="quick-log-section">
           <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>{{ t('footprint.quickLog') }}</h2>
           <p class="section-desc">{{ t('footprint.quickLogDesc') }}</p>
@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <!-- Custom Log Section -->
+        <!-- Pielāgotās reģistrēšanas sekcija -->
         <div class="custom-log-section">
           <div class="section-header">
             <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>{{ t('footprint.logCustomActivity') }}</h2>
@@ -119,7 +119,7 @@
           </div>
         </div>
 
-        <!-- Weekly Progress -->
+        <!-- Nedēļas progress -->
         <div class="weekly-section">
           <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>{{ t('footprint.weeklyProgress') }}</h2>
           <div class="week-chart">
@@ -155,7 +155,7 @@
           </div>
         </div>
 
-        <!-- Activity History -->
+        <!-- Aktivitāšu vēsture -->
         <div class="history-section">
           <div class="section-header">
             <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>{{ t('footprint.activityHistory') }}</h2>
@@ -203,9 +203,9 @@
         </div>
       </div>
 
-      <!-- Right Column - Sidebar -->
+      <!-- Labā kolonna — sānjosla -->
       <aside class="tracker-sidebar">
-        <!-- Impact Breakdown -->
+        <!-- Ietekmes sadalījums -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>{{ t('footprint.impactByCategory') }}</h3>
           <div class="category-breakdown">
@@ -232,7 +232,7 @@
           </div>
         </div>
 
-        <!-- Achievements -->
+        <!-- Sasniegumi -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>{{ t('footprint.achievements') }}</h3>
           <div class="achievements-grid">
@@ -251,7 +251,7 @@
           </div>
         </div>
 
-        <!-- Eco Goals -->
+        <!-- Eko mērķi -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('footprint.monthlyGoal') }}</h3>
           <div class="goal-progress">
@@ -273,7 +273,7 @@
           </div>
         </div>
 
-        <!-- Tips -->
+        <!-- Padomi -->
         <div class="sidebar-card tips-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>{{ t('footprint.dailyTip') }}</h3>
           <div class="daily-tip">
@@ -284,7 +284,7 @@
         </div>
       </aside>
     </div>
-    </div><!-- end tracker view -->
+    </div><!-- sekotāja skata beigas -->
   </div>
 </template>
 
@@ -366,7 +366,7 @@ export default {
       return this.activities.reduce((sum, act) => sum + (act.impact || 0), 0);
     },
     currentStreak() {
-      // Calculate streak of consecutive days with activities
+      // Aprēķināt secīgu dienu skaitu ar aktivitātēm (sēriju)
       if (this.activities.length === 0) return 0;
       let streak = 0;
       const today = new Date();
@@ -534,27 +534,27 @@ export default {
       }
     },
     updateAchievements() {
-      // First Step
+      // Pirmais solis
       this.achievements[0].unlocked = this.activities.length > 0;
       this.achievements[0].progress = this.activities.length > 0 ? 100 : 0;
       
-      // Week Warrior
+      // Nedēļas karotājs
       this.achievements[1].unlocked = this.currentStreak >= 7;
       this.achievements[1].progress = Math.min(this.currentStreak / 7 * 100, 100);
       
-      // Carbon Cutter (50kg)
+      // Oglekļa griezējs (50 kg)
       this.achievements[2].unlocked = this.totalImpact >= 50;
       this.achievements[2].progress = Math.min(this.totalImpact / 50 * 100, 100);
       
-      // Eco Champion (100kg)
+      // Eko čempions (100 kg)
       this.achievements[3].unlocked = this.totalImpact >= 100;
       this.achievements[3].progress = Math.min(this.totalImpact / 100 * 100, 100);
       
-      // Green Master (50 activities)
+      // Zaļais meistars (50 aktivitātes)
       this.achievements[4].unlocked = this.activities.length >= 50;
       this.achievements[4].progress = Math.min(this.activities.length / 50 * 100, 100);
       
-      // Planet Hero (500kg)
+      // Planētas varonis (500 kg)
       this.achievements[5].unlocked = this.totalImpact >= 500;
       this.achievements[5].progress = Math.min(this.totalImpact / 500 * 100, 100);
     },
@@ -609,7 +609,7 @@ export default {
 </script>
 
 <style scoped>
-/* Page Tabs */
+/* Lapas cilnes */
 .page-tabs {
   display: flex;
   gap: 8px;
@@ -650,7 +650,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .tracker-hero {
   max-width: 1200px;
   margin: 0 auto 30px;
@@ -753,7 +753,7 @@ export default {
   color: rgba(255, 255, 255, 0.96);
 }
 
-/* Container */
+/* Konteiners */
 .tracker-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -762,7 +762,7 @@ export default {
   gap: 30px;
 }
 
-/* Quick Log Section */
+/* Ātrās reģistrēšanas sekcija */
 .quick-log-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -831,7 +831,7 @@ export default {
   font-weight: 600;
 }
 
-/* Custom Log Section */
+/* Pielāgotās reģistrēšanas sekcija */
 .custom-log-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -962,7 +962,7 @@ export default {
   box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
 }
 
-/* Weekly Section */
+/* Nedēļas sekcija */
 .weekly-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -1052,7 +1052,7 @@ export default {
   color: var(--primary);
 }
 
-/* History Section */
+/* Vēstures sekcija */
 .history-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -1180,7 +1180,7 @@ export default {
   opacity: 0.75;
 }
 
-/* Sidebar */
+/* Sānjosla */
 .tracker-sidebar {
   display: flex;
   flex-direction: column;
@@ -1201,7 +1201,7 @@ export default {
   font-weight: 600;
 }
 
-/* Category Breakdown */
+/* Kategoriju sadalījums */
 .category-breakdown {
   display: flex;
   flex-direction: column;
@@ -1254,7 +1254,7 @@ export default {
   transition: width 0.5s ease;
 }
 
-/* Achievements */
+/* Sasniegumi */
 .achievements-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1315,7 +1315,7 @@ export default {
   border-radius: 2px;
 }
 
-/* Goal Progress */
+/* Mērķa progress */
 .goal-progress {
   display: flex;
   flex-direction: column;
@@ -1376,7 +1376,7 @@ export default {
   font-size: 0.95rem;
 }
 
-/* Tips Card */
+/* Padomu kartīte */
 .tips-card {
   background: var(--primary-subtle);
   border: 1px solid var(--primary);
@@ -1416,7 +1416,7 @@ export default {
   box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .tracker-container {
     grid-template-columns: 1fr;

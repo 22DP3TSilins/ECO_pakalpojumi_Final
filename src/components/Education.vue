@@ -1,6 +1,6 @@
 <template>
   <div class="education-page">
-    <!-- Hero Section -->
+    <!-- Galvenā sekcija -->
     <div class="education-hero">
       <div class="header-content">
         <h1>{{ t('education.title') }}</h1>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <!-- Search and Topics -->
+    <!-- Meklēšana un tēmas -->
     <div class="search-section">
       <div class="search-bar">
         <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <!-- Quick Topics -->
+    <!-- Ātrās tēmas -->
     <div class="quick-topics">
       <h2>{{ t('education.quickTopics') }}</h2>
       <div class="topics-grid">
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <!-- Featured Section -->
+    <!-- Izceltā sekcija -->
     <div class="featured-section" v-if="featuredContent">
       <div class="featured-card">
         <div class="featured-badge">{{ t('education.featured') }}</div>
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <!-- Content Tabs -->
+    <!-- Satura cilnes -->
     <div class="content-section">
       <div class="section-header">
         <h2>{{ t('education.learningResources') }}</h2>
@@ -123,7 +123,7 @@
         </div>
       </div>
 
-      <!-- Content Grid -->
+      <!-- Satura režģis -->
       <div class="content-grid">
         <article 
           v-for="item in filteredContent" 
@@ -158,7 +158,7 @@
         </article>
       </div>
 
-      <!-- Empty State -->
+      <!-- Tukšs stāvoklis -->
       <div v-if="filteredContent.length === 0" class="empty-state">
         <div class="empty-icon">
           <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
@@ -170,7 +170,7 @@
       </div>
     </div>
 
-    <!-- Learning Paths -->
+    <!-- Apmācību ceļi -->
     <div class="learning-paths">
       <h2>
         <svg class="section-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
@@ -216,7 +216,7 @@
       </div>
     </div>
 
-    <!-- Tips Carousel -->
+    <!-- Padomu karuselis -->
     <div class="tips-section">
       <h2>
         <svg class="section-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
@@ -236,7 +236,7 @@
       </div>
     </div>
 
-    <!-- Content Modal -->
+    <!-- Satura modālais logs -->
     <div v-if="selectedContent" class="content-modal" @click.self="selectedContent = null">
       <div class="modal-content">
         <button class="modal-close" @click="selectedContent = null">
@@ -306,7 +306,7 @@
       </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Paziņojuma izlēciens -->
     <transition name="toast">
       <div v-if="toastMessage" class="toast-notification" :class="toastType">
         <span class="toast-icon">
@@ -544,18 +544,18 @@ export default {
     filteredContent() {
       let content = [...this.allContent];
       
-      // Filter by tab
+      // Filtrēt pēc cilnes
       if (this.activeTab !== 'all') {
         const typeMap = { articles: 'article', videos: 'video', guides: 'guide' };
         content = content.filter(c => c.type === typeMap[this.activeTab]);
       }
       
-      // Filter by topic
+      // Filtrēt pēc tēmas
       if (this.selectedTopic) {
         content = content.filter(c => c.topic === this.selectedTopic);
       }
       
-      // Filter by search
+      // Filtrēt pēc meklēšanas
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         content = content.filter(c => 
@@ -676,13 +676,13 @@ export default {
           await navigator.share(shareData);
           this.showToast(this.t('education.shareSuccess') || 'Paldies par dalīšanos!', 'success');
         } else {
-          // Fallback: copy to clipboard
+          // Rezerves variants: kopēt starpliktuvē
           await navigator.clipboard.writeText(`${content.title}\n\n${content.description}\n\n${window.location.href}`);
           this.showToast(this.t('education.copiedToClipboard') || 'Saite nokopēta starpliktuvē!', 'success');
         }
       } catch (error) {
         console.error('Error sharing:', error);
-        // Try clipboard as fallback
+        // Mēģināt starpliktuvi kā rezerves variantu
         try {
           await navigator.clipboard.writeText(window.location.href);
           this.showToast(this.t('education.copiedToClipboard') || 'Saite nokopēta starpliktuvē!', 'success');
@@ -715,7 +715,7 @@ export default {
       return this.pathProgress[pathId] || 0;
     },
     startLearningPath(path) {
-      // Increment progress by 10-15% each time (simulating module completion)
+      // Katru reizi palielināt progresu par 10–15% (simulē moduļa pabeigšanu)
       const currentProgress = this.pathProgress[path.id] || 0;
       if (currentProgress >= 100) {
         this.showToast(this.t('education.pathCompleted') || 'Apsveicam! Ceļš pabeigts!', 'success');
@@ -750,7 +750,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .education-hero {
   max-width: 1100px;
   margin: 0 auto 32px;
@@ -846,7 +846,7 @@ export default {
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* Search Section */
+/* Meklēšanas sekcija */
 .search-section {
   max-width: 1100px;
   margin: 0 auto 24px;
@@ -884,7 +884,7 @@ export default {
   outline: none;
 }
 
-/* Quick Topics */
+/* Ātrās tēmas */
 .quick-topics {
   max-width: 1100px;
   margin: 0 auto 32px;
@@ -934,7 +934,7 @@ export default {
   font-weight: 500;
 }
 
-/* Featured Section */
+/* Izceltā sekcija */
 .featured-section {
   max-width: 1100px;
   margin: 0 auto 32px;
@@ -1049,7 +1049,7 @@ export default {
   left: 100%;
 }
 
-/* Content Section */
+/* Satura sekcija */
 .content-section {
   max-width: 1100px;
   margin: 0 auto 40px;
@@ -1096,7 +1096,7 @@ export default {
   color: white;
 }
 
-/* Content Grid */
+/* Satura režģis */
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1219,7 +1219,7 @@ export default {
   color: #dc2626;
 }
 
-/* Empty State */
+/* Tukšs stāvoklis */
 .empty-state {
   text-align: center;
   padding: 48px 20px;
@@ -1246,7 +1246,7 @@ export default {
   font-size: 0.9rem;
 }
 
-/* Learning Paths */
+/* Apmācību ceļi */
 .learning-paths {
   max-width: 1100px;
   margin: 0 auto 40px;
@@ -1411,7 +1411,7 @@ export default {
   left: 100%;
 }
 
-/* Tips Section */
+/* Padomu sekcija */
 .tips-section {
   max-width: 1100px;
   margin: 0 auto 40px;
@@ -1484,7 +1484,7 @@ export default {
   line-height: 1.5;
 }
 
-/* Content Modal */
+/* Satura modālais logs */
 .content-modal {
   position: fixed;
   top: 0;
@@ -1677,7 +1677,7 @@ export default {
   left: 100%;
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .education-hero {
     flex-direction: column;
@@ -1741,7 +1741,7 @@ export default {
   }
 }
 
-/* Toast Notification */
+/* Paziņojuma izlēciens */
 .toast-notification {
   position: fixed;
   bottom: 30px;
@@ -1782,7 +1782,7 @@ export default {
   transform: translateX(-50%) translateY(20px);
 }
 
-/* Button States */
+/* Pogas stāvokļi */
 .action-btn.saved {
   border-color: #f39c12;
   color: #f39c12;

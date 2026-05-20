@@ -1,6 +1,6 @@
 <template>
   <div class="challenges-page">
-    <!-- Hero Section -->
+    <!-- Galvenā sekcija -->
     <div class="challenges-hero">
       <div class="hero-content">
         <h1><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('challenges.title') }}</h1>
@@ -27,9 +27,9 @@
     </div>
 
     <div class="challenges-container">
-      <!-- Main Content -->
+      <!-- Galvenais saturs -->
       <div class="challenges-main">
-        <!-- Featured Challenge -->
+        <!-- Izceltais izaicinājums -->
         <div class="featured-challenge" v-if="featuredChallenge">
           <div class="featured-badge"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Featured Challenge</div>
           <div class="featured-content">
@@ -68,7 +68,7 @@
           </div>
         </div>
 
-        <!-- Filter Tabs -->
+        <!-- Filtra cilnes -->
         <div class="filter-section">
           <div class="filter-tabs">
             <button 
@@ -90,7 +90,7 @@
           </div>
         </div>
 
-        <!-- Challenge Categories -->
+        <!-- Izaicinājumu kategorijas -->
         <div class="category-chips">
           <button 
             v-for="cat in categories" 
@@ -102,7 +102,7 @@
           </button>
         </div>
 
-        <!-- Challenges Grid -->
+        <!-- Izaicinājumu režģis -->
         <div class="challenges-grid">
           <div 
             v-for="challenge in filteredChallenges" 
@@ -183,7 +183,7 @@
           </div>
         </div>
 
-        <!-- Empty State -->
+        <!-- Tukšs stāvoklis -->
         <div v-if="filteredChallenges.length === 0" class="empty-state">
           <div class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
           <h3>No challenges found</h3>
@@ -191,9 +191,9 @@
         </div>
       </div>
 
-      <!-- Sidebar -->
+      <!-- Sānjosla -->
       <aside class="challenges-sidebar">
-        <!-- Your Active Challenges -->
+        <!-- Tavi aktīvie izaicinājumi -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>{{ t('challenges.yourActiveChallenges') }}</h3>
           <div v-if="activeChallenges.length === 0" class="no-active">
@@ -221,7 +221,7 @@
           </div>
         </div>
 
-        <!-- Leaderboard -->
+        <!-- Topu saraksts -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>{{ t('challenges.leaderboard') }}</h3>
           <div class="leaderboard">
@@ -245,7 +245,7 @@
           </div>
         </div>
 
-        <!-- Achievements -->
+        <!-- Sasniegumi -->
         <div class="sidebar-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>Challenge Badges</h3>
           <div class="badges-grid">
@@ -261,7 +261,7 @@
           </div>
         </div>
 
-        <!-- Community Impact -->
+        <!-- Kopienas ietekme -->
         <div class="sidebar-card impact-card">
           <h3><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>{{ t('challenges.communityImpact') }}</h3>
           <div class="impact-stats">
@@ -282,7 +282,7 @@
       </aside>
     </div>
 
-    <!-- Progress Modal -->
+    <!-- Progresa modālais logs -->
     <div v-if="showProgressModal" class="modal-overlay" @click.self="showProgressModal = false">
       <div class="progress-modal">
         <button class="modal-close" @click="showProgressModal = false">×</button>
@@ -545,7 +545,7 @@ export default {
     filteredChallenges() {
       let filtered = [...this.challenges];
 
-      // Apply filter tab
+      // Lietot filtra cilni
       if (this.activeFilter === 'active') {
         filtered = filtered.filter(c => c.joined && !c.completed);
       } else if (this.activeFilter === 'completed') {
@@ -554,12 +554,12 @@ export default {
         filtered = filtered.filter(c => !c.joined && !c.completed);
       }
 
-      // Apply category filter
+      // Lietot kategorijas filtru
       if (this.activeCategory !== 'all') {
         filtered = filtered.filter(c => c.category === this.activeCategory);
       }
 
-      // Apply sorting
+      // Lietot kārtošanu
       if (this.sortBy === 'popular') {
         filtered.sort((a, b) => b.participants - a.participants);
       } else if (this.sortBy === 'newest') {
@@ -612,7 +612,7 @@ export default {
           this.selectedChallenge.currentProgress = this.selectedChallenge.targetProgress;
           this.selectedChallenge.completed = true;
           this.selectedChallenge.progress = 100;
-          // Could show celebration here
+          // Šeit varētu parādīt svinēšanu
         } else {
           this.selectedChallenge.progress = Math.round(
             (this.selectedChallenge.currentProgress / this.selectedChallenge.targetProgress) * 100
@@ -629,7 +629,7 @@ export default {
           url: window.location.href
         });
       } else {
-        // Fallback - copy to clipboard
+        // Rezerves variants — kopēt starpliktuvē
         navigator.clipboard.writeText(
           `Join me in the "${challenge.title}" eco challenge! ${window.location.href}`
         );
@@ -653,7 +653,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .challenges-hero {
   max-width: 1100px;
   margin: 0 auto 24px;
@@ -743,7 +743,7 @@ export default {
   opacity: 0.85;
 }
 
-/* Container Layout */
+/* Konteinera izkārtojums */
 .challenges-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -752,7 +752,7 @@ export default {
   gap: 24px;
 }
 
-/* Featured Challenge */
+/* Izceltais izaicinājums */
 .featured-challenge {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -896,7 +896,7 @@ export default {
   color: var(--primary);
 }
 
-/* Filter Section */
+/* Filtra sekcija */
 .filter-section {
   display: flex;
   justify-content: space-between;
@@ -961,7 +961,7 @@ export default {
   cursor: pointer;
 }
 
-/* Category Chips */
+/* Kategoriju čipi */
 .category-chips {
   display: flex;
   gap: 8px;
@@ -994,7 +994,7 @@ export default {
   border-color: var(--primary);
 }
 
-/* Challenges Grid */
+/* Izaicinājumu režģis */
 .challenges-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1188,7 +1188,7 @@ export default {
   color: var(--primary);
 }
 
-/* Empty State */
+/* Tukšs stāvoklis */
 .empty-state {
   text-align: center;
   padding: 48px 20px;
@@ -1212,7 +1212,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Sidebar */
+/* Sānjosla */
 .challenges-sidebar {
   display: flex;
   flex-direction: column;
@@ -1233,7 +1233,7 @@ export default {
   font-weight: 600;
 }
 
-/* Active Challenges */
+/* Aktīvie izaicinājumi */
 .no-active {
   text-align: center;
   padding: 20px 10px;
@@ -1302,7 +1302,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Leaderboard */
+/* Topu saraksts */
 .leaderboard {
   display: flex;
   flex-direction: column;
@@ -1392,7 +1392,7 @@ export default {
   color: var(--primary);
 }
 
-/* Badges */
+/* Nozīmes */
 .badges-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1434,7 +1434,7 @@ export default {
   text-align: center;
 }
 
-/* Impact Card */
+/* Ietekmes kartīte */
 .impact-card {
   background: var(--primary-subtle);
   border: 1px solid var(--primary);
@@ -1463,7 +1463,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Modal */
+/* Modālais logs */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1633,7 +1633,7 @@ export default {
   box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .challenges-container {
     grid-template-columns: 1fr;

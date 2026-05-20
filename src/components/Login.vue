@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <div class="login-container">
-      <!-- Left Panel - Branding -->
+      <!-- Kreisais panelis — zīmols -->
       <div class="branding-panel">
         <div class="branding-shapes">
           <div class="b-shape b-shape-1"></div>
@@ -72,7 +72,7 @@
         </div>
       </div>
 
-      <!-- Right Panel - Login Form -->
+      <!-- Labais panelis — pieteikšanās forma -->
       <div class="form-panel">
         <div class="form-container">
           <div class="form-header">
@@ -80,7 +80,7 @@
             <p>{{ t('login.subtitle') }}</p>
           </div>
 
-          <!-- Error Message -->
+          <!-- Kļūdas ziņojums -->
           <div v-if="error" class="error-message">
             <svg class="error-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
@@ -91,7 +91,7 @@
             <button class="error-close" @click="error = ''">×</button>
           </div>
 
-          <!-- Login Form -->
+          <!-- Pieteikšanās forma -->
           <form @submit.prevent="login" class="login-form">
             <div class="input-group">
               <label for="email">{{ t('login.email') }}</label>
@@ -173,17 +173,17 @@
             </button>
           </form>
 
-          <!-- Divider -->
+          <!-- Atdalītājs -->
           <div class="divider">
             <span>{{ t('login.orContinueWith') }}</span>
           </div>
 
-          <!-- Social Login -->
+          <!-- Sociālā pieteikšanās -->
           <div class="social-login social-login--single">
             <div id="google-signin-btn" class="google-btn-wrapper"></div>
           </div>
 
-          <!-- Register Link -->
+          <!-- Reģistrācijas saite -->
           <div class="register-prompt">
             <p>{{ t('login.noAccount') }} 
               <router-link to="/register" class="register-link">
@@ -192,7 +192,7 @@
             </p>
           </div>
 
-          <!-- Demo Credentials -->
+          <!-- Demo akreditācijas dati -->
           <div class="demo-hint">
             <svg class="hint-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
@@ -205,7 +205,7 @@
       </div>
     </div>
 
-    <!-- Forgot Password Modal -->
+    <!-- Aizmirstas paroles modālais logs -->
     <Teleport to="body">
       <div v-if="showForgotModal" class="modal-overlay" @click.self="showForgotModal = false">
         <div class="modal-box">
@@ -272,17 +272,17 @@ export default {
       this.$router.push('/products');
     }
     
-    // Check for remembered email
+    // Pārbaudīt, vai ir atcerēts e-pasts
     const rememberedEmail = localStorage.getItem('rememberedEmail');
     if (rememberedEmail) {
       this.credentials.email = rememberedEmail;
       this.rememberMe = true;
     }
     
-    // Initialize Google Sign-In
+    // Inicializēt Google pierakstīšanos
     this.initGoogleSignIn();
     
-    // Fetch global stats
+    // Ielādēt globālo statistiku
     this.fetchGlobalStats();
   },
   methods: {
@@ -305,7 +305,7 @@ export default {
       return num.toString();
     },
     initGoogleSignIn() {
-      // Load Google Identity Services script
+      // Ielādēt Google Identity Services skriptu
       if (!document.getElementById('google-gsi-script')) {
         const script = document.createElement('script');
         script.id = 'google-gsi-script';
@@ -349,7 +349,7 @@ export default {
         
         if (result.success) {
           if (result.isNewUser) {
-            // New user created via Google
+            // Jauns lietotājs izveidots, izmantojot Google
             this.$router.push('/products?welcome=true');
           } else {
             this.$router.push('/products');
@@ -392,7 +392,7 @@ export default {
         return;
       }
 
-      // Remember email if checked
+      // Atcerēties e-pastu, ja atzīmēts
       if (this.rememberMe) {
         localStorage.setItem('rememberedEmail', this.credentials.email);
       } else {
@@ -431,7 +431,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Login Container */
+/* Pieteikšanās konteiners */
 .login-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -444,7 +444,7 @@ export default {
   border: 1px solid var(--border-color);
 }
 
-/* Branding Panel */
+/* Zīmola panelis */
 .branding-panel {
   background: var(--gradient-eco);
   padding: 48px 40px;
@@ -592,7 +592,7 @@ export default {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Form Panel */
+/* Formas panelis */
 .form-panel {
   padding: 48px 40px;
   display: flex;
@@ -623,7 +623,7 @@ export default {
   font-size: 0.9rem;
 }
 
-/* Error Message */
+/* Kļūdas ziņojums */
 .error-message {
   display: flex;
   align-items: center;
@@ -661,7 +661,7 @@ export default {
   opacity: 1;
 }
 
-/* Login Form */
+/* Pieteikšanās forma */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -731,7 +731,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Form Options */
+/* Formas opcijas */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -783,7 +783,7 @@ export default {
   text-decoration: underline;
 }
 
-/* Login Button */
+/* Pieteikšanās poga */
 .login-btn {
   width: 100%;
   padding: 14px;
@@ -859,7 +859,7 @@ export default {
   to { transform: rotate(360deg); }
 }
 
-/* Divider */
+/* Atdalītājs */
 .divider {
   display: flex;
   align-items: center;
@@ -881,7 +881,7 @@ export default {
   white-space: nowrap;
 }
 
-/* Social Login */
+/* Sociālā pieteikšanās */
 .social-login {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -935,7 +935,7 @@ export default {
   height: 18px;
 }
 
-/* Forgot Password Modal */
+/* Aizmirstas paroles modālais logs */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1017,7 +1017,7 @@ export default {
   border: 1px solid #fca5a5;
 }
 
-/* Register Prompt */
+/* Reģistrācijas uzaicinājums */
 .register-prompt {
   text-align: center;
   margin-top: 24px;
@@ -1039,7 +1039,7 @@ export default {
   text-decoration: underline;
 }
 
-/* Demo Hint */
+/* Demo padoms */
 .demo-hint {
   display: flex;
   align-items: center;
@@ -1058,7 +1058,7 @@ export default {
   color: var(--primary);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 768px) {
   .login-container {
     grid-template-columns: 1fr;

@@ -7,7 +7,7 @@ async function resetAndSeedDatabase() {
   console.log('🔧 RESETTING DATABASE AND CREATING TEST USERS...\n');
 
   try {
-    // Drop existing users table
+    // Dzēst esošo lietotāju tabulu
     db.run(`DROP TABLE IF EXISTS users`, async (err) => {
       if (err) {
         console.error('❌ Error dropping users table:', err);
@@ -15,7 +15,7 @@ async function resetAndSeedDatabase() {
       }
       console.log('✅ Users table dropped');
 
-      // Recreate users table
+      // Atkārtoti izveidot lietotāju tabulu
       db.run(`CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
@@ -32,12 +32,12 @@ async function resetAndSeedDatabase() {
         }
         console.log('✅ Users table recreated');
 
-        // Hash passwords for test users
+        // Šifrēt paroles testa lietotājiem
         const demoUserPassword = await bcrypt.hash('Demo123!', 10);
         const testUserPassword = await bcrypt.hash('TestPass123', 10);
         const adminUserPassword = await bcrypt.hash('AdminPass123', 10);
 
-        // Insert demo user (for login page demo)
+        // Ievietot demonstrācijas lietotāju (pieteikšanās lapas demo)
         db.run(
           'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
           ['Demo Lietotājs', 'demo@ecopakalpojumi.lv', demoUserPassword, 'user'],
@@ -51,7 +51,7 @@ async function resetAndSeedDatabase() {
             console.log('   Password: Demo123!');
             console.log('   Role: user');
 
-            // Insert test user
+            // Ievietot testa lietotāju
             db.run(
               'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
               ['Test User', 'test@example.com', testUserPassword, 'user'],
@@ -65,7 +65,7 @@ async function resetAndSeedDatabase() {
                 console.log('   Password: TestPass123');
                 console.log('   Role: user');
 
-                // Insert admin user
+                // Ievietot administratora lietotāju
                 db.run(
                   'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
                   ['Admin User', 'admin@ecopakalpojumi.lv', adminUserPassword, 'admin'],
@@ -79,7 +79,7 @@ async function resetAndSeedDatabase() {
                     console.log('   Password: AdminPass123');
                     console.log('   Role: admin');
 
-                    // Verify users were created
+                    // Pārbaudīt, vai lietotāji tika izveidoti
                     db.all('SELECT id, name, email, role FROM users', (err, rows) => {
                       if (err) {
                         console.error('❌ Error fetching users:', err);

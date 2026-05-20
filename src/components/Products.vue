@@ -1,6 +1,6 @@
 <template>
   <div class="products-page">
-    <!-- Hero Section -->
+    <!-- Galvenā sekcija -->
     <div class="products-hero">
       <div class="hero-shapes">
         <div class="h-shape h-shape-1"></div>
@@ -42,7 +42,7 @@
     </div>
 
     <div class="products-container">
-      <!-- Sidebar Filters -->
+      <!-- Sānjoslas filtri -->
       <aside class="filters-sidebar">
         <div class="filter-card">
           <h3>{{ t('products.categories') }}</h3>
@@ -101,7 +101,7 @@
         </button>
       </aside>
 
-      <!-- Products Grid -->
+      <!-- Produktu režģis -->
       <div class="products-main">
         <div class="products-header-bar">
           <p class="results-count">
@@ -206,7 +206,7 @@
       </div>
     </div>
 
-    <!-- Quick View Modal -->
+    <!-- Ātrā skata modālais logs -->
     <div v-if="showQuickView" class="modal-overlay" @click.self="showQuickView = false">
       <div class="quick-view-modal">
         <button class="close-modal" @click="showQuickView = false"><Icon name="x" :size="20" /></button>
@@ -290,7 +290,7 @@ export default {
     displayProducts() {
       let result = [...this.products];
       
-      // Search filter
+      // Meklēšanas filtrs
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter(p => 
@@ -300,20 +300,20 @@ export default {
         );
       }
       
-      // Category filter
+      // Kategorijas filtrs
       if (this.selectedCategory) {
         result = result.filter(p => p.category === this.selectedCategory);
       }
       
-      // Availability filter
+      // Pieejamības filtrs
       if (this.showAvailableOnly) {
         result = result.filter(p => p.stock > 0);
       }
       
-      // Price filter
+      // Cenas filtrs
       result = result.filter(p => p.price <= this.maxPrice);
       
-      // Sorting
+      // Kārtošana
       if (this.sortBy === 'price-low') {
         result.sort((a, b) => a.price - b.price);
       } else if (this.sortBy === 'price-high') {
@@ -327,7 +327,7 @@ export default {
   },
   mounted() {
     this.loadProducts();
-    // Check for search query in URL
+    // Pārbaudīt meklēšanas vaicājumu URL
     if (this.$route.query.search) {
       this.searchQuery = this.$route.query.search;
     }
@@ -448,7 +448,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .products-hero {
   padding: 100px 24px 60px;
   background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
@@ -599,7 +599,7 @@ export default {
   font-size: 0.85rem;
 }
 
-/* Container */
+/* Konteiners */
 .products-container {
   max-width: 1200px;
   margin: 32px auto 0;
@@ -609,7 +609,7 @@ export default {
   gap: 24px;
 }
 
-/* Filters Sidebar */
+/* Filtru sānjosla */
 .filters-sidebar {
   display: flex;
   flex-direction: column;
@@ -677,7 +677,7 @@ export default {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Price Range */
+/* Cenu diapazons */
 .price-range input[type="range"] {
   width: 100%;
   height: 8px;
@@ -750,7 +750,7 @@ export default {
   font-weight: 500;
 }
 
-/* Checkbox */
+/* Izvēles rūtiņa */
 .checkbox-option {
   display: flex;
   align-items: center;
@@ -788,7 +788,7 @@ export default {
   font-size: 0.7rem;
 }
 
-/* Sort Select */
+/* Kārtošanas izvēle */
 .sort-select {
   width: 100%;
   padding: 10px 12px;
@@ -817,7 +817,7 @@ export default {
   color: var(--primary);
 }
 
-/* Products Main */
+/* Produktu galvenā daļa */
 .products-main {
   min-height: 400px;
 }
@@ -863,7 +863,7 @@ export default {
   color: white;
 }
 
-/* Loading & Empty States */
+/* Ielādes un tukšie stāvokļi */
 .loading-state,
 .empty-state {
   text-align: center;
@@ -919,7 +919,7 @@ export default {
   background: var(--primary-dark);
 }
 
-/* Products Grid */
+/* Produktu režģis */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -930,7 +930,7 @@ export default {
   grid-template-columns: 1fr;
 }
 
-/* Product Card */
+/* Produkta kartīte */
 .product-card {
   background: var(--card-bg);
   border-radius: var(--radius-lg);
@@ -1166,7 +1166,7 @@ export default {
   cursor: not-allowed;
 }
 
-/* Quick View Modal */
+/* Ātrā skata modālais logs */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1362,7 +1362,7 @@ export default {
   cursor: not-allowed;
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .products-container {
     grid-template-columns: 1fr;

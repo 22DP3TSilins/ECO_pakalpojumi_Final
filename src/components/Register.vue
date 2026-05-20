@@ -1,7 +1,7 @@
 <template>
   <div class="register-page">
     <div class="register-container">
-      <!-- Left Panel - Form -->
+      <!-- Kreisais panelis — forma -->
       <div class="form-panel">
         <div class="form-container">
           <div class="form-header">
@@ -9,7 +9,7 @@
             <p>{{ t('register.subtitle') }}</p>
           </div>
 
-          <!-- Success Message -->
+          <!-- Veiksmes ziņojums -->
           <div v-if="success" class="success-message">
             <svg class="success-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
@@ -18,7 +18,7 @@
             <span>{{ success }}</span>
           </div>
 
-          <!-- Error Message -->
+          <!-- Kļūdas ziņojums -->
           <div v-if="error" class="error-message">
             <svg class="error-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -27,7 +27,7 @@
             <button class="error-close" @click="error = ''">×</button>
           </div>
 
-          <!-- Register Form -->
+          <!-- Reģistrācijas forma -->
           <form @submit.prevent="register" class="register-form">
             <div class="input-group">
               <label for="name">{{ t('register.fullName') }}</label>
@@ -97,7 +97,7 @@
                   </svg>
                 </button>
               </div>
-              <!-- Password Strength Indicator -->
+              <!-- Paroles stipruma indikators -->
               <div class="password-strength" v-if="user.password">
                 <div class="strength-bar">
                   <div 
@@ -154,7 +154,7 @@
               </span>
             </div>
 
-            <!-- Terms Checkbox -->
+            <!-- Noteikumu izvēles rūtiņa -->
             <label class="terms-checkbox">
               <input type="checkbox" v-model="acceptTerms" required>
               <span class="checkbox-mark"></span>
@@ -173,17 +173,17 @@
             </button>
           </form>
 
-          <!-- Divider -->
+          <!-- Atdalītājs -->
           <div class="divider">
             <span>{{ t('register.orSignUpWith') }}</span>
           </div>
 
-          <!-- Social Login -->
+          <!-- Sociālā pieteikšanās -->
           <div class="social-login" style="grid-template-columns: 1fr">
             <div id="google-signup-btn" class="google-btn-wrapper"></div>
           </div>
 
-          <!-- Login Link -->
+          <!-- Pieteikšanās saite -->
           <div class="login-prompt">
             <p>{{ t('register.alreadyHaveAccount') }} 
               <router-link to="/login" class="login-link">
@@ -194,7 +194,7 @@
         </div>
       </div>
 
-      <!-- Right Panel - Branding -->
+      <!-- Labais panelis — zīmols -->
       <div class="branding-panel">
         <div class="branding-shapes">
           <div class="b-shape b-shape-1"></div>
@@ -275,7 +275,7 @@ export default {
     }
   },
   mounted() {
-    // Initialize Google Sign-In
+    // Inicializēt Google pierakstīšanos
     this.initGoogleSignIn();
   },
   computed: {
@@ -324,13 +324,13 @@ export default {
       this.error = '';
       this.success = '';
 
-      // Check password confirmation first
+      // Vispirms pārbaudīt paroles apstiprinājumu
       if (this.user.password !== this.confirmPassword) {
         this.error = 'Passwords do not match';
         return;
       }
 
-      // Client-side validation
+      // Klienta puses validācija
       if (this.user.name.trim().length < 2) {
         this.error = 'Name must be at least 2 characters long';
         return;
@@ -369,7 +369,7 @@ export default {
         this.success = result.message + ' Redirecting to login...';
         setTimeout(() => this.$router.push('/login'), 2000);
       } else {
-        // Display the specific error from backend
+        // Parādīt konkrēto kļūdu no aizmugurpuses
         this.error = result.error || 'Registration failed. Please try again.';
         console.error('Registration error:', result.error);
       }
@@ -377,7 +377,7 @@ export default {
       this.loading = false;
     },
     initGoogleSignIn() {
-      // Load Google Identity Services script
+      // Ielādēt Google Identity Services skriptu
       if (!document.getElementById('google-gsi-script')) {
         const script = document.createElement('script');
         script.id = 'google-gsi-script';
@@ -426,7 +426,7 @@ export default {
               window.location.href = '/products?welcome=true';
             }, 1500);
           } else {
-            // User already exists, just log them in
+            // Lietotājs jau eksistē, vienkārši pieteikt
             window.location.href = '/products';
           }
         } else {
@@ -460,7 +460,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Register Container */
+/* Reģistrācijas konteiners */
 .register-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -473,7 +473,7 @@ export default {
   border: 1px solid var(--border-color);
 }
 
-/* Form Panel */
+/* Formas panelis */
 .form-panel {
   padding: 40px;
   display: flex;
@@ -506,7 +506,7 @@ export default {
   font-size: 0.9rem;
 }
 
-/* Messages */
+/* Ziņojumi */
 .error-message {
   display: flex;
   align-items: center;
@@ -562,7 +562,7 @@ export default {
   opacity: 1;
 }
 
-/* Register Form */
+/* Reģistrācijas forma */
 .register-form {
   display: flex;
   flex-direction: column;
@@ -641,7 +641,7 @@ export default {
   color: var(--text-color);
 }
 
-/* Password Strength */
+/* Paroles stiprums */
 .password-strength {
   display: flex;
   align-items: center;
@@ -678,7 +678,7 @@ export default {
 .strength-text.strong { color: var(--primary); }
 .strength-text.very-strong { color: var(--primary-light); }
 
-/* Password Requirements */
+/* Paroles prasības */
 .password-requirements {
   display: flex;
   flex-wrap: wrap;
@@ -702,7 +702,7 @@ export default {
   border-color: transparent;
 }
 
-/* Phone input styling */
+/* Tālruņa ievades stils */
 .phone-valid {
   border-color: var(--primary) !important;
 }
@@ -723,7 +723,7 @@ export default {
   font-size: 0.85em;
 }
 
-/* Match indicators */
+/* Atbilstības indikatori */
 .match-error {
   font-size: 0.75rem;
   color: #dc2626;
@@ -736,7 +736,7 @@ export default {
   margin-top: 4px;
 }
 
-/* Terms Checkbox */
+/* Noteikumu izvēles rūtiņa */
 .terms-checkbox {
   display: flex;
   align-items: flex-start;
@@ -786,7 +786,7 @@ export default {
   text-decoration: underline;
 }
 
-/* Register Button */
+/* Reģistrācijas poga */
 .register-btn {
   width: 100%;
   padding: 12px 16px;
@@ -864,7 +864,7 @@ export default {
   to { transform: rotate(360deg); }
 }
 
-/* Divider */
+/* Atdalītājs */
 .divider {
   display: flex;
   align-items: center;
@@ -886,7 +886,7 @@ export default {
   white-space: nowrap;
 }
 
-/* Social Login */
+/* Sociālā pieteikšanās */
 .social-login {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -939,7 +939,7 @@ export default {
 
 
 
-/* Login Prompt */
+/* Pieteikšanās uzaicinājums */
 .login-prompt {
   text-align: center;
   margin-top: 20px;
@@ -961,7 +961,7 @@ export default {
   text-decoration: underline;
 }
 
-/* Branding Shapes */
+/* Zīmola formas */
 .branding-shapes {
   position: absolute;
   inset: 0;
@@ -1004,7 +1004,7 @@ export default {
   50% { transform: translate(10px, -15px) scale(1.05); }
 }
 
-/* Branding Panel */
+/* Zīmola panelis */
 .branding-panel {
   background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
   padding: 48px 40px;
@@ -1053,7 +1053,7 @@ export default {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Benefits List */
+/* Priekšrocību saraksts */
 .benefits-list {
   display: flex;
   flex-direction: column;
@@ -1107,7 +1107,7 @@ export default {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Mini Testimonial */
+/* Mini atsauksme */
 .testimonial-mini {
   padding: 16px;
   background: rgba(255, 255, 255, 0.1);
@@ -1145,7 +1145,7 @@ export default {
   color: #ffffff;
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .register-container {
     grid-template-columns: 1fr;

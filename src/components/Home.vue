@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
-    <!-- Hero Section -->
+    <!-- Galvenā sekcija -->
     <div class="hero-section">
-      <!-- Organic decorative shapes -->
+      <!-- Organiskās dekoratīvās formas -->
       <div class="hero-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <!-- Features Section -->
+    <!-- Funkciju sekcija -->
     <div class="features-section">
       <div class="section-header reveal">
         <span class="section-badge">Features</span>
@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <!-- How It Works Section -->
+    <!-- Kā tas darbojas sekcija -->
     <div class="how-section">
       <div class="section-header reveal">
         <span class="section-badge">Process</span>
@@ -148,7 +148,7 @@
       </div>
     </div>
 
-    <!-- CTA Section -->
+    <!-- Aicinājuma uz darbību sekcija -->
     <div class="cta-section reveal">
       <div class="cta-glow"></div>
       <div class="cta-content">
@@ -264,7 +264,7 @@ export default {
   overflow: hidden;
 }
 
-/* Organic floating shapes */
+/* Organiskās peldošās formas */
 .hero-shapes {
   position: absolute;
   inset: 0;
@@ -415,7 +415,7 @@ export default {
   transform: translateY(-2px);
 }
 
-/* Stats */
+/* Statistika */
 .hero-stats {
   display: flex;
   justify-content: center;

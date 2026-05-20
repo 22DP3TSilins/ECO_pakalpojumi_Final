@@ -1,12 +1,12 @@
 const sqlite3 = require('sqlite3').verbose();
 
-// Reset users table
+// Atiestatīt lietotāju tabulu
 const db = new sqlite3.Database('./eco_pakalpojumi.db');
 
 console.log('🗑️  RESETTING USERS TABLE...');
 
 db.serialize(() => {
-  // Drop and recreate users table
+  // Dzēst un atkārtoti izveidot lietotāju tabulu
   db.run(`DROP TABLE IF EXISTS users`, (err) => {
     if (err) {
       console.error('❌ Error dropping users table:', err);
@@ -15,7 +15,7 @@ db.serialize(() => {
     console.log('✅ Users table dropped');
   });
 
-  // Recreate users table with correct schema
+  // Atkārtoti izveidot lietotāju tabulu ar pareizo shēmu
   db.run(`CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -42,7 +42,7 @@ db.serialize(() => {
     console.log('  - google_id (TEXT)');
   });
 
-  // Verify table creation
+  // Pārbaudīt tabulas izveidi
   db.all("PRAGMA table_info(users)", (err, rows) => {
     if (err) {
       console.error('❌ Error getting table info:', err);

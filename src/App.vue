@@ -78,12 +78,12 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      // Use special transition for admin page
+      // Īpaša pāreja administratora lapai
       if (to.path === '/admin' || from.path === '/admin') {
         this.transitionName = 'admin-transition'
         return
       }
-      // Determine transition direction
+      // Noteikt pārejas virzienu
       const routeOrder = ['/', '/products', '/footprint', '/challenges', '/forum', '/education', '/profile', '/admin']
       const toIndex = routeOrder.indexOf(to.path)
       const fromIndex = routeOrder.indexOf(from.path)
@@ -95,7 +95,7 @@ export default {
     this.theme = currentTheme
     document.documentElement.setAttribute('data-theme', currentTheme)
 
-    // Scroll-reveal observer
+    // Ritināšanas atklāšanas novērotājs
     this.setupScrollReveal()
   },
   methods: {
@@ -118,14 +118,14 @@ export default {
         })
       }
 
-      // Observe elements after initial render + transition settle
+      // Novērot elementus pēc sākotnējās renderēšanas un pārejas pabeigšanas
       this.$nextTick(() => {
         observeNewElements()
-        // Fallback for transition-delayed mounts
+        // Rezerves variants pārejas aizkavētai montāžai
         setTimeout(observeNewElements, 400)
       })
 
-      // Re-observe on route change (after transition completes)
+      // Atkārtoti novērot maršruta maiņas laikā (pēc pārejas pabeigšanas)
       this.$watch('$route', () => {
         this.$nextTick(() => {
           setTimeout(observeNewElements, 100)
@@ -133,7 +133,7 @@ export default {
         })
       })
 
-      // Watch for dynamically added .reveal elements
+      // Sekot dinamiski pievienotiem .reveal elementiem
       const mutationObserver = new MutationObserver(() => {
         observeNewElements()
       })
@@ -147,7 +147,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Eco Color Palette */
+  /* Eko krāsu palete */
   --primary: #0d7c5f;
   --primary-light: #10a37f;
   --primary-dark: #095c47;
@@ -246,7 +246,7 @@ body {
   line-height: 1.6;
 }
 
-/* Typography */
+/* Tipogrāfija */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
@@ -272,7 +272,7 @@ a:hover {
   color: var(--primary-light);
 }
 
-/* Buttons */
+/* Pogas */
 button {
   font-family: inherit;
   cursor: pointer;
@@ -329,7 +329,7 @@ button {
   transform: translateY(-1px);
 }
 
-/* Main Content */
+/* Galvenais saturs */
 .main-content {
   flex: 1;
 }
@@ -338,7 +338,7 @@ button {
   padding: 0;
 }
 
-/* Admin Page Transition */
+/* Administratora lapas pāreja */
 .admin-transition-enter-active {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -356,7 +356,7 @@ button {
   filter: blur(2px);
 }
 
-/* Page Transitions */
+/* Lapu pārejas */
 .page-fade-enter-active,
 .page-fade-leave-active {
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -391,7 +391,7 @@ button {
   transform: translateX(30px);
 }
 
-/* Scroll Reveal System */
+/* Ritināšanas atklāšanas sistēma */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -419,7 +419,7 @@ button {
   transform: scale(1);
 }
 
-/* Footer */
+/* Kājene */
 .app-footer {
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
@@ -549,14 +549,14 @@ button {
   font-weight: 500;
 }
 
-/* Container utility */
+/* Konteinera utilīta */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* Card utility */
+/* Kartītes utilīta */
 .card {
   background: var(--gradient-card);
   border: 1px solid var(--border-color);
@@ -570,7 +570,7 @@ button {
   border-color: rgba(13, 124, 95, 0.2);
 }
 
-/* Input styles */
+/* Ievadlauka stili */
 input, textarea, select {
   font-family: inherit;
   font-size: 0.95rem;
@@ -593,7 +593,7 @@ input::placeholder, textarea::placeholder {
   color: var(--text-muted);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 768px) {
   h1 { font-size: 2rem; }
   h2 { font-size: 1.5rem; }
@@ -618,7 +618,7 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-/* Scrollbar */
+/* Ritjosla */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -637,13 +637,13 @@ input::placeholder, textarea::placeholder {
   background: var(--text-muted);
 }
 
-/* Selection */
+/* Atlase */
 ::selection {
   background: rgba(13, 124, 95, 0.15);
   color: var(--primary-dark);
 }
 
-/* Floating eco-particles (optional decoration) */
+/* Peldošās eko-daļiņas (papildu dekorācija) */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-15px) rotate(5deg); }

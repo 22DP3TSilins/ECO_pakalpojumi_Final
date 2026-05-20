@@ -1,7 +1,7 @@
 <template>
   <header class="app-header" :class="{ scrolled: isScrolled }">
     <nav class="navbar">
-      <!-- Desktop Layout -->
+      <!-- Datora izkārtojums -->
       <div class="nav-left desktop-only">
         <router-link to="/" class="brand-link">
           <span class="brand-icon">
@@ -15,7 +15,7 @@
       </div>
 
       <div class="nav-center desktop-only">
-        <!-- Search Bar -->
+        <!-- Meklēšanas josla -->
         <div class="search-container" :class="{ expanded: searchExpanded }">
           <button class="search-toggle" @click="toggleSearch" v-if="!searchExpanded">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -39,7 +39,7 @@
             </span>
             <button class="search-close" @click="closeSearch">×</button>
             
-            <!-- Search Results Dropdown -->
+            <!-- Meklēšanas rezultātu nolaižamā izvēlne -->
             <div v-if="showSearchResults && searchQuery.length >= 2" class="search-results-dropdown">
               <div v-if="searchLoading" class="search-loading">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -54,7 +54,7 @@
                 No results found for "{{ searchQuery }}"
               </div>
               <div v-else class="search-results-content">
-                <!-- Products Section -->
+                <!-- Produktu sekcija -->
                 <div v-if="searchResults.products.length > 0" class="search-section">
                   <div class="search-section-header">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -82,7 +82,7 @@
                   </div>
                 </div>
                 
-                <!-- Forum Posts Section -->
+                <!-- Foruma ierakstu sekcija -->
                 <div v-if="searchResults.posts.length > 0" class="search-section">
                   <div class="search-section-header">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -109,7 +109,7 @@
                   </div>
                 </div>
                 
-                <!-- Education Section -->
+                <!-- Izglītības sekcija -->
                 <div v-if="searchResults.education.length > 0" class="search-section">
                   <div class="search-section-header">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -160,7 +160,7 @@
       </div>
 
       <div class="nav-right desktop-only">
-        <!-- Notifications -->
+        <!-- Paziņojumi -->
         <div v-if="user" class="notification-wrapper">
           <button class="notification-btn" @click="toggleNotifications" :class="{ active: notificationsOpen }">
             <svg class="notif-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -197,7 +197,7 @@
           </div>
         </div>
 
-        <!-- Cart Button with Badge -->
+        <!-- Groza poga ar atzīmi -->
         <router-link v-if="user" to="/cart" class="cart-button" title="Shopping Cart">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -272,7 +272,7 @@
           <router-link to="/register" class="auth-link primary">{{ t('common.signUp') }}</router-link>
         </div>
 
-        <!-- Language Toggle -->
+        <!-- Valodas pārslēdzējs -->
         <button @click="toggleLanguage" class="lang-toggle" :title="currentLanguage === 'lv' ? 'Switch to English' : 'Pārslēgties uz latviešu'">
           <span class="lang-icon">{{ currentLanguage === 'lv' ? 'LV' : 'EN' }}</span>
         </button>
@@ -287,7 +287,7 @@
         </button>
       </div>
 
-      <!-- Mobile Layout -->
+      <!-- Mobilais izkārtojums -->
       <div class="mobile-header mobile-only">
         <router-link to="/" class="mobile-brand">
           <svg class="brand-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
@@ -297,14 +297,14 @@
         </router-link>
         
         <div class="mobile-actions">
-          <!-- Mobile Search Toggle -->
+          <!-- Mobilās meklēšanas pārslēdzējs -->
           <button class="mobile-search-btn" @click="toggleMobileSearch">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
           </button>
           
-          <!-- Mobile Cart -->
+          <!-- Mobilais grozs -->
           <router-link v-if="user" to="/cart" class="mobile-cart-btn">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
@@ -313,7 +313,7 @@
             <span v-if="cartCount > 0" class="mobile-cart-badge">{{ cartCount }}</span>
           </router-link>
           
-          <!-- Mobile Notifications -->
+          <!-- Mobilie paziņojumi -->
           <button v-if="user" class="mobile-notif-btn" @click="toggleNotifications">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
@@ -329,7 +329,7 @@
         </div>
       </div>
       
-      <!-- Mobile Search Bar -->
+      <!-- Mobilā meklēšanas josla -->
       <div class="mobile-search-overlay" v-if="mobileSearchOpen">
         <div class="mobile-search-container">
           <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
@@ -345,7 +345,7 @@
           <button class="search-close" @click="closeMobileSearch">×</button>
         </div>
         
-        <!-- Mobile Search Results -->
+        <!-- Mobilās meklēšanas rezultāti -->
         <div v-if="showSearchResults && searchQuery.length >= 2" class="mobile-search-results">
           <div v-if="searchLoading" class="search-loading">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -360,7 +360,7 @@
             No results found
           </div>
           <div v-else class="search-results-content">
-            <!-- Products Section -->
+            <!-- Produktu sekcija -->
             <div v-if="searchResults.products.length > 0" class="search-section">
               <div class="search-section-header">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -387,7 +387,7 @@
               </div>
             </div>
             
-            <!-- Forum Posts Section -->
+            <!-- Foruma ierakstu sekcija -->
             <div v-if="searchResults.posts.length > 0" class="search-section">
               <div class="search-section-header">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -412,7 +412,7 @@
               </div>
             </div>
             
-            <!-- Education Section -->
+            <!-- Izglītības sekcija -->
             <div v-if="searchResults.education.length > 0" class="search-section">
               <div class="search-section-header">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
@@ -441,7 +441,7 @@
       </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
+    <!-- Mobilās izvēlnes pārklājums -->
     <div v-if="mobileMenuOpen" class="mobile-menu-overlay" @click="closeMobileMenu">
       <div class="mobile-menu" @click.stop>
         <div class="mobile-menu-header">
@@ -455,7 +455,7 @@
         </div>
 
         <div class="mobile-menu-content">
-          <!-- User Info -->
+          <!-- Lietotāja informācija -->
           <div v-if="user" class="mobile-user-info">
             <div class="user-avatar-large">
               <img v-if="userAvatar" :src="userAvatar" alt="Avatar" class="avatar-img" />
@@ -467,7 +467,7 @@
             </div>
           </div>
 
-          <!-- Navigation Links -->
+          <!-- Navigācijas saites -->
           <nav class="mobile-nav-links">
             <router-link to="/home" @click="closeMobileMenu" class="mobile-nav-link">
               <span class="link-icon">
@@ -511,7 +511,7 @@
             </router-link>
           </nav>
 
-          <!-- Auth Actions -->
+          <!-- Autentifikācijas darbības -->
           <div v-if="!user" class="mobile-auth-actions">
             <router-link to="/login" @click="closeMobileMenu" class="mobile-auth-btn">
               <span class="btn-icon">
@@ -531,7 +531,7 @@
             </router-link>
           </div>
 
-          <!-- Mobile Sign Out -->
+          <!-- Mobilā izrakstīšanās -->
           <div v-if="user" class="mobile-auth-actions">
             <button @click="handleLogout" class="mobile-auth-btn logout">
               <span class="btn-icon">
@@ -543,7 +543,7 @@
             </button>
           </div>
 
-          <!-- Language Toggle -->
+          <!-- Valodas pārslēdzējs -->
           <div class="mobile-theme-toggle">
             <button @click="toggleLanguage" class="theme-toggle-btn">
               <span class="toggle-icon lang-mobile-icon">{{ currentLanguage === 'lv' ? 'LV' : 'EN' }}</span>
@@ -551,7 +551,7 @@
             </button>
           </div>
 
-          <!-- Theme Toggle -->
+          <!-- Tēmas pārslēdzējs -->
           <div class="mobile-theme-toggle">
             <button @click="toggleTheme" class="theme-toggle-btn">
               <svg v-if="theme === 'light'" class="toggle-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -589,7 +589,7 @@ export default {
     const theme = ref(localStorage.getItem('theme') || 'light')
     const user = computed(() => authStore.user)
     
-    // Language switcher
+    // Valodas pārslēdzējs
     const currentLanguage = ref(localStorage.getItem('language') || 'lv')
     const toggleLanguage = () => {
       currentLanguage.value = currentLanguage.value === 'lv' ? 'en' : 'lv'
@@ -597,10 +597,10 @@ export default {
       localStorage.setItem('language', currentLanguage.value)
     }
     
-    // User avatar from customizations
+    // Lietotāja avatārs no pielāgojumiem
     const userAvatar = ref('')
     
-    // User stats from backend
+    // Lietotāja statistika no aizmugurpuses
     const userStats = ref({
       ecoPoints: 0,
       challengesCompleted: 0,
@@ -608,7 +608,7 @@ export default {
       level: 1
     })
     
-    // Fetch user stats from backend
+    // Ielādēt lietotāja statistiku no aizmugurpuses
     const fetchUserStats = async () => {
       if (!user.value) return
       try {
@@ -619,7 +619,7 @@ export default {
       }
     }
     
-    // Load user customizations (avatar)
+    // Ielādēt lietotāja pielāgojumus (avatāru)
     const loadUserCustomizations = () => {
       if (user.value && user.value.id) {
         const saved = localStorage.getItem(`customizations_${user.value.id}`)
@@ -634,7 +634,7 @@ export default {
       }
     }
     
-    // Watch for user changes to reload customizations
+    // Sekot lietotāja izmaiņām, lai atkārtoti ielādētu pielāgojumus
     watch(user, () => {
       loadUserCustomizations()
       if (user.value) {
@@ -644,10 +644,10 @@ export default {
       }
     }, { immediate: true })
     
-    // Scroll detection
+    // Ritināšanas atpazīšana
     const isScrolled = ref(false)
     
-    // Search
+    // Meklēšana
     const searchExpanded = ref(false)
     const searchQuery = ref('')
     const searchInput = ref(null)
@@ -657,9 +657,9 @@ export default {
     const searchLoading = ref(false)
     const showSearchResults = ref(false)
     
-    // Notifications
+    // Paziņojumi
     const notificationsOpen = ref(false)
-    const notifications = ref([])  // Fetched from backend
+    const notifications = ref([])  // Ielādēts no aizmugurpuses
     
     const fetchNotifications = async () => {
       const storedToken = localStorage.getItem('token')
@@ -691,16 +691,16 @@ export default {
       return `${days}d ago`
     }
     
-    // Cart count from userStats
+    // Groza skaits no userStats
     const cartCount = computed(() => userStats.value.cartCount || 0)
 
-    // Dropdown states
+    // Nolaižamo izvēlņu stāvokļi
     const userDropdownOpen = ref(false)
     
-    // Computed
+    // Aprēķinātās vērtības
     const unreadCount = computed(() => notifications.value.filter(n => !n.read).length)
 
-    // Scroll handler
+    // Ritināšanas apstrādātājs
     const handleScroll = () => {
       isScrolled.value = window.scrollY > 20
     }
@@ -720,7 +720,7 @@ export default {
       emit('theme-changed', theme.value)
     }
     
-    // Search functions
+    // Meklēšanas funkcijas
     const toggleSearch = () => {
       searchExpanded.value = true
       nextTick(() => {
@@ -751,7 +751,7 @@ export default {
       searchResults.value = { products: [], posts: [], education: [] }
     }
     
-    // Global search function
+    // Globālās meklēšanas funkcija
     const doGlobalSearch = async () => {
       const query = searchQuery.value.trim()
       if (!query || query.length < 2) {
@@ -764,7 +764,7 @@ export default {
       showSearchResults.value = true
       
       try {
-        // Fetch from all endpoints in parallel
+        // Vienlaicīgi ielādēt no visiem galapunktiem
         const [productsRes, postsRes, educationRes] = await Promise.all([
           api.get('/api/products').then(r => r.data).catch(() => []),
           api.get('/api/posts').then(r => r.data).catch(() => ({ posts: [] })),
@@ -773,7 +773,7 @@ export default {
         
         const searchLower = query.toLowerCase()
         
-        // Filter products
+        // Filtrēt produktus
         const products = (Array.isArray(productsRes) ? productsRes : productsRes.products || [])
           .filter(p => 
             p.name?.toLowerCase().includes(searchLower) ||
@@ -782,7 +782,7 @@ export default {
           )
           .slice(0, 4)
         
-        // Filter forum posts
+        // Filtrēt foruma ierakstus
         const posts = (postsRes.posts || postsRes || [])
           .filter(p => 
             p.title?.toLowerCase().includes(searchLower) ||
@@ -790,7 +790,7 @@ export default {
           )
           .slice(0, 4)
         
-        // Filter education articles
+        // Filtrēt izglītības rakstus
         const education = (Array.isArray(educationRes) ? educationRes : [])
           .filter(e => 
             e.title?.toLowerCase().includes(searchLower) ||
@@ -808,7 +808,7 @@ export default {
       }
     }
     
-    // Debounced search
+    // Aizkavētā meklēšana
     let searchTimeout = null
     watch(searchQuery, (newVal) => {
       clearTimeout(searchTimeout)
@@ -864,7 +864,7 @@ export default {
       }
     }
     
-    // Notification functions
+    // Paziņojumu funkcijas
     const toggleNotifications = () => {
       notificationsOpen.value = !notificationsOpen.value
       if (notificationsOpen.value) {
@@ -876,7 +876,7 @@ export default {
       notifications.value.forEach(n => n.read = true)
       try {
         await api.put('/api/notifications/read-all')
-      } catch (e) { /* ignore */ }
+      } catch (e) { /* ignort */ }
     }
     
     const handleNotification = async (notif) => {
@@ -884,13 +884,13 @@ export default {
       notificationsOpen.value = false
       try {
         await api.put(`/api/notifications/${notif.id}/read`)
-      } catch (e) { /* ignore */ }
+      } catch (e) { /* ignort */ }
       if (notif.link) {
         router.push(notif.link)
       }
     }
     
-    // User level functions
+    // Lietotāja līmeņa funkcijas
     const getUserLevel = () => {
       const level = userStats.value.level || 1
       if (level >= 10) return 'level-master'
@@ -905,7 +905,7 @@ export default {
       return t(`profile.levelTitles.${key}`)
     }
 
-    // Dropdown functions
+    // Nolaižamās izvēlnes funkcijas
     const toggleUserDropdown = () => {
       userDropdownOpen.value = !userDropdownOpen.value
       notificationsOpen.value = false
@@ -927,24 +927,24 @@ export default {
     }
 
     onMounted(() => {
-      // Listen for theme changes
+      // Klausīties tēmas izmaiņas
       const currentTheme = localStorage.getItem('theme') || 'light'
       theme.value = currentTheme
       document.documentElement.setAttribute('data-theme', currentTheme)
       
-      // Load user customizations
+      // Ielādēt lietotāja pielāgojumus
       loadUserCustomizations()
       
-      // Fetch user stats
+      // Ielādēt lietotāja statistiku
       if (user.value) {
         fetchUserStats()
         fetchNotifications()
       }
       
-      // Add scroll listener
+      // Pievienot ritināšanas klausītāju
       window.addEventListener('scroll', handleScroll)
       
-      // Close dropdowns on outside click
+      // Aizvērt nolaižamās izvēlnes, klikšķinot ārpusē
       document.addEventListener('click', (e) => {
         if (!e.target.closest('.notification-wrapper')) {
           notificationsOpen.value = false
@@ -1032,7 +1032,7 @@ export default {
   gap: 24px;
 }
 
-/* Desktop Layout */
+/* Datora izkārtojums */
 .nav-left {
   flex-shrink: 0;
 }
@@ -1086,7 +1086,7 @@ export default {
   gap: 8px;
 }
 
-/* Search Bar */
+/* Meklēšanas josla */
 .search-container {
   display: flex;
   align-items: center;
@@ -1168,7 +1168,7 @@ export default {
   color: var(--text-color);
 }
 
-/* Search Results Dropdown */
+/* Meklēšanas rezultātu nolaižamā izvēlne */
 .search-results-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -1296,7 +1296,7 @@ export default {
   to { transform: rotate(360deg); }
 }
 
-/* Mobile Search Results */
+/* Mobilās meklēšanas rezultāti */
 .mobile-search-results {
   background: var(--card-bg);
   margin: 8px 16px;
@@ -1373,7 +1373,7 @@ export default {
   flex-shrink: 0;
 }
 
-/* Notifications */
+/* Paziņojumi */
 .notification-wrapper {
   position: relative;
 }
@@ -1540,7 +1540,7 @@ export default {
   margin: 0;
 }
 
-/* Cart Button */
+/* Groza poga */
 .cart-button {
   display: flex;
   align-items: center;
@@ -1582,7 +1582,7 @@ export default {
   justify-content: center;
 }
 
-/* User Menu */
+/* Lietotāja izvēlne */
 .user-menu {
   position: relative;
 }
@@ -1809,7 +1809,7 @@ export default {
   background: rgba(231, 76, 60, 0.1) !important;
 }
 
-/* Auth Links */
+/* Autentifikācijas saites */
 .auth-links {
   display: flex;
   align-items: center;
@@ -1847,7 +1847,7 @@ export default {
   box-shadow: 0 6px 20px rgba(13, 124, 95, 0.4);
 }
 
-/* Language Toggle */
+/* Valodas pārslēdzējs */
 .lang-toggle {
   background: none;
   border: 1.5px solid var(--border-color);
@@ -1879,7 +1879,7 @@ export default {
   transform: scale(1.1);
 }
 
-/* Theme Toggle */
+/* Tēmas pārslēdzējs */
 .theme-toggle {
   background: none;
   border: 1.5px solid var(--border-color);
@@ -1910,7 +1910,7 @@ export default {
   transform: rotate(30deg) scale(1.15);
 }
 
-/* Mobile Layout */
+/* Mobilais izkārtojums */
 .mobile-header {
   display: flex;
   align-items: center;
@@ -1996,7 +1996,7 @@ export default {
   border-radius: 50%;
 }
 
-/* Mobile Search Overlay */
+/* Mobilās meklēšanas pārklājums */
 .mobile-search-overlay {
   position: absolute;
   top: 100%;
@@ -2037,7 +2037,7 @@ export default {
   outline: none;
 }
 
-/* Hamburger Menu */
+/* Burgera izvēlne */
 .hamburger {
   display: flex;
   flex-direction: column;
@@ -2071,7 +2071,7 @@ export default {
   transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Mobile Menu Overlay */
+/* Mobilās izvēlnes pārklājums */
 .mobile-menu-overlay {
   position: fixed;
   top: 70px;
@@ -2332,7 +2332,7 @@ export default {
   font-weight: 500;
 }
 
-/* Animations */
+/* Animācijas */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -2349,7 +2349,7 @@ export default {
   }
 }
 
-/* Responsive Design */
+/* Adaptīvais dizains */
 @media (max-width: 1024px) {
   .desktop-only {
     display: none !important;

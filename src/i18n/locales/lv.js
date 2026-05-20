@@ -1,5 +1,5 @@
 export default {
-  // Common
+  // Kopīgi
   common: {
     home: 'Sākums',
     products: 'Produkti',
@@ -36,7 +36,7 @@ export default {
     or: 'vai',
     and: 'un',
     included: 'Iekļauts',
-    // Days of week
+    // Ned�ļas dienas
     days: {
       sun: 'Sv',
       mon: 'Pr',
@@ -55,7 +55,7 @@ export default {
       fri: 'Piektdiena',
       sat: 'Sestdiena'
     },
-    // Time
+    // Laiks
     daysAgo: 'dienas atpakaļ',
     weeksAgo: 'nedēļas atpakaļ',
     today: 'Šodien',
@@ -63,7 +63,7 @@ export default {
     recently: 'Nesen'
   },
 
-  // Navbar
+  // Navigācijas josla
   navbar: {
     brand: 'Eco Pakalpojumi',
     searchPlaceholder: 'Meklēt produktus, rakstus...',
@@ -82,7 +82,7 @@ export default {
     lightMode: 'Gaišais režīms'
   },
 
-  // Home Page
+  // Sākumlapa
   home: {
     heroTitle: 'Dari Planētu Zaļāku',
     heroSubtitle: 'Pievienojies mūsu kopienai un sāc savu ceļu uz ilgtspējīgu dzīvesveidu. Izseko savu oglekļa pēdu, iepērcies ekoloģiski un dari atšķirību.',
@@ -154,7 +154,7 @@ export default {
     testimonial3Role: 'Videi Draudzīga Iepircēja'
   },
 
-  // Products Page
+  // Produktu lapa
   products: {
     title: 'Eko Produkti',
     subtitle: 'Ilgtspējīgi produkti labākai planētai',
@@ -190,16 +190,16 @@ export default {
     tryDifferent: 'Mēģini citu meklējumu vai kategoriju'
   },
 
-  // Calculator Page
+  // Kalkulatora lapa
   calculator: {
     title: 'Oglekļa Pēdas Kalkulators',
     subtitle: 'Aprēķini savu ietekmi uz vidi un atklāj veidus, kā to samazināt',
-    // Categories
+    // Kategorijas
     transport: 'Transports',
     home: 'Māja',
     food: 'Ēdiens',
     lifestyle: 'Dzīvesveids',
-    // Transport section
+    // Transporta sadaļa
     transportation: 'Transports',
     carTravel: 'Auto Braucieni',
     carTravelDesc: 'Vidējie nobrauktie kilometri nedēļā',
@@ -217,7 +217,7 @@ export default {
     publicTransport: 'Sabiedriskais Transports',
     publicTransportDesc: 'Stundas nedēļā autobusā, vilcienā, metro',
     hrsWeek: 'st/nedēļā',
-    // Home section
+    // Mājas sadaļa
     homeEnergy: 'Mājas Enerģija',
     electricity: 'Elektrība',
     electricityDesc: 'Mēneša elektrības patēriņš',
@@ -237,7 +237,7 @@ export default {
     waterUsage: 'Ūdens Patēriņš',
     waterUsageDesc: 'Dienas ūdens patēriņš (litri)',
     lDay: 'L/dienā',
-    // Food section
+    // Pārtikas sadaļa
     foodDiet: 'Ēdiens un Diēta',
     meatConsumption: 'Gaļas Patēriņš',
     meatConsumptionDesc: 'Maltītes ar gaļu nedēļā',
@@ -250,7 +250,7 @@ export default {
     servingsDay: 'porcijas/dienā',
     foodWaste: 'Pārtikas Atkritumi',
     foodWasteDesc: 'Izšķērdētās pārtikas procents',
-    // Lifestyle section
+    // Dzīvesveida sadaļa
     lifestyleShopping: 'Dzīvesveids un Iepirkšanās',
     clothing: 'Apģērbs',
     clothingDesc: 'Jauni apģērba gabali mēnesī',
@@ -264,7 +264,7 @@ export default {
     someItems: 'Dažas lietas',
     mostItems: 'Lielāko daļu',
     everythingPossible: 'Visu iespējamo',
-    // Results
+    // Rezultāti
     calculateBtn: 'Aprēķināt Manu Pēdu',
     resultsTitle: 'Tavas Oglekļa Pēdas Rezultāti',
     tonnesCo2Year: 'tonnas CO₂/gadā',
@@ -275,14 +275,14 @@ export default {
     low: 'Zems',
     average2: 'Vidējs',
     high: 'Augsts',
-    // Tips
+    // Padomi
     switchToRenewable: 'Pārslēdzies uz atjaunojamo enerģiju',
     switchToRenewableDesc: 'Sazinies ar savu enerģijas piegādātāju par zaļajiem tarifiem.',
     improveRecycling: 'Uzlabo pārstrādes ieradumus',
     improveRecyclingDesc: 'Šķiro atkritumus pareizi un kompostē organiskos materiālus.',
     useLed: 'Izmanto LED apgaismojumu',
     useLedDesc: 'Nomainiet visas spuldzes uz LED un vienmēr izslēdziet gaismas, izejot no telpas.',
-    // Legacy
+    // Mantojuma kods
     carUsage: 'Auto lietošana',
     carUsageDesc: 'Cik km nedēļā tu brauc ar auto?',
     flights: 'Lidojumi',
@@ -311,13 +311,13 @@ export default {
     tip2: 'Samazini gaļas patēriņu',
     tip3: 'Izmanto atjaunojamo enerģiju',
     tip4: 'Pērc mazāk, izvēlies ilgtspējīgi',
-    // Footprint messages
+    // PÄ“das nospieduma ziÅ†ojumi
     msgExcellent: 'Izcili! Tu esi zaļais varonis!',
     msgGreat: 'Lieliski! Daudz zem vidējā.',
     msgAverage: 'Labi. Tu esi vidējais.',
     msgAbove: 'Ir kur uzlabot.',
     msgHigh: 'Būtiski augstāks par vidējo.',
-    // Dynamic tips
+    // Dinamiski padomi
     tipCarpool: 'Apsvērt koplietošanu',
     tipCarpoolDesc: 'Dalies braucienos uz darbu, lai samazinātu emisijas un ietaupītu naudu.',
     tipFlights: 'Samazini lidojumus',
@@ -328,10 +328,10 @@ export default {
     tipFoodWasteDesc: 'Plāno maltītes un kompostē atkritumus, lai samazinātu metāna emisijas.',
     tipClothing: 'Ilgtspējīga mode',
     tipClothingDesc: 'Pērc lietotu vai izvēlies kvalitāti, kas kalpo ilgāk.',
-    // Units
+    // M�rvienības
     tonnesYear: 'tonnas/gadā',
     tonnesPerFlight: 't CO₂ uz lidojumu',
-    // Methodology section
+    // Metodoloģijas sadaļa
     methodologyTitle: 'Kā tiek veikti šie aprēķini?',
     methodologyDesc: 'Mūsu CO₂ aplēses balstās uz recenzētiem emisiju faktoriem no atzītiem zinātniskiem avotiem. Visas vērtības atspoguļo dzīves cikla emisijas kg CO₂ ekvivalentā.',
     methodologyTransportTitle: 'Transports',
@@ -345,7 +345,7 @@ export default {
     methodologySources: 'Avoti: IPCC AR6, IEA 2023, ICAO Carbon Emissions Calculator, Poore & Nemecek (2018) Science, UK DEFRA Conversion Factors, European Environment Agency.'
   },
 
-  // Forum Page
+  // Foruma lapa
   forum: {
     title: 'Eko Kopienas Forums',
     subtitle: 'Sazinies ar ekoloģiski domājošiem cilvēkiem, dalies ar idejām un mācies kopā',
@@ -389,7 +389,7 @@ export default {
     noDiscussionsYet: 'Vēl nav diskusiju',
     beFirstToStart: 'Esi pirmais, kas sāk sarunu šajā kategorijā!',
     viewAllComments: 'Skatīt visus komentārus',
-    // Categories
+    // Kategorijas
     all: 'Visi',
     allDiscussions: 'Visas Diskusijas',
     ecoTips: 'Eko Padomi',
@@ -407,7 +407,7 @@ export default {
     }
   },
 
-  // Education Page
+  // Izglītības lapa
   education: {
     title: 'Eko Izglītības Centrs',
     subtitle: 'Iepazīsti ilgtspējīgu dzīvesveidu caur ceļvežiem, video un interaktīvu mācīšanos',
@@ -440,7 +440,7 @@ export default {
     modules: 'moduļi',
     minRead: 'min lasīšana',
     minWatch: 'min skatīšanās',
-    // Toast messages
+    // Paziņojumu ziņojumi
     contentSaved: 'Saturs saglabāts!',
     contentUnsaved: 'Saturs noņemts no saglabātajiem',
     contentCompleted: 'Apsveicam! Saturs atzīmēts kā pabeigts!',
@@ -450,7 +450,7 @@ export default {
     shareError: 'Neizdevās dalīties',
     pathCompleted: 'Apsveicam! Mācību ceļš pabeigts!',
     pathProgressUpdated: 'Progress atjaunināts!',
-    // Topics
+    // TÄ“mas
     topics: {
       energy: 'Enerģija',
       waste: 'Bez Atkritumiem',
@@ -461,7 +461,7 @@ export default {
       fashion: 'Lēnā Mode',
       water: 'Ūdens Taupīšana'
     },
-    // Content items
+    // Satura vienības
     content: {
       carbonFootprintTitle: 'Izprast Savu Oglekļa Pēdu',
       carbonFootprintDesc: 'Uzzini, ko nozīmē oglekļa pēda un kā tavas ikdienas izvēles ietekmē vidi.',
@@ -491,7 +491,7 @@ export default {
       solarDesc: 'Viss, kas tev jāzina par saules paneļu uzstādīšanu.',
       solarFull: 'Saules paneļi var būtiski samazināt tavus elektrības rēķinus un oglekļa pēdu. Lielākā daļa sistēmu atmaksājas 7-12 gados.'
     },
-    // Learning paths
+    // Apmācību ceļi
     paths: {
       zeroWasteTitle: 'Bezatkritumu Iesācējiem',
       zeroWasteDesc: 'Sāc savu ceļojumu uz mazāku atkritumu daudzumu ar vienkāršiem, praktiskiem soļiem.',
@@ -501,7 +501,7 @@ export default {
       sustainableEatingDesc: 'Iemācies ēst tā, lai barotos gan tu, gan planēta.',
       weeks: 'nedēļas'
     },
-    // Daily tips
+    // Dienas padomi
     tips: {
       shorterShowersTitle: 'Īsākas Dušas',
       shorterShowersDesc: 'Samazinot dušu par 2 minūtēm, ietaupi 40 litrus ūdens!',
@@ -516,7 +516,7 @@ export default {
     }
   },
 
-  // Challenges Page
+  // Izaicinājumu lapa
   challenges: {
     title: 'Eko Izaicinājumi',
     subtitle: 'Pievienojies izaicinājumiem, dari ietekmi un saņem balvas!',
@@ -542,7 +542,7 @@ export default {
     easy: 'Viegls',
     medium: 'Vidējs',
     hard: 'Grūts',
-    // Challenge content
+    // Izaicinājuma saturs
     challengesList: {
       plasticFreeTitle: 'Nedēļa Bez Plastmasas',
       plasticFreeDesc: 'Izvairieties no vienreizlietojamās plastmasas 7 dienas pēc kārtas. Ņemiet līdzi savas somas, pudeles un konteinerus.',
@@ -561,7 +561,7 @@ export default {
       secondhandTitle: 'Lietotu Lietu Septembris',
       secondhandDesc: 'Pērciet tikai lietotas apģērbu un mājsaimniecības preces šomēnes.'
     },
-    // Badges
+    // Nozīmes
     badges: {
       firstStepName: 'Pirmais Solis',
       firstStepDesc: 'Pabeidz savu pirmo izaicinājumu',
@@ -576,7 +576,7 @@ export default {
       legendName: 'Leģenda',
       legendDesc: 'Pabeidz visus izaicinājumu veidus'
     },
-    // Sidebar
+    // Sānjosla
     yourActiveChallenges: 'Tavi Aktīvie Izaicinājumi',
     noActiveYet: 'Tu vēl neesi pievienojies nevienam izaicinājumam!',
     browseAndJoin: 'Pārlūko izaicinājumus un pievienojies, lai sāktu',
@@ -585,14 +585,14 @@ export default {
     kgCo2Saved: 'kg CO₂ Ietaupīts',
     treesPlanted: 'Koki Iestādīti',
     challengesDone: 'Izaicinājumi Pabeigti',
-    // Modal
+    // Modālais logs
     logYourProgress: 'Reģistrē savu progresu šajā izaicinājumā:',
     todaysProgress: 'Šodienas Progress',
     current: 'Pašreizējais',
     logProgress: 'Reģistrēt Progresu'
   },
 
-  // Footprint Page
+  // PÄ“das nospieduma lapa
   footprint: {
     title: 'Eko Pēdas Izsekotājs',
     subtitle: 'Izseko savu pozitīvo ietekmi uz vidi',
@@ -609,7 +609,7 @@ export default {
     recentActivities: 'Nesenās Aktivitātes',
     noActivities: 'Vēl nav reģistrētu aktivitāšu',
     startLogging: 'Sāc reģistrēt savas eko aktivitātes!',
-    // New translations
+    // Jauni tulkojumi
     quickLog: 'Ātrā Reģistrācija',
     quickLogDesc: 'Pieskaries aktivitātei, lai to uzreiz reģistrētu',
     logCustomActivity: 'Reģistrēt Pielāgotu Aktivitāti',
@@ -651,7 +651,7 @@ export default {
       energySaving: 'Enerģijas taupīšana',
       waterSaving: 'Ūdens taupīšana'
     },
-    // Categories
+    // Kategorijas
     categories: {
       transport: 'Transports',
       energy: 'Enerģija',
@@ -660,7 +660,7 @@ export default {
       water: 'Ūdens',
       nature: 'Daba'
     },
-    // Quick activities
+    // Ĭtras aktivitātes
     quickActivities: {
       bikedToWork: 'Brauca ar velo uz darbu',
       recycledWaste: 'Pārstrādāja atkritumus',
@@ -671,7 +671,7 @@ export default {
       shortShower: 'Īsa duša',
       noCarToday: 'Šodien bez auto'
     },
-    // Achievements
+    // Sasniegumi
     achievementsList: {
       firstStepName: 'Pirmais Solis',
       firstStepDesc: 'Reģistrē savu pirmo aktivitāti',
@@ -686,7 +686,7 @@ export default {
       planetHeroName: 'Planētas Varonis',
       planetHeroDesc: 'Ietaupi 500kg CO₂'
     },
-    // Tips
+    // Padomi
     tipsList: {
       cycling: 'Riteņbraukšana 5km automašīnas vietā ietaupa aptuveni 1kg CO₂!',
       led: 'Pāreja uz LED spuldzēm var samazināt apgaismojuma enerģiju par 80%.',
@@ -699,7 +699,7 @@ export default {
     }
   },
 
-  // Cart Page
+  // Iepirkumu groza lapa
   cart: {
     title: 'Tavs Eko Grozs',
     itemsReady: 'prece(-es) gatavas noformēšanai',
@@ -726,7 +726,7 @@ export default {
     remove: 'Noņemt',
     quantity: 'Daudzums',
     priceEach: 'Cena',
-    // Additional cart translations
+    // Papildu groza tulkojumi
     ecoProduct: 'Eko Produkts',
     orderSummary: 'Pasūtījuma Kopsavilkums',
     ecoShipping: 'Eko Piegāde',
@@ -735,7 +735,7 @@ export default {
     estimatedDelivery: 'Paredzamā Piegāde'
   },
 
-  // Profile Page
+  // Profila lapa
   profile: {
     title: 'Mans Profils',
     memberSince: 'Eko Biedrs kopš',
@@ -774,7 +774,7 @@ export default {
       ecoOrders: 'Eko Pasūtījumi',
       streak: 'Dienu Sērija'
     },
-    // Achievements
+    // Sasniegumi
     achievementsList: {
       firstStepName: 'Pirmais Solis',
       firstStepDesc: 'Pabeidz savu pirmo aktivitāti',
@@ -791,7 +791,7 @@ export default {
     }
   },
 
-  // Login Page
+  // Pieteikšanās lapa
   login: {
     title: 'Laipni Lūgti Atpakaļ',
     subtitle: 'Piesakies savā kontā',
@@ -825,7 +825,7 @@ export default {
     }
   },
 
-  // Register Page
+  // Reģistrācijas lapa
   register: {
     title: 'Izveidot Kontu',
     subtitle: 'Pievienojies tūkstošiem ekoloģiski domājošu cilvēku',
@@ -882,7 +882,7 @@ export default {
     }
   },
 
-  // Admin Page
+  // Administratora lapa
   admin: {
     title: 'Administrācijas Panelis',
     ecoAdmin: 'Eco Admin',
@@ -894,7 +894,7 @@ export default {
     myProfile: 'Mans Profils',
     signOut: 'Izrakstīties',
 
-    // Sidebar
+    // Sānjosla
     sidebarMain: 'Galvenais',
     sidebarContent: 'Saturs',
     sidebarSettings: 'Iestatījumi',
@@ -905,7 +905,7 @@ export default {
     forum: 'Forums',
     settings: 'Iestatījumi',
 
-    // Dashboard
+    // Vadības panelis
     dashboardOverview: 'Pārskata Panelis',
     dashboardWelcome: 'Laipni lūgti atpakaļ! Lūk, kas notiek tavā eko-veikalā.',
     today: 'Šodien',
@@ -933,7 +933,7 @@ export default {
     vsLastYear: 'pret pagājušo gadu',
     vsPreviousPeriod: 'pret iepriekšējo periodu',
 
-    // Users tab
+    // Lietotāju cilne
     userManagement: 'Lietotāju Pārvaldība',
     userManagementDesc: 'Pārvaldiet lietotāju kontus un atļaujas',
     searchUsers: 'Meklēt lietotājus...',
@@ -949,7 +949,7 @@ export default {
     unblock: 'Atbloķēt',
     noUsersFound: 'Lietotāji nav atrasti',
 
-    // Products tab
+    // Produktu cilne
     productManagement: 'Produktu Pārvaldība',
     productManagementDesc: 'Pārvaldiet jūsu ekoloģisko produktu katalogu',
     searchProducts: 'Meklēt produktus...',
@@ -960,7 +960,7 @@ export default {
     noProductsFound: 'Produkti nav atrasti',
     addFirstProduct: 'Pievienot Pirmo Produktu',
 
-    // Orders tab
+    // Pasūtījumu cilne
     orderManagement: 'Pasūtījumu Pārvaldība',
     orderManagementDesc: 'Izsekojiet un pārvaldiet klientu pasūtījumus',
     all: 'Visi',
@@ -978,7 +978,7 @@ export default {
       cancelled: 'Atcelts'
     },
 
-    // Forum tab
+    // Foruma cilne
     forumManagement: 'Foruma Pārvaldība',
     forumManagementDesc: 'Moderējiet kopienas diskusijas',
     searchPosts: 'Meklēt ierakstus...',
@@ -986,7 +986,7 @@ export default {
     comments: 'komentāri',
     noForumPosts: 'Foruma ieraksti nav atrasti',
 
-    // Settings tab
+    // Iestatījumu cilne
     configureAdmin: 'Konfigurējiet administratora paneli',
     storeSettings: 'Veikala Iestatījumi',
     storeName: 'Veikala Nosaukums',
@@ -998,7 +998,7 @@ export default {
     emailOnNewUsers: 'E-pasts par jauniem lietotājiem',
     lowStockAlerts: 'Zemu krājumu brīdinājumi',
 
-    // User edit modal
+    // Lietotāja rediģ�šanas modālais logs
     editUser: 'Rediģēt Lietotāju',
     name: 'Vārds',
     userRole: {
@@ -1008,7 +1008,7 @@ export default {
     saving: 'Saglabā...',
     cancel: 'Atcelt',
 
-    // Product modal
+    // Produkta modālais logs
     productName: 'Produkta Nosaukums',
     category: 'Kategorija',
     selectCategory: 'Izvēlieties kategoriju',
@@ -1025,7 +1025,7 @@ export default {
     updateProduct: 'Atjaunināt Produktu',
     or: 'vai',
 
-    // Category names
+    // Kategoriju nosaukumi
     categorySolar: 'Saules enerģija',
     categoryWater: 'Ūdens',
     categoryEnergy: 'Enerģija',
@@ -1043,7 +1043,7 @@ export default {
     edit: 'Rediģēt'
   },
 
-  // Notifications
+  // Paziņojumi
   notifications: {
     title: 'Paziņojumi',
     markAllRead: 'Atzīmēt visus kā lasītus',
@@ -1053,7 +1053,7 @@ export default {
     newTip: 'Jauns eko padoms pieejams'
   },
 
-  // Error Messages
+  // Kļūdu ziņojumi
   errors: {
     required: 'Šis lauks ir obligāts',
     invalidEmail: 'Lūdzu ievadi derīgu e-pasta adresi',
@@ -1065,7 +1065,7 @@ export default {
     somethingWrong: 'Kaut kas nogāja greizi. Mēģini vēlreiz.'
   },
 
-  // Success Messages
+  // Veiksmes ziņojumi
   success: {
     loginSuccess: 'Veiksmīgi pieteicies!',
     registerSuccess: 'Konts izveidots veiksmīgi!',

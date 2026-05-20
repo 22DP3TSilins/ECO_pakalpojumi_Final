@@ -4,12 +4,12 @@ const bcrypt = require('bcryptjs');
 const db = new sqlite3.Database('./eco_pakalpojumi.db');
 
 db.serialize(() => {
-  // Create admin user
+  // Izveidot administratora lietotāju
   const adminPassword = bcrypt.hashSync('admin123', 10);
   db.run(`INSERT OR IGNORE INTO users (email, password, name, role) VALUES (?, ?, ?, ?)`,
     ['admin@eco.com', adminPassword, 'Admin User', 'admin']);
 
-  // Add sample products
+  // Pievienot paraugproduktus
   const products = [
     {
       name: 'Bamboo Toothbrush',

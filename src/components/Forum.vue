@@ -1,6 +1,6 @@
 <template>
   <div class="forum-page">
-    <!-- Forum Header -->
+    <!-- Foruma galvene -->
     <div class="forum-header">
       <div class="header-content">
         <h1>{{ t('forum.title') }}</h1>
@@ -9,9 +9,9 @@
     </div>
 
     <div class="forum-container">
-      <!-- Sidebar -->
+      <!-- Sānjosla -->
       <aside class="forum-sidebar">
-        <!-- Categories -->
+        <!-- Kategorijas -->
         <div class="sidebar-section">
           <h3>{{ t('forum.categories') }}</h3>
           <div class="category-list">
@@ -28,9 +28,9 @@
         </div>
       </aside>
 
-      <!-- Main Content -->
+      <!-- Galvenais saturs -->
       <main class="forum-main">
-        <!-- Create Post Section -->
+        <!-- Izveidot ieraksta sekcija -->
         <div v-if="user && !selectedPost" class="create-post-section">
           <div v-if="!showCreateForm" class="create-post-trigger" @click="showCreateForm = true">
             <div class="user-avatar">{{ user.name ? user.name.charAt(0).toUpperCase() : '?' }}</div>
@@ -76,25 +76,25 @@
           </div>
         </div>
 
-        <!-- Login Prompt -->
+        <!-- Pieteikšanās uzaicinājums -->
         <div v-if="!user && !selectedPost" class="login-prompt">
           <p><Icon name="lock" :size="16" /> <router-link to="/login">{{ t('common.login') }}</router-link> {{ t('common.or') }} <router-link to="/register">{{ t('common.register') }}</router-link> {{ t('forum.loginToJoin') }}</p>
         </div>
 
-        <!-- Posts List -->
+        <!-- Ierakstu saraksts -->
         <div v-if="!selectedPost" class="posts-section">
           <div class="posts-header">
             <h2>{{ getCurrentCategoryName }}</h2>
           </div>
 
-          <!-- Empty State -->
+          <!-- Tukšs stāvoklis -->
           <div v-if="filteredPosts.length === 0" class="empty-state">
             <div class="empty-icon"><Icon name="leaf" :size="48" /></div>
             <h3>{{ t('forum.noDiscussionsYet') }}</h3>
             <p>{{ t('forum.beFirstToStart') }}</p>
           </div>
 
-          <!-- Posts Grid -->
+          <!-- Ierakstu režģis -->
           <div class="posts-list">
             <article 
               v-for="post in filteredPosts" 
@@ -136,14 +136,14 @@
           </div>
         </div>
 
-        <!-- Share Toast -->
+        <!-- Kopīgošanas paziņojums -->
         <transition name="toast">
           <div v-if="shareToast" class="share-toast">
             <Icon name="check" :size="16" /> Link copied to clipboard!
           </div>
         </transition>
 
-        <!-- Post Detail View -->
+        <!-- Ieraksta detaļu skats -->
         <div v-if="selectedPost" class="post-detail">
           <button class="back-btn" @click="selectedPost = null">
             {{ t('forum.backToDiscussions') }}
@@ -187,11 +187,11 @@
             </div>
           </article>
 
-          <!-- Comments Section -->
+          <!-- Komentāru sekcija -->
           <div class="comments-section">
             <h3>Comments ({{ comments.length }})</h3>
 
-            <!-- Add Comment -->
+            <!-- Pievienot komentāru -->
             <div v-if="user" class="add-comment">
               <div class="user-avatar small">{{ user.name ? user.name.charAt(0).toUpperCase() : '?' }}</div>
               <form @submit.prevent="addComment" class="comment-form">
@@ -208,7 +208,7 @@
               </form>
             </div>
 
-            <!-- Comments List -->
+            <!-- Komentāru saraksts -->
             <div v-if="comments.length === 0" class="no-comments">
               <p>No comments yet. Be the first to share your thoughts!</p>
             </div>
@@ -234,7 +234,7 @@
                   </div>
                 </div>
 
-                <!-- Replies -->
+                <!-- Atbildes -->
                 <div v-if="getReplies(comment.id).length" class="replies-list">
                   <div v-for="reply in getReplies(comment.id)" :key="reply.id" class="comment-card reply-card">
                     <div class="comment-header">
@@ -310,7 +310,7 @@ export default {
     filteredPosts() {
       let filtered = [...this.posts];
       
-      // Filter by category
+      // Filtrēt pēc kategorijas
       if (this.selectedCategory !== 'all') {
         filtered = filtered.filter(p => p.category === this.selectedCategory);
       }
@@ -357,7 +357,7 @@ export default {
     },
     async viewPost(id) {
       this.selectedPost = this.posts.find(p => p.id === id);
-      // Track the view
+      // Reģistrēt skatījumu
       try {
         const { data: viewData } = await api.post(`/api/posts/${id}/view`);
         if (this.selectedPost) {
@@ -370,7 +370,7 @@ export default {
       } catch (e) {
         console.error('Error tracking view:', e);
       }
-      // Fetch comments
+      // Ielādēt komentārus
       try {
         const { data } = await api.get(`/api/posts/${id}/comments`);
         this.comments = data.comments || [];
@@ -542,7 +542,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Header */
+/* Galvene */
 .forum-header {
   max-width: 1100px;
   margin: 0 auto 20px;
@@ -571,7 +571,7 @@ export default {
   font-size: 0.95rem;
 }
 
-/* Container */
+/* Konteiners */
 .forum-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -580,7 +580,7 @@ export default {
   gap: 20px;
 }
 
-/* Sidebar */
+/* Sānjosla */
 .forum-sidebar {
   position: sticky;
   top: 90px;
@@ -689,12 +689,12 @@ export default {
   border: none;
 }
 
-/* Main Content */
+/* Galvenais saturs */
 .forum-main {
   min-width: 0;
 }
 
-/* Create Post */
+/* Izveidot ierakstu */
 .create-post-section {
   margin-bottom: 20px;
 }
@@ -920,7 +920,7 @@ export default {
   box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
 }
 
-/* Login Prompt */
+/* Pieteikšanās uzaicinājums */
 .login-prompt {
   text-align: center;
   padding: 16px;
@@ -937,7 +937,7 @@ export default {
   font-weight: 500;
 }
 
-/* Posts Section */
+/* Ierakstu sekcija */
 .posts-header {
   display: flex;
   justify-content: space-between;
@@ -952,7 +952,7 @@ export default {
   font-weight: 600;
 }
 
-/* Empty State */
+/* Tukšs stāvoklis */
 .empty-state {
   text-align: center;
   padding: 48px 20px;
@@ -979,7 +979,7 @@ export default {
   font-size: 0.9rem;
 }
 
-/* Posts List */
+/* Ierakstu saraksts */
 .posts-list {
   display: flex;
   flex-direction: column;
@@ -1101,7 +1101,7 @@ export default {
   font-size: 0.85rem;
 }
 
-/* Post Detail */
+/* Ieraksta detaļas */
 .post-detail {
   animation: fadeIn 0.2s ease;
 }
@@ -1224,7 +1224,7 @@ export default {
   font-weight: 600;
 }
 
-/* Share Toast */
+/* Kopīgošanas paziņojums */
 .share-toast {
   position: fixed;
   bottom: 28px;
@@ -1251,7 +1251,7 @@ export default {
   transform: translateX(-50%) translateY(16px);
 }
 
-/* Comments */
+/* Komentāri */
 .comments-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -1447,7 +1447,7 @@ export default {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .forum-container {
     grid-template-columns: 1fr;

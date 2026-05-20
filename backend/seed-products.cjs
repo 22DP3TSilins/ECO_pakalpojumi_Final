@@ -1,11 +1,11 @@
-// Seed the products catalog with eco-friendly items.
-// Can be run standalone:    node backend/seed-products.cjs
-// Or imported & called as:  require('./seed-products.cjs').seedProducts(db)
+// Aizpildīt produktu katalogu ar videi draudzīgiem produktiem.
+// Var izpildīt atsevišķi:   node backend/seed-products.cjs
+// Vai importēt un izsaukt:  require('./seed-products.cjs').seedProducts(db)
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const products = [
-  // Home
+  // Mājas
   {
     name: 'Bamboo Toothbrush Set',
     description: 'Pack of 4 biodegradable bamboo toothbrushes with soft BPA-free bristles. Compostable handles reduce plastic waste.',
@@ -25,7 +25,7 @@ const products = [
     lifecycle_info: 'Soy wax is renewable and biodegradable. Glass jar is reusable / fully recyclable.'
   },
 
-  // Kitchen
+  // Virtuve
   {
     name: 'Reusable Beeswax Food Wraps (Set of 3)',
     description: 'Replace plastic cling film with beeswax-coated organic cotton wraps. Washable and reusable for up to a year.',
@@ -45,7 +45,7 @@ const products = [
     lifecycle_info: 'Durable steel lasts decades; saves ~600 disposable containers over 5 years of daily use.'
   },
 
-  // Garden
+  // Dārzs
   {
     name: 'Compost Bin (Kitchen Counter)',
     description: '5L odor-control countertop compost bin with charcoal filter. Turn food scraps into garden gold.',
@@ -65,7 +65,7 @@ const products = [
     lifecycle_info: 'Open-pollinated seeds can be saved each season for self-sufficient growing.'
   },
 
-  // Beauty
+  // Skaistums
   {
     name: 'Solid Shampoo Bar',
     description: 'Plastic-free shampoo bar with argan oil and shea butter. Equivalent to ~3 bottles of liquid shampoo.',
@@ -85,7 +85,7 @@ const products = [
     lifecycle_info: 'Refills come in compostable paper packaging. The tube lasts a lifetime.'
   },
 
-  // Fashion
+  // Mode
   {
     name: 'Organic Cotton T-Shirt',
     description: 'GOTS-certified organic cotton t-shirt, fair trade. Naturally dyed, available in 5 earth tones.',
@@ -105,7 +105,7 @@ const products = [
     lifecycle_info: 'Each bag diverts 18 PET bottles from landfill or ocean.'
   },
 
-  // Electronics
+  // Elektronika
   {
     name: 'Solar Power Bank 20 000 mAh',
     description: 'Charge phones and tablets anywhere with built-in solar panel and USB-C fast charge.',
@@ -125,7 +125,7 @@ const products = [
     lifecycle_info: 'Saves ~80 kWh per year per bulb compared to incandescent.'
   },
 
-  // Office
+  // Birojs
   {
     name: 'Recycled Paper Notebook (A5)',
     description: '120-page A5 notebook made from 100% post-consumer recycled paper. Stitched binding lays flat.',
@@ -145,7 +145,7 @@ const products = [
     lifecycle_info: 'Zero waste pencils made from FSC-certified wood and non-GMO seeds.'
   },
 
-  // Food
+  // Pārtika
   {
     name: 'Organic Loose-Leaf Green Tea (100 g)',
     description: 'Single-origin organic sencha green tea in a refillable tin. No tea bag waste.',
@@ -213,7 +213,7 @@ function seedProducts(db, { closeWhenDone = false } = {}) {
 
 module.exports = { seedProducts };
 
-// Standalone CLI usage:  node backend/seed-products.cjs
+// Atsevišķa CLI lietošana: node backend/seed-products.cjs
 if (require.main === module) {
   const dbPath = process.env.DB_PATH || path.join(__dirname, 'eco_pakalpojumi.db');
   const db = new sqlite3.Database(dbPath);

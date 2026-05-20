@@ -5,7 +5,7 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-// Check if token is close to expiry (within 1 day)
+// Pārbaudīt, vai pilnvaras derīguma termiņš ir tuvu (1 dienas laikā)
 function isTokenExpiringSoon(token) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]))
@@ -19,7 +19,7 @@ function isTokenExpiringSoon(token) {
 
 let refreshing = null
 
-// Attach token and auto-refresh if expiring soon
+// Pievienot pilnvaru un automātiski to atjaunot, ja tūlīt beigsies
 api.interceptors.request.use(async config => {
   let token = localStorage.getItem('token')
   if (token) {
@@ -43,7 +43,7 @@ api.interceptors.request.use(async config => {
   return config
 })
 
-// Handle auth errors globally
+// Globāli apstrādāt autentifikācijas kļūdas
 api.interceptors.response.use(
   response => response,
   error => {

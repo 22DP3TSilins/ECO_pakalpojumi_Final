@@ -2,7 +2,7 @@
   <div class="calculator-page">
     <div class="calculator-container">
 
-      <!-- Hero Header -->
+      <!-- Galvenā galvene -->
       <div class="calc-hero">
         <div class="calc-hero-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="calculator-content">
-        <!-- Category Tabs -->
+        <!-- Kategoriju cilnes -->
         <div class="category-tabs">
           <button 
             v-for="(cat, key) in categories" 
@@ -26,7 +26,7 @@
           </button>
         </div>
 
-        <!-- Transportation Section -->
+        <!-- Transporta sekcija -->
         <div v-show="activeCategory === 'transport'" class="category-section">
           <div class="section-title-row">
             <span class="section-step">01</span>
@@ -105,7 +105,7 @@
           </div>
         </div>
 
-        <!-- Home Energy Section -->
+        <!-- Mājas enerģijas sekcija -->
         <div v-show="activeCategory === 'home'" class="category-section">
           <div class="section-title-row">
             <span class="section-step">02</span>
@@ -185,7 +185,7 @@
           </div>
         </div>
 
-        <!-- Food Section -->
+        <!-- Pārtikas sekcija -->
         <div v-show="activeCategory === 'food'" class="category-section">
           <div class="section-title-row">
             <span class="section-step">03</span>
@@ -259,7 +259,7 @@
           </div>
         </div>
 
-        <!-- Lifestyle Section -->
+        <!-- Dzīvesveida sekcija -->
         <div v-show="activeCategory === 'lifestyle'" class="category-section">
           <div class="section-title-row">
             <span class="section-step">04</span>
@@ -333,14 +333,14 @@
           </div>
         </div>
 
-        <!-- Calculate Button -->
+        <!-- Aprēķināt poga -->
         <button class="calculate-btn" @click="calculateFootprint">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/></svg>
           {{ t('calculator.calculateBtn') }}
         </button>
       </div>
 
-      <!-- Results Section -->
+      <!-- Rezultātu sekcija -->
       <div v-if="showResults" class="results-section">
         <div class="results-header">
           <h2>{{ t('calculator.resultsTitle') }}</h2>
@@ -443,7 +443,7 @@
         </button>
       </div>
 
-      <!-- Methodology Section -->
+      <!-- Metodoloģijas sekcija -->
       <div class="methodology-section">
         <button class="methodology-toggle" @click="showMethodology = !showMethodology">
           <div class="methodology-toggle-left">
@@ -507,27 +507,27 @@ export default {
       showResults: false,
       showMethodology: false,
       inputs: {
-        // Transport
+        // Transports
         carKm: 100,
         carType: 'petrol',
         shortFlights: 2,
         mediumFlights: 1,
         longFlights: 0,
         publicTransport: 5,
-        // Home
+        // Mājas
         electricity: 300,
         energySource: 'mixed',
         heating: 100,
         heatingType: 'gas',
         water: 150,
-        // Food
+        // Pārtika
         beef: 2,
         pork: 2,
         poultry: 3,
         fish: 1,
         dairy: 3,
         foodWaste: 15,
-        // Lifestyle
+        // Dzīvesveids
         clothing: 3,
         packages: 5,
         recycling: 'some'
@@ -569,7 +569,7 @@ export default {
   },
   methods: {
     calculateFootprint() {
-      // Transport calculations (tonnes CO2/year)
+      // Transporta aprēķini (tonnās CO2 gadā)
       const carEmissions = {
         petrol: 0.21, diesel: 0.18, hybrid: 0.12, electric: 0.05
       };
@@ -582,7 +582,7 @@ export default {
       const publicCO2 = (this.inputs.publicTransport * 52 * 0.089) / 1000;
       this.breakdown.transport = carCO2 + flightCO2 + publicCO2;
 
-      // Home energy calculations
+      // Mājas enerģijas aprēķini
       const electricityMultiplier = {
         mixed: 0.42, renewable: 0.05, coal: 0.82
       };
@@ -595,7 +595,7 @@ export default {
       const waterCO2 = (this.inputs.water * 365 * 0.001) / 1000;
       this.breakdown.home = electricityCO2 + heatingCO2 + waterCO2;
 
-      // Food calculations
+      // Pārtikas aprēķini
       const beefCO2 = this.inputs.beef * 52 * 0.027; // 27kg CO2 per kg beef
       const porkCO2 = this.inputs.pork * 52 * 0.012;
       const poultryCO2 = this.inputs.poultry * 52 * 0.007;
@@ -604,7 +604,7 @@ export default {
       const wasteFactor = 1 + (this.inputs.foodWaste / 100);
       this.breakdown.food = (beefCO2 + porkCO2 + poultryCO2 + fishCO2 + dairyCO2) * wasteFactor;
 
-      // Lifestyle calculations
+      // Dzīvesveida aprēķini
       const clothingCO2 = this.inputs.clothing * 12 * 0.025;
       const packagesCO2 = this.inputs.packages * 12 * 0.005;
       const recyclingFactor = {
@@ -612,18 +612,18 @@ export default {
       };
       this.breakdown.lifestyle = (clothingCO2 + packagesCO2) * recyclingFactor[this.inputs.recycling];
 
-      // Total
+      // Kopā
       this.totalFootprint = this.breakdown.transport + this.breakdown.home + 
                             this.breakdown.food + this.breakdown.lifestyle;
 
-      // Generate personalized tips
+      // Ģenerēt personalizētus padomus
       this.generateTips();
       this.showResults = true;
     },
     generateTips() {
       this.personalizedTips = [];
       
-      // Transport tips
+      // Transporta padomi
       if (this.inputs.carType === 'petrol' || this.inputs.carType === 'diesel') {
         if (this.inputs.carKm > 200) {
           this.personalizedTips.push({
@@ -644,7 +644,7 @@ export default {
         });
       }
 
-      // Home tips
+      // Mājas padomi
       if (this.inputs.energySource === 'mixed' || this.inputs.energySource === 'coal') {
         this.personalizedTips.push({
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
@@ -654,7 +654,7 @@ export default {
         });
       }
 
-      // Food tips
+      // Pārtikas padomi
       if (this.inputs.beef > 3) {
         this.personalizedTips.push({
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"/><path d="m13 12 4-4"/></svg>',
@@ -673,7 +673,7 @@ export default {
         });
       }
 
-      // Lifestyle tips
+      // Dzīvesveida padomi
       if (this.inputs.clothing > 5) {
         this.personalizedTips.push({
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>',
@@ -692,7 +692,7 @@ export default {
         });
       }
 
-      // Always add some general tips if we have few
+      // Vienmēr pievienot dažus vispārīgus padomus, ja esošo ir maz
       if (this.personalizedTips.length < 3) {
         this.personalizedTips.push({
           icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>',
@@ -789,7 +789,7 @@ export default {
   border: 1px solid var(--border-color);
 }
 
-/* Category Tabs */
+/* Kategoriju cilnes */
 .category-tabs {
   display: flex;
   gap: 6px;
@@ -835,7 +835,7 @@ export default {
   flex-shrink: 0;
 }
 
-/* Section Title Row */
+/* Sekcijas virsraksta rinda */
 .section-title-row {
   display: flex;
   align-items: center;
@@ -860,7 +860,7 @@ export default {
   font-weight: 600;
 }
 
-/* Category Section animation */
+/* Kategoriju sekcijas animācija */
 .category-section {
   animation: fadeIn 0.2s ease;
 }
@@ -870,7 +870,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Input Cards */
+/* Ievades kartītes */
 .input-card {
   background: var(--bg-color);
   border-radius: var(--radius-lg);
@@ -1000,7 +1000,7 @@ export default {
   border-color: var(--primary);
 }
 
-/* Sub options */
+/* Apakšopcijas */
 .sub-options {
   margin-top: 14px;
   padding-top: 14px;
@@ -1038,7 +1038,7 @@ export default {
   border-color: var(--primary);
 }
 
-/* Flight & Meat Inputs */
+/* Lidojumu un gaļas ievades */
 .flight-inputs, .meat-types {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -1074,7 +1074,7 @@ export default {
   border-color: var(--primary);
 }
 
-/* Radio Options */
+/* Radio opcijas */
 .radio-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1108,7 +1108,7 @@ export default {
   font-weight: 600;
 }
 
-/* Calculate Button */
+/* Aprēķināt poga */
 .calculate-btn {
   width: 100%;
   display: flex;
@@ -1276,7 +1276,7 @@ export default {
 .label-avg { color: #f59e0b; font-weight: 600; }
 .label-high { color: #ef4444; font-weight: 600; }
 
-/* Breakdown */
+/* Sadalījums */
 .breakdown-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -1351,7 +1351,7 @@ export default {
   transition: width 0.8s cubic-bezier(.4,0,.2,1);
 }
 
-/* Tips */
+/* Padomi */
 .tips-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);

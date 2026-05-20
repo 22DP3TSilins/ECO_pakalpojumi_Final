@@ -2,13 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback so Vue Router routes (/products, /profile, etc.) don't 404 on refresh
+# SPA rezerves variants, lai Vue Router maršruti (/products, /profile, u.c.) pārlādesā nedotu 404 kļūdu
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Allow Google Identity Services popup to communicate back via postMessage
+# Atļauj Google Identity Services uznirstošajam logam sazināties atpakaļ, izmantojot postMessage
 [[headers]]
   for = "/*"
   [headers.values]

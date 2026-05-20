@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./eco_pakalpojumi.db');
 
 db.serialize(() => {
-  // Add new columns to existing tables
+  // Pievienot jaunas kolonnas esošajām tabulām
   db.run(`ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'`, (err) => {
     if (err && !err.message.includes('duplicate column name')) {
       console.error('Error adding role column:', err);
@@ -34,7 +34,7 @@ db.serialize(() => {
     }
   });
 
-  // Rename lifecycle to lifecycle_info if it exists
+  // Pārdēvēt lifecycle uz lifecycle_info, ja tas eksistē
   db.all("PRAGMA table_info(products)", (err, columns) => {
     if (!err) {
       const hasLifecycle = columns.some(col => col.name === 'lifecycle');
@@ -46,7 +46,7 @@ db.serialize(() => {
     }
   });
 
-  // Create orders table if it doesn't exist
+  // Izveidot orders tabulu, ja tā neeksistē
   db.run(`CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
@@ -66,7 +66,7 @@ db.serialize(() => {
     FOREIGN KEY(product_id) REFERENCES products(id)
   )`);
 
-  // Create admin user
+  // Izveidot administratora lietotāju
   const bcrypt = require('bcryptjs');
   const adminPassword = bcrypt.hashSync('admin123', 10);
 

@@ -14,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key';
 
-// CORS: allow local dev + the deployed frontend (FRONTEND_URL env var)
+// CORS: atļaut lokālo izstrādi + izvietoto priekšpusi (FRONTEND_URL vides mainīgais)
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
@@ -22,7 +22,7 @@ const allowedOrigins = [
 ].filter(Boolean);
 app.use(cors({
   origin: (origin, cb) => {
-    // Allow no-origin requests (curl, mobile apps) and any origin in the list
+    // Atļaut pieprasījumus bez izcelsmes (curl, mobilās lietotnes) un jebkuru sarakstā esošu izcelsmi
     if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
     return cb(new Error(`CORS blocked: ${origin}`));
   },
@@ -30,16 +30,16 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Create uploads directory if it doesn't exist
+// Izveidot uploads direktoriju, ja tā neeksistē
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Serve static files from uploads folder
+// Apkalpot statiskos failus no uploads mapes
 app.use('/uploads', express.static(uploadsDir));
 
-// Multer configuration for file uploads
+// Multer konfigurācija failu augšupielādei
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadsDir);
@@ -52,7 +52,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB ierobežojums
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
@@ -64,7 +64,7 @@ const upload = multer({
   }
 });
 
-// Auth middleware
+// Autentifikācijas starpprogrammatūra
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -89,38 +89,38 @@ const requireAdmin = (req, res, next) => {
   next();
 };
 
-// Passport setup for Google
+// Passport iestatīšana Google autentifikācijai
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'YOUR_GOOGLE_CLIENT_SECRET',
     callbackURL: 'http://localhost:3000/auth/google/callback'
   },
   (accessToken, refreshToken, profile, done) => {
-    // Here you would find or create user in DB
+    // Šeit jūs atrastu vai izveidotu lietotāju datubāzē
     return done(null, profile);
   }
 ));
 
 app.use(passport.initialize());
 
-// Google OAuth - verify token from frontend and create/login user
+// Google OAuth — pārbaudīt pilnvaru no priekšpuses un izveidot/pieteikt lietotāju
 app.post('/api/auth/google', async (req, res) => {
   const { credential, clientId } = req.body;
   
   try {
-    // Decode the JWT token from Google (in production, verify with Google's public keys)
+    // Dekodēt Google JWT pilnvaru (ražošanā pārbaudīt ar Google publiskajām atslēgām)
     const payload = JSON.parse(Buffer.from(credential.split('.')[1], 'base64').toString());
     
     const { email, name, sub: googleId, picture } = payload;
     
-    // Check if user exists
+    // Pārbaudīt, vai lietotājs eksistē
     db.get('SELECT * FROM users WHERE email = ? OR google_id = ?', [email, googleId], (err, existingUser) => {
       if (err) {
         return res.status(500).json({ error: 'Database error' });
       }
       
       if (existingUser) {
-        // User exists - update google_id if needed and login
+        // Lietotājs eksistē — atjaunināt google_id, ja nepieciešams, un pieteikt
         if (!existingUser.google_id) {
           db.run('UPDATE users SET google_id = ? WHERE id = ?', [googleId, existingUser.id]);
         }
@@ -141,7 +141,7 @@ app.post('/api/auth/google', async (req, res) => {
           }
         });
       } else {
-        // Create new user with Google account
+        // Izveidot jaunu lietotāju ar Google kontu
         const randomPassword = Math.random().toString(36).slice(-12) + 'Aa1!';
         bcrypt.hash(randomPassword, 10, (err, hashedPassword) => {
           if (err) {
@@ -179,11 +179,11 @@ app.post('/api/auth/google', async (req, res) => {
   }
 });
 
-// Database setup
+// Datubāzes iestatīšana
 const dbPath = process.env.DB_PATH || path.join(__dirname, 'eco_pakalpojumi.db');
 const db = new sqlite3.Database(dbPath);
 
-// Create tables if not exist
+// Izveidot tabulas, ja tās neeksistē
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -231,7 +231,7 @@ db.serialize(() => {
     date TEXT,
     FOREIGN KEY(user_id) REFERENCES users(id)
   )`);
-  // Add columns if they don't exist (for existing databases)
+  // Pievienot kolonnas, ja tās neeksistē (esošajām datubāzēm)
   db.run(`ALTER TABLE posts ADD COLUMN category TEXT`, () => {});
   db.run(`ALTER TABLE posts ADD COLUMN tags TEXT`, () => {});
   db.run(`ALTER TABLE posts ADD COLUMN views INTEGER DEFAULT 0`, () => {});
@@ -323,15 +323,15 @@ db.serialize(() => {
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id)
   )`);
-  // Add phone column for existing DBs
+  // Pievienot phone kolonnu esošajām datubāzēm
   db.run(`ALTER TABLE users ADD COLUMN phone TEXT`, () => {});
 });
 
-// Auto-seed the products catalog on startup (idempotent — skips items that already exist).
-// Useful on hosts with ephemeral disks where the SQLite DB is wiped on restart.
+// Automātiski aizpildīt produktu katalogu palaišanas brīdī (idempotenti — izlaiž jau esošos).
+// Noderīgi resursdatoros ar īslaicīgiem diskiem, kur SQLite datubāze tiek dzēsta pārstartēšanā.
 try {
   const { seedProducts } = require('./seed-products.cjs');
-  // Defer briefly to ensure CREATE TABLE statements above have flushed
+  // Īsi atlikt, lai pārliecinātos, ka iepriekšējie CREATE TABLE pieprasījumi ir izpildīti
   setTimeout(() => {
     seedProducts(db).catch((e) => console.error('[seed-products] failed:', e));
   }, 500);
@@ -339,8 +339,8 @@ try {
   console.warn('[seed-products] module not available:', e.message);
 }
 
-// Routes
-// Password validation function
+// Maršruti
+// Paroles validācijas funkcija
 const validatePassword = (password) => {
   if (password.length < 8) {
     return 'Password must be at least 8 characters long';
@@ -360,10 +360,10 @@ const validatePassword = (password) => {
     return 'Password must contain at least one number';
   }
 
-  return null; // Valid password
+  return null; // Derīga parole
 };
 
-// Simple in-memory rate limiter
+// Vienkāršs atmiņā balstīts ātruma ierobežotājs
 const rateLimitStore = new Map();
 const rateLimit = (maxRequests, windowMs) => (req, res, next) => {
   const ip = req.ip || req.connection.remoteAddress;
@@ -377,7 +377,7 @@ const rateLimit = (maxRequests, windowMs) => (req, res, next) => {
     rateLimitStore.set(key, record);
   }
   
-  // Remove expired entries
+  // Noņemt izbeigušās vienības
   while (record.length > 0 && record[0] < windowStart) record.shift();
   
   if (record.length >= maxRequests) {
@@ -388,7 +388,7 @@ const rateLimit = (maxRequests, windowMs) => (req, res, next) => {
   next();
 };
 
-// Clean up rate limit store every 10 minutes
+// Notīrīt ātruma ierobežojuma krātuvi katras 10 minūtes
 setInterval(() => {
   const cutoff = Date.now() - 15 * 60 * 1000;
   for (const [key, timestamps] of rateLimitStore) {
@@ -398,7 +398,7 @@ setInterval(() => {
   }
 }, 10 * 60 * 1000);
 
-// Token refresh endpoint
+// Pilnvaras atjaunošanas galapunkts
 app.post('/api/auth/refresh', authenticateToken, (req, res) => {
   const user = req.user;
   db.get('SELECT id, email, name, role, blocked FROM users WHERE id = ?', [user.id], (err, row) => {
@@ -413,32 +413,32 @@ app.post('/api/auth/refresh', authenticateToken, (req, res) => {
   });
 });
 
-// Auth
+// Autentifikācija
 app.post('/api/auth/register', rateLimit(5, 15 * 60 * 1000), async (req, res) => {
   console.log('🔍 REGISTER REQUEST RECEIVED:', req.body);
 
   const { name, email, password, phone } = req.body;
 
-  // Validate input
+  // Pārbaudīt ievadi
   if (!name || !email || !password) {
     console.log('❌ MISSING REQUIRED FIELDS');
     return res.status(400).json({ error: 'Please fill in all required fields: name, email, and password.' });
   }
 
-  // Validate name length
+  // Pārbaudīt vārda garumu
   if (name.trim().length < 2) {
     console.log('❌ NAME TOO SHORT');
     return res.status(400).json({ error: 'Name must be at least 2 characters long' });
   }
 
-  // Validate email format
+  // Pārbaudīt e-pasta formātu
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     console.log('❌ INVALID EMAIL FORMAT');
     return res.status(400).json({ error: 'Please enter a valid email address' });
   }
 
-  // Validate password strength
+  // Pārbaudīt paroles stiprumu
   const passwordError = validatePassword(password);
   if (passwordError) {
     console.log('❌ PASSWORD VALIDATION FAILED:', passwordError);
@@ -447,7 +447,7 @@ app.post('/api/auth/register', rateLimit(5, 15 * 60 * 1000), async (req, res) =>
 
   console.log('✅ ALL VALIDATIONS PASSED');
 
-  // Check if email exists
+  // Pārbaudīt, vai e-pasts eksistē
   db.get('SELECT id FROM users WHERE email = ?', [email], async (err, row) => {
     if (err) {
       console.log('❌ DATABASE ERROR:', err);
@@ -473,7 +473,7 @@ app.post('/api/auth/register', rateLimit(5, 15 * 60 * 1000), async (req, res) =>
           return res.status(500).json({ error: 'Failed to create user' });
         }
         console.log('✅ USER CREATED SUCCESSFULLY, ID:', this.lastID);
-        // Create welcome notification
+        // Izveidot sveiciena paziņojumu
         db.run('INSERT INTO notifications (user_id, message, icon, type) VALUES (?, ?, ?, ?)',
           [this.lastID, 'Welcome to Eco Pakalpojumi! Start exploring eco-friendly products. 🌿', '🎉', 'welcome']);
         res.status(201).json({ message: 'User registered successfully' });
@@ -490,7 +490,7 @@ app.post('/api/auth/login', rateLimit(10, 15 * 60 * 1000), (req, res) => {
 
   const { email, password } = req.body;
 
-  // Validate input
+  // Pārbaudīt ievadi
   if (!email || !password) {
     console.log('❌ MISSING EMAIL OR PASSWORD');
     return res.status(400).json({ error: 'Email and password are required' });
@@ -547,7 +547,7 @@ app.post('/api/auth/login', rateLimit(10, 15 * 60 * 1000), (req, res) => {
   });
 });
 
-// Forgot Password
+// Aizmirsta parole
 app.post('/api/auth/forgot-password', rateLimit(3, 15 * 60 * 1000), (req, res) => {
   const { email } = req.body;
   if (!email) {
@@ -559,25 +559,25 @@ app.post('/api/auth/forgot-password', rateLimit(3, 15 * 60 * 1000), (req, res) =
       return res.status(500).json({ error: 'Database error' });
     }
     if (!user) {
-      // Don't reveal whether email exists
+      // Neatklāt, vai e-pasts eksistē
       return res.json({ message: 'If an account with that email exists, a temporary password has been generated. Check your console/logs.' });
     }
 
     try {
-      // Generate a random temporary password
+      // Ģenerēt nejaušu pagaidu paroli
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
       let tempPassword = 'Tmp';
       for (let i = 0; i < 8; i++) {
         tempPassword += chars.charAt(Math.floor(Math.random() * chars.length));
       }
-      tempPassword += '1!'; // ensure it meets strength requirements
+      tempPassword += '1!'; // pārliecināties, ka tā atbilst stipruma prasībām
 
       const hashedPassword = await bcrypt.hash(tempPassword, 10);
       db.run('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, user.id], function(updateErr) {
         if (updateErr) {
           return res.status(500).json({ error: 'Failed to reset password' });
         }
-        // In production, send email. For dev, log it.
+        // Ražošanā sūtīt e-pastu. Izstrādē reģistrēt žurnālā.
         console.log(`🔑 TEMPORARY PASSWORD for ${email}: ${tempPassword}`);
         res.json({ message: `Password has been reset. Your temporary password is: ${tempPassword}  — Please change it after logging in.` });
       });
@@ -590,12 +590,12 @@ app.post('/api/auth/forgot-password', rateLimit(3, 15 * 60 * 1000), (req, res) =
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  // Create JWT for Google user
+  // Izveidot JWT Google lietotājam
   const token = jwt.sign({ id: req.user.id, email: req.user.emails[0].value, name: req.user.displayName }, JWT_SECRET);
   res.redirect(`http://localhost:5173?token=${token}`);
 });
 
-// Products
+// Produkti
 app.get('/api/products', (req, res) => {
   db.all('SELECT * FROM products', [], (err, rows) => {
     if (err) {
@@ -606,7 +606,7 @@ app.get('/api/products', (req, res) => {
   });
 });
 
-// Cart
+// Grozs
 app.get('/api/cart', authenticateToken, (req, res) => {
   db.all(`
     SELECT cart.id, cart.quantity, cart.product_id,
@@ -631,7 +631,7 @@ app.post('/api/cart', authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid product_id or quantity' });
   }
   
-  // Check if item already in cart
+  // Pārbaudīt, vai produkts jau ir grozā
   db.get('SELECT id, quantity FROM cart WHERE user_id = ? AND product_id = ?', [req.user.id, pid], (err, existing) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -639,7 +639,7 @@ app.post('/api/cart', authenticateToken, (req, res) => {
     }
     
     if (existing) {
-      // Update quantity
+      // Atjaunināt daudzumu
       db.run('UPDATE cart SET quantity = quantity + ? WHERE id = ?', [qty, existing.id], function(err) {
         if (err) {
           res.status(500).json({ error: err.message });
@@ -648,7 +648,7 @@ app.post('/api/cart', authenticateToken, (req, res) => {
         res.json({ id: existing.id, updated: true });
       });
     } else {
-      // Insert new
+      // Ievietot jaunu
       db.run('INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)', [req.user.id, pid, qty], function(err) {
         if (err) {
           res.status(500).json({ error: err.message });
@@ -705,16 +705,16 @@ app.delete('/api/cart', authenticateToken, (req, res) => {
   });
 });
 
-// Checkout / Create Order
+// Norēķini / izveidot pasūtījumu
 app.post('/api/checkout', authenticateToken, (req, res) => {
   const userId = req.user.id;
   const { promoCode } = req.body || {};
   
-  // Validate promo code server-side
+  // Pārbaudīt akcijas kodu servera pusē
   const validPromos = { 'ECO10': 0.1, 'GREEN20': 0.2, 'PLANET15': 0.15 };
   const discountRate = promoCode ? validPromos[promoCode.toUpperCase()] || 0 : 0;
   
-  // Get cart items
+  // Iegūt groza vienumus
   db.all(`
     SELECT cart.id, cart.quantity, cart.product_id,
            products.name, products.price, products.stock
@@ -730,19 +730,19 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
       return res.status(400).json({ error: 'Cart is empty' });
     }
     
-    // Check stock
+    // Pārbaudīt krājumus
     for (const item of cartItems) {
       if (item.stock < item.quantity) {
         return res.status(400).json({ error: `Not enough stock for ${item.name}` });
       }
     }
     
-    // Calculate total with discount
+    // Aprēķināt kopsummu ar atlaidi
     let total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const discountAmount = total * discountRate;
     total = Math.round((total - discountAmount) * 100) / 100;
     
-    // Create order
+    // Izveidot pasūtījumu
     db.run('INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)', [userId, total, 'pending'], function(err) {
       if (err) {
         return res.status(500).json({ error: err.message });
@@ -750,7 +750,7 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
       
       const orderId = this.lastID;
       
-      // Insert order items
+      // Ievietot pasūtījuma vienumus
       const insertStmt = db.prepare('INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)');
       const updateStockStmt = db.prepare('UPDATE products SET stock = stock - ? WHERE id = ?');
       
@@ -762,12 +762,12 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
       insertStmt.finalize();
       updateStockStmt.finalize();
       
-      // Clear cart
+      // Notīrīt grozu
       db.run('DELETE FROM cart WHERE user_id = ?', [userId], function(err) {
         if (err) {
           console.error('Error clearing cart:', err);
         }
-        // Create order notification
+        // Izveidot pasūtījuma paziņojumu
         db.run('INSERT INTO notifications (user_id, message, icon, type, link) VALUES (?, ?, ?, ?, ?)',
           [userId, `Order #${orderId} placed successfully! Total: €${total.toFixed(2)}`, '🛒', 'order', `/profile`]);
         res.json({ 
@@ -782,7 +782,7 @@ app.post('/api/checkout', authenticateToken, (req, res) => {
   });
 });
 
-// Get user orders
+// Iegūt lietotāja pasūtījumus
 app.get('/api/orders', authenticateToken, (req, res) => {
   db.all(`
     SELECT o.*, 
@@ -802,7 +802,7 @@ app.get('/api/orders', authenticateToken, (req, res) => {
   });
 });
 
-// Footprint
+// Oglekļa pēdas nospiedums
 app.get('/api/footprint', authenticateToken, (req, res) => {
   db.all('SELECT * FROM user_activities WHERE user_id = ?', [req.user.id], (err, rows) => {
     if (err) {
@@ -831,9 +831,9 @@ app.post('/api/footprint', authenticateToken, (req, res) => {
   });
 });
 
-// Forum
+// Forums
 app.get('/api/posts', (req, res) => {
-  // Check if user is logged in to include their like/bookmark status
+  // Pārbaudīt, vai lietotājs ir pieteicies, lai iekļautu viņa patīk/grāmatzīmju statusu
   const token = req.headers.authorization?.split(' ')[1];
   let userId = null;
   if (token) {
@@ -859,7 +859,7 @@ app.get('/api/posts', (req, res) => {
       return res.json({ posts: rows.map(r => ({ ...r, liked: false, bookmarked: false })) });
     }
 
-    // Get user's likes and bookmarks
+    // Iegūt lietotāja patīkamos un grāmatzīmes
     db.all('SELECT post_id FROM post_likes WHERE user_id = ?', [userId], (err2, likes) => {
       const likedSet = new Set((likes || []).map(l => l.post_id));
       db.all('SELECT post_id FROM post_bookmarks WHERE user_id = ?', [userId], (err3, bookmarks) => {
@@ -900,7 +900,7 @@ app.post('/api/posts', (req, res) => {
   }
 });
 
-// Track view when opening a post
+// Reģistrēt skatījumu, atverot ierakstu
 app.post('/api/posts/:id/view', (req, res) => {
   db.run('UPDATE posts SET views = COALESCE(views, 0) + 1 WHERE id = ?', [req.params.id], function(err) {
     if (err) return res.status(500).json({ error: err.message });
@@ -910,7 +910,7 @@ app.post('/api/posts/:id/view', (req, res) => {
   });
 });
 
-// Like / unlike a post
+// Patīk / atcelt patīk ierakstam
 app.post('/api/posts/:id/like', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Login required' });
@@ -919,11 +919,11 @@ app.post('/api/posts/:id/like', (req, res) => {
     const postId = req.params.id;
     const userId = decoded.id;
 
-    // Check if already liked
+    // Pārbaudīt, vai jau atzīmēts kā patīk
     db.get('SELECT id FROM post_likes WHERE post_id = ? AND user_id = ?', [postId, userId], (err, row) => {
       if (err) return res.status(500).json({ error: err.message });
       if (row) {
-        // Unlike
+        // Atcelt patīk
         db.run('DELETE FROM post_likes WHERE post_id = ? AND user_id = ?', [postId, userId], function(err2) {
           if (err2) return res.status(500).json({ error: err2.message });
           db.get('SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?', [postId], (err3, countRow) => {
@@ -931,7 +931,7 @@ app.post('/api/posts/:id/like', (req, res) => {
           });
         });
       } else {
-        // Like
+        // Patīk
         db.run('INSERT INTO post_likes (post_id, user_id) VALUES (?, ?)', [postId, userId], function(err2) {
           if (err2) return res.status(500).json({ error: err2.message });
           db.get('SELECT COUNT(*) as count FROM post_likes WHERE post_id = ?', [postId], (err3, countRow) => {
@@ -945,7 +945,7 @@ app.post('/api/posts/:id/like', (req, res) => {
   }
 });
 
-// Bookmark / unbookmark a post
+// Pievienot/noņemt grāmatzīmi ierakstam
 app.post('/api/posts/:id/bookmark', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Login required' });
@@ -1030,7 +1030,7 @@ app.post('/api/posts/:id/comments', (req, res) => {
   }
 });
 
-// Like / unlike a comment
+// Patīk / atcelt patīk komentāram
 app.post('/api/comments/:id/like', (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Login required' });
@@ -1062,10 +1062,10 @@ app.post('/api/comments/:id/like', (req, res) => {
   }
 });
 
-// Admin: Delete post
+// Administrators: dzēst ierakstu
 app.delete('/api/admin/posts/:id', authenticateToken, requireAdmin, (req, res) => {
   const postId = req.params.id;
-  // Delete associated data first (comments, likes, bookmarks)
+  // Vispirms dzēst saistītos datus (komentārus, patīk, grāmatzīmes)
   db.run('DELETE FROM comments WHERE post_id = ?', [postId], function(err) {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -1081,7 +1081,7 @@ app.delete('/api/admin/posts/:id', authenticateToken, requireAdmin, (req, res) =
           res.status(500).json({ error: err.message });
           return;
         }
-        // Finally delete the post
+        // Visbeidzot dzēst ierakstu
         db.run('DELETE FROM posts WHERE id = ?', [postId], function(err) {
           if (err) {
             res.status(500).json({ error: err.message });
@@ -1097,7 +1097,7 @@ app.delete('/api/admin/posts/:id', authenticateToken, requireAdmin, (req, res) =
   });
 });
 
-// Challenges
+// Izaicinājumi
 app.get('/api/challenges', (req, res) => {
   db.all('SELECT * FROM challenges', [], (err, rows) => {
     if (err) {
@@ -1126,7 +1126,7 @@ app.post('/api/user-challenges', (req, res) => {
   }
 });
 
-// Education
+// Izglītība
 app.put('/api/user', (req, res) => {
   const { name, password } = req.body;
   const token = req.headers.authorization?.split(' ')[1];
@@ -1153,7 +1153,7 @@ app.put('/api/user', (req, res) => {
         res.status(500).json({ error: err.message });
         return;
       }
-      // Re-issue JWT so the client picks up the new name immediately
+      // Atkārtoti izsniegt JWT, lai klients uzreiz uztvertu jauno vārdu
       db.get('SELECT id, email, name, role FROM users WHERE id = ?', [decoded.id], (e, row) => {
         if (e || !row) return res.json({ message: 'Profile updated' });
         const newToken = jwt.sign(
@@ -1190,7 +1190,7 @@ app.delete('/api/user', (req, res) => {
   }
 });
 
-// Admin routes
+// Administratora maršruti
 app.get('/api/admin/users', authenticateToken, requireAdmin, (req, res) => {
   db.all('SELECT id, name, email, role, blocked, created_at FROM users ORDER BY id ASC', [], (err, rows) => {
     if (err) {
@@ -1227,10 +1227,10 @@ app.put('/api/admin/users/:id/role', authenticateToken, requireAdmin, (req, res)
   });
 });
 
-// Delete user (admin only)
+// Dzēst lietotāju (tikai administrators)
 app.delete('/api/admin/users/:id', authenticateToken, requireAdmin, (req, res) => {
   const userId = req.params.id;
-  // Don't allow deleting yourself
+  // Neļaut izdzēst sevi
   if (parseInt(userId) === req.user.id) {
     return res.status(400).json({ error: 'Cannot delete your own account from admin panel' });
   }
@@ -1286,7 +1286,7 @@ app.delete('/api/admin/orders/:id', authenticateToken, requireAdmin, (req, res) 
   });
 });
 
-// Education posts endpoint
+// Izglītības ierakstu galapunkts
 app.get('/api/education', (req, res) => {
   db.all('SELECT * FROM education_posts ORDER BY id DESC', [], (err, rows) => {
     if (err) {
@@ -1297,7 +1297,7 @@ app.get('/api/education', (req, res) => {
   });
 });
 
-// Image upload endpoint
+// Attēla augšupielādes galapunkts
 app.post('/api/upload', authenticateToken, requireAdmin, upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
@@ -1306,7 +1306,7 @@ app.post('/api/upload', authenticateToken, requireAdmin, upload.single('image'),
   res.json({ url: imageUrl, filename: req.file.filename });
 });
 
-// Product CRUD for admin
+// Produktu CRUD administratoram
 app.post('/api/products', authenticateToken, requireAdmin, (req, res) => {
   const { name, description, price, category, stock, image_url, lifecycle_info } = req.body;
   if (!name || typeof name !== 'string' || name.trim().length === 0 || name.length > 500) {
@@ -1369,76 +1369,76 @@ app.delete('/api/products/:id', authenticateToken, requireAdmin, (req, res) => {
   });
 });
 
-// Get user stats
+// Iegūt lietotāja statistiku
 app.get('/api/user/stats', authenticateToken, (req, res) => {
   const userId = req.user.id;
   
-  // Get various stats for the user
+  // Iegūt dažādu lietotāja statistiku
   const queries = {
-    // Total orders count
+    // Kopējais pasūtījumu skaits
     ordersCount: new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM orders WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Completed challenges count
+    // Pabeigto izaicinājumu skaits
     challengesCompleted: new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM user_challenges WHERE user_id = ? AND completed = 1', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Total challenges joined
+    // Kopējais pievienoto izaicinājumu skaits
     challengesJoined: new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM user_challenges WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Total activities logged
+    // Kopējais reģistrēto aktivitāšu skaits
     activitiesCount: new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM user_activities WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Total CO2 impact from activities
+    // Kopējais CO2 ietekmējums no aktivitātēm
     totalCo2Saved: new Promise((resolve, reject) => {
       db.get('SELECT COALESCE(SUM(impact), 0) as total FROM user_activities WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.total || 0);
       });
     }),
-    // Cart items count
+    // Groza vienumu skaits
     cartCount: new Promise((resolve, reject) => {
       db.get('SELECT COALESCE(SUM(quantity), 0) as count FROM cart WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Forum posts count
+    // Foruma ierakstu skaits
     postsCount: new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) as count FROM posts WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.count || 0);
       });
     }),
-    // Recent activities
+    // Nesenās aktivitātes
     recentActivities: new Promise((resolve, reject) => {
       db.all('SELECT * FROM user_activities WHERE user_id = ? ORDER BY date DESC LIMIT 5', [userId], (err, rows) => {
         if (err) reject(err);
         else resolve(rows || []);
       });
     }),
-    // User creation date
+    // Lietotāja izveides datums
     userCreatedAt: new Promise((resolve, reject) => {
       db.get('SELECT created_at FROM users WHERE id = ?', [userId], (err, row) => {
         if (err) reject(err);
         else resolve(row?.created_at || null);
       });
     }),
-    // Total money spent
+    // Kopējā iztērētā nauda
     totalSpent: new Promise((resolve, reject) => {
       db.get('SELECT COALESCE(SUM(total), 0) as total FROM orders WHERE user_id = ?', [userId], (err, row) => {
         if (err) reject(err);
@@ -1455,14 +1455,14 @@ app.get('/api/user/stats', authenticateToken, (req, res) => {
         stats[key] = results[index];
       });
       
-      // Calculate eco points based on activities
-      // 10 points per activity + 50 points per completed challenge + 5 points per order
+      // Aprēķināt eko punktus, balstoties uz aktivitātēm
+      // 10 punkti par aktivitāti + 50 punkti par pabeigtu izaicinājumu + 5 punkti par pasūtījumu
       stats.ecoPoints = (stats.activitiesCount * 10) + (stats.challengesCompleted * 50) + (stats.ordersCount * 5);
       
-      // Calculate streak (consecutive days with activities)
+      // Aprēķināt sēriju (secīgas dienas ar aktivitātēm)
       stats.streak = calculateStreak(stats.recentActivities);
       
-      // Calculate level based on eco points
+      // Aprēķināt līmeni, balstoties uz eko punktiem
       stats.level = Math.floor(stats.ecoPoints / 100) + 1;
       stats.currentXP = stats.ecoPoints % 100;
       stats.nextLevelXP = 100;
@@ -1474,7 +1474,7 @@ app.get('/api/user/stats', authenticateToken, (req, res) => {
     });
 });
 
-// Helper function to calculate streak
+// Palīgfunkcija sērijas aprēķināšanai
 function calculateStreak(activities) {
   if (!activities || activities.length === 0) return 0;
   
@@ -1482,7 +1482,7 @@ function calculateStreak(activities) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   
-  // Get unique dates
+  // Iegūt unikālos datumus
   const dates = [...new Set(activities.map(a => {
     const d = new Date(a.date);
     d.setHours(0, 0, 0, 0);
@@ -1491,11 +1491,11 @@ function calculateStreak(activities) {
   
   if (dates.length === 0) return 0;
   
-  // Check if the most recent activity is today or yesterday
+  // Pārbaudīt, vai pēdējā aktivitāte ir šodien vai vakar
   const mostRecent = dates[0];
   const diffDays = Math.floor((today - mostRecent) / (1000 * 60 * 60 * 24));
   
-  if (diffDays > 1) return 0; // Streak broken
+  if (diffDays > 1) return 0; // Sērija pārtraukta
   
   streak = 1;
   for (let i = 1; i < dates.length; i++) {
@@ -1510,7 +1510,7 @@ function calculateStreak(activities) {
   return streak;
 }
 
-// Get global site stats (public)
+// Iegūt globālo vietnes statistiku (publiska)
 app.get('/api/stats/global', (req, res) => {
   const queries = {
     totalUsers: new Promise((resolve, reject) => {
@@ -1565,7 +1565,7 @@ app.get('/api/stats/global', (req, res) => {
         stats[key] = results[index];
       });
       
-      // Calculate trees planted equivalent (1 tree absorbs ~21kg CO2/year, so we estimate 1 tree per 20kg saved)
+      // Aprēķināt iestādīto koku ekvivalentu (1 koks absorbē ~21 kg CO2 gadā, tāpēc novērtējam 1 koku uz 20 kg ietaupītā CO2)
       stats.treesPlanted = Math.floor(stats.totalCo2Saved / 20);
       
       res.json(stats);
@@ -1575,7 +1575,7 @@ app.get('/api/stats/global', (req, res) => {
     });
 });
 
-// Notifications API
+// Paziņojumu API
 app.get('/api/notifications', authenticateToken, (req, res) => {
   db.all(
     'SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC LIMIT 30',

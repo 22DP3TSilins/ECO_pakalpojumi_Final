@@ -1,6 +1,6 @@
 <template>
   <div class="cart-page">
-    <!-- Hero Section -->
+    <!-- Galvenā sekcija -->
     <div class="cart-hero">
       <div class="hero-shapes">
         <div class="h-shape h-shape-1"></div>
@@ -28,13 +28,13 @@
     </div>
 
     <div class="cart-container">
-      <!-- Loading State -->
+      <!-- Ielādes stāvoklis -->
       <div v-if="loading" class="loading-state">
         <div class="spinner"></div>
         <p>{{ t('cart.loading') }}</p>
       </div>
 
-      <!-- Empty Cart -->
+      <!-- Tukšs grozs -->
       <div v-else-if="cart.length === 0" class="empty-cart">
         <div class="empty-content">
           <div class="empty-icon">
@@ -71,9 +71,9 @@
         </div>
       </div>
 
-      <!-- Cart Content -->
+      <!-- Groza saturs -->
       <div v-else class="cart-content">
-        <!-- Cart Items Section -->
+        <!-- Groza vienumu sekcija -->
         <div class="cart-items-section">
           <div class="section-header">
             <h2>{{ t('cart.cartItems') }}</h2>
@@ -142,13 +142,13 @@
             </div>
           </div>
 
-          <!-- Continue Shopping -->
+          <!-- Turpināt iepirkties -->
           <router-link to="/products" class="continue-shopping">
             ← {{ t('cart.continueShopping') }}
           </router-link>
         </div>
 
-        <!-- Order Summary Section -->
+        <!-- Pasūtījuma kopsavilkuma sekcija -->
         <div class="order-summary-section">
           <div class="summary-card">
             <h3>{{ t('cart.orderSummary') }}</h3>
@@ -227,7 +227,7 @@
             </div>
           </div>
 
-          <!-- Payment Methods -->
+          <!-- Maksājuma veidi -->
           <div class="payment-methods">
             <span>{{ t('cart.weAccept') }}</span>
             <div class="payment-icons">
@@ -240,7 +240,7 @@
       </div>
     </div>
 
-    <!-- Checkout Modal -->
+    <!-- Norēķinu modālais logs -->
     <div v-if="showCheckoutModal" class="modal-overlay" @click.self="showCheckoutModal = false">
       <div class="checkout-modal">
         <button class="close-modal" @click="showCheckoutModal = false"><Icon name="x" :size="20" /></button>
@@ -307,7 +307,7 @@
       </div>
     </div>
 
-    <!-- Success Modal -->
+    <!-- Veiksmes modālais logs -->
     <div v-if="showSuccessModal" class="modal-overlay">
       <div class="success-modal">
         <div class="success-animation">
@@ -450,7 +450,7 @@ export default {
     },
     
     applyPromo() {
-      // Demo promo codes
+      // Demonstrācijas akciju kodi
       const codes = {
         'ECO10': 0.1,
         'GREEN20': 0.2,
@@ -505,7 +505,7 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
+/* Galvenā sekcija */
 .cart-hero {
   padding: 100px 20px 50px;
   background: var(--gradient-eco, linear-gradient(135deg, var(--primary), var(--primary-dark)));
@@ -591,7 +591,7 @@ export default {
   opacity: 1;
 }
 
-/* Container */
+/* Konteiners */
 .cart-container {
   max-width: 1100px;
   margin: -24px auto 0;
@@ -600,7 +600,7 @@ export default {
   z-index: 10;
 }
 
-/* Loading State */
+/* Ielādes stāvoklis */
 .loading-state {
   text-align: center;
   padding: 60px 20px;
@@ -629,7 +629,7 @@ export default {
   margin: 0;
 }
 
-/* Empty Cart */
+/* Tukšs grozs */
 .empty-cart {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -736,7 +736,7 @@ export default {
   color: var(--primary);
 }
 
-/* Cart Content */
+/* Groza saturs */
 .cart-content {
   display: grid;
   grid-template-columns: 1fr 350px;
@@ -744,7 +744,7 @@ export default {
   align-items: start;
 }
 
-/* Cart Items Section */
+/* Groza vienumu sekcija */
 .cart-items-section {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -785,7 +785,7 @@ export default {
   color: #dc2626;
 }
 
-/* Cart Items */
+/* Groza vienumi */
 .cart-items {
   display: flex;
   flex-direction: column;
@@ -898,7 +898,7 @@ export default {
   margin: 6px 0 0;
 }
 
-/* Item Actions */
+/* Vienuma darbības */
 .item-actions {
   display: flex;
   flex-direction: column;
@@ -970,7 +970,7 @@ export default {
   color: var(--primary);
 }
 
-/* Remove Button */
+/* Noņemšanas poga */
 .remove-btn {
   width: 32px;
   height: 32px;
@@ -996,7 +996,7 @@ export default {
   color: white;
 }
 
-/* Continue Shopping */
+/* Turpināt iepirkties */
 .continue-shopping {
   display: inline-block;
   margin-top: 16px;
@@ -1010,7 +1010,7 @@ export default {
   color: var(--primary);
 }
 
-/* Order Summary Section */
+/* Pasūtījuma kopsavilkuma sekcija */
 .order-summary-section {
   position: sticky;
   top: 100px;
@@ -1031,7 +1031,7 @@ export default {
   font-weight: 600;
 }
 
-/* Promo Code */
+/* Akcijas kods */
 .promo-code {
   display: flex;
   gap: 8px;
@@ -1070,7 +1070,7 @@ export default {
   cursor: not-allowed;
 }
 
-/* Summary Details */
+/* Kopsavilkuma detaļas */
 .summary-details {
   margin-bottom: 16px;
 }
@@ -1110,7 +1110,7 @@ export default {
   margin-top: 12px;
 }
 
-/* Eco Impact Card */
+/* Eko ietekmes kartīte */
 .eco-impact-card {
   background: var(--primary-subtle);
   border-radius: var(--radius-lg);
@@ -1157,7 +1157,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Checkout Button */
+/* Norēķinu poga */
 .checkout-btn {
   width: 100%;
   padding: 14px;
@@ -1212,7 +1212,7 @@ export default {
   transform: translateX(3px);
 }
 
-/* Trust Badges */
+/* Uzticības nozīmes */
 .trust-badges {
   display: flex;
   justify-content: center;
@@ -1228,7 +1228,7 @@ export default {
   gap: 4px;
 }
 
-/* Payment Methods */
+/* Maksājuma veidi */
 .payment-methods {
   margin-top: 16px;
   text-align: center;
@@ -1251,7 +1251,7 @@ export default {
   color: var(--text-secondary);
 }
 
-/* Modal Styles */
+/* Modālā loga stili */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1490,7 +1490,7 @@ export default {
   border-color: var(--text-secondary);
 }
 
-/* Success Modal */
+/* Veiksmes modālais logs */
 .success-modal {
   background: var(--card-bg);
   border-radius: var(--radius-xl);
@@ -1641,7 +1641,7 @@ export default {
   color: var(--primary);
 }
 
-/* Responsive */
+/* Adaptīvs dizains */
 @media (max-width: 900px) {
   .cart-content {
     grid-template-columns: 1fr;

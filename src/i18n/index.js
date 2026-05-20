@@ -3,8 +3,8 @@ import lv from './locales/lv.js'
 import en from './locales/en.js'
 
 const i18n = createI18n({
-  legacy: false, // Use Composition API mode
-  locale: localStorage.getItem('language') || 'lv', // Default to Latvian
+  legacy: false, // Izmantot Composition API režīmu
+  locale: localStorage.getItem('language') || 'lv', // Pēc noklusējuma latviešu valoda
   fallbackLocale: 'en',
   messages: {
     lv,

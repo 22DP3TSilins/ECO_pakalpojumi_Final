@@ -1,6 +1,6 @@
 <template>
   <div class="admin-dashboard" :class="{ 'admin-dark': adminDarkMode }">
-    <!-- Top Navigation Bar -->
+    <!-- Augšējā navigācijas josla -->
     <header class="admin-topbar">
       <div class="topbar-left">
         <button class="sidebar-toggle" @click="sidebarCollapsed = !sidebarCollapsed">
@@ -33,7 +33,7 @@
           <span class="profile-name">{{ currentUser?.name || 'Admin' }}</span>
           <span class="profile-dropdown-arrow">▼</span>
           
-          <!-- Profile Dropdown Menu -->
+          <!-- Profila nolaižamā izvēlne -->
           <div v-if="showProfileMenu" class="profile-dropdown">
             <div class="dropdown-header">
               <span class="dropdown-email">{{ currentUser?.email || 'admin@eco.lv' }}</span>
@@ -56,7 +56,7 @@
     </header>
 
     <div class="admin-layout">
-      <!-- Sidebar Navigation -->
+      <!-- Sānjoslas navigācija -->
       <aside class="admin-sidebar" :class="{ collapsed: sidebarCollapsed }">
         <nav class="admin-nav">
           <div class="nav-section">
@@ -109,10 +109,10 @@
         </nav>
       </aside>
 
-      <!-- Main Content -->
+      <!-- Galvenais saturs -->
       <main class="admin-content" :class="{ expanded: sidebarCollapsed }">
         <transition name="tab-fade" mode="out-in">
-        <!-- Dashboard Overview Tab -->
+        <!-- Vadības paneļa pārskata cilne -->
         <div v-if="activeTab === 'dashboard'" key="dashboard" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -296,7 +296,7 @@
           </div>
         </div>
 
-        <!-- Users Tab -->
+        <!-- Lietotāju cilne -->
         <div v-else-if="activeTab === 'users'" key="users" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -373,7 +373,7 @@
           </div>
         </div>
 
-        <!-- Products Tab -->
+        <!-- Produktu cilne -->
         <div v-else-if="activeTab === 'products'" key="products" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -421,7 +421,7 @@
           </div>
         </div>
 
-        <!-- Orders Tab -->
+        <!-- Pasūtījumu cilne -->
         <div v-else-if="activeTab === 'orders'" key="orders" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -484,7 +484,7 @@
           </div>
         </div>
 
-        <!-- Forum Management Tab -->
+        <!-- Foruma pārvaldības cilne -->
         <div v-else-if="activeTab === 'forum'" key="forum" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -524,7 +524,7 @@
           </div>
         </div>
 
-        <!-- Settings Tab -->
+        <!-- Iestatījumu cilne -->
         <div v-else-if="activeTab === 'settings'" key="settings" class="admin-section admin-tab-content">
           <div class="section-title-bar">
             <div>
@@ -582,7 +582,7 @@
       </main>
     </div>
 
-    <!-- User Edit Modal -->
+    <!-- Lietotāja rediģēšanas modālais logs -->
     <AdminUserModal
       :show="showUserModal"
       :form="userForm"
@@ -592,7 +592,7 @@
       @update:form="userForm = $event"
     />
 
-    <!-- Product Modal -->
+    <!-- Produkta modālais logs -->
     <AdminProductModal
       :show="showProductModal"
       :form="productForm"
@@ -692,7 +692,7 @@ export default {
         { id: 'settings', label: this.$t('admin.settings'), icon: 'settings' }
       ]
     },
-    // Get date range boundaries
+    // Iegūt datumu diapazona robežas
     dateRangeBounds() {
       const now = new Date()
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -731,7 +731,7 @@ export default {
       return { startDate, prevStartDate, prevEndDate, now }
     },
     
-    // Filter orders by date range
+    // Filtrēt pasūtījumus pēc datumu diapazona
     ordersInRange() {
       const { startDate, now } = this.dateRangeBounds
       return this.orders.filter(order => {
@@ -740,7 +740,7 @@ export default {
       })
     },
     
-    // Previous period orders for trend comparison
+    // Iepriekšējā perioda pasūtījumi tendences salīdzinājumam
     ordersPrevPeriod() {
       const { prevStartDate, prevEndDate } = this.dateRangeBounds
       return this.orders.filter(order => {
@@ -749,7 +749,7 @@ export default {
       })
     },
     
-    // Filter users by date range
+    // Filtrēt lietotājus pēc datumu diapazona
     usersInRange() {
       const { startDate, now } = this.dateRangeBounds
       return this.users.filter(user => {
@@ -758,7 +758,7 @@ export default {
       })
     },
     
-    // Previous period users
+    // Iepriekšējā perioda lietotāji
     usersPrevPeriod() {
       const { prevStartDate, prevEndDate } = this.dateRangeBounds
       return this.users.filter(user => {
@@ -767,7 +767,7 @@ export default {
       })
     },
     
-    // Filtered stats based on date range
+    // Filtrētā statistika pēc datumu diapazona
     filteredStats() {
       return {
         totalUsers: this.usersInRange.length,
@@ -777,17 +777,17 @@ export default {
       }
     },
     
-    // Calculate revenue for current period
+    // Aprēķināt pašreizējā perioda ieņēmumus
     revenueInRange() {
       return this.ordersInRange.reduce((sum, order) => sum + (order.total || 0), 0)
     },
     
-    // Calculate revenue for previous period
+    // Aprēķināt iepriekšējā perioda ieņēmumus
     revenuePrevPeriod() {
       return this.ordersPrevPeriod.reduce((sum, order) => sum + (order.total || 0), 0)
     },
     
-    // Dynamic trends
+    // Dinamiskās tendences
     trends() {
       const calcTrend = (current, previous) => {
         if (previous === 0) return current > 0 ? 100 : 0
@@ -802,7 +802,7 @@ export default {
       }
     },
     
-    // Period comparison label
+    // Perioda salīdzinājuma marķējums
     periodLabel() {
       switch (this.dateRange) {
         case 'today': return this.$t('admin.vsYesterday')
@@ -846,7 +846,7 @@ export default {
     this.loadCurrentUser()
     this.loadSettings()
     this.loadAllData()
-    // Close dropdown when clicking outside
+    // Aizvērt nolaižamo izvēlni, klikšķinot ārpusē
     this._clickHandler = (e) => this.handleClickOutside(e)
     document.addEventListener('click', this._clickHandler)
   },
@@ -949,7 +949,7 @@ export default {
         totalPosts: this.posts.length
       }
       
-      // Build recent activity from latest data
+      // Veidot nesenās aktivitātes no jaunākajiem datiem
       this.recentActivity = []
       
       if (this.users.length > 0) {
@@ -1020,7 +1020,7 @@ export default {
         return dateStr
       }
     },
-    // User Management
+    // Lietotāju pārvaldība
     editUser(user) {
       this.userForm = { ...user }
       this.showUserModal = true
@@ -1074,7 +1074,7 @@ export default {
         alert('Error deleting user: ' + error.message)
       }
     },
-    // Product Management
+    // Produktu pārvaldība
     openProductModal(product = null) {
       if (product) {
         this.productForm = { ...product }
@@ -1109,13 +1109,13 @@ export default {
       const file = event.target.files[0]
       if (!file) return
 
-      // Validate file size (5MB max)
+      // Pārbaudīt faila lielumu (maks. 5 MB)
       if (file.size > 5 * 1024 * 1024) {
         alert('File size must be less than 5MB')
         return
       }
 
-      // Validate file type
+      // Pārbaudīt faila tipu
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp']
       if (!allowedTypes.includes(file.type)) {
         alert('Only image files are allowed (JPG, PNG, GIF, WebP)')
@@ -1177,7 +1177,7 @@ export default {
         alert('Error deleting product: ' + (error.response?.data?.error || error.message))
       }
     },
-    // Order Management
+    // Pasūtījumu pārvaldība
     async updateOrderStatus(orderId, status) {
       try {
         await api.put(`/api/admin/orders/${orderId}/status`, { status })
@@ -1200,7 +1200,7 @@ export default {
         alert('Error deleting order: ' + (error.response?.data?.error || error.message))
       }
     },
-    // Forum Management
+    // Foruma pārvaldība
     viewPost(post) {
       alert(`Post: ${post.title}\nAuthor: ${post.author_name}\nContent: ${post.content?.substring(0, 200)}...`)
     },
@@ -1215,7 +1215,7 @@ export default {
         alert('Error deleting post: ' + (error.response?.data?.error || error.message))
       }
     },
-    // Placeholder methods
+    // Vietturu metodes
     openEducationModal() {
       alert('Education management coming soon!')
     },
@@ -1465,7 +1465,7 @@ export default {
   margin-left: 2px;
 }
 
-/* Profile dropdown */
+/* Profila nolaižamā izvēlne */
 .profile-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -1987,7 +1987,7 @@ export default {
   padding: 0;
 }
 
-/* Mini table */
+/* Mini tabula */
 .mini-table {
   padding: 4px 0;
 }
@@ -2043,7 +2043,7 @@ export default {
 .order-status.delivered { background: rgba(46,204,113,0.15); color: #2ecc71; }
 .order-status.cancelled { background: rgba(231,76,60,0.15); color: #e74c3c; }
 
-/* Activity */
+/* Aktivitāte */
 .activity-timeline {
   padding: 12px 22px;
 }
@@ -2082,7 +2082,7 @@ export default {
   color: #555;
 }
 
-/* Quick actions */
+/* Ātrās darbības */
 .quick-actions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2124,7 +2124,7 @@ export default {
   font-weight: 600;
 }
 
-/* Top products */
+/* Populārākie produkti */
 .top-products-list {
   padding: 8px 0;
 }
@@ -2205,7 +2205,7 @@ export default {
   font-size: 0.9em;
 }
 
-/* Empty states */
+/* Tukšie stāvokļi */
 .empty-card {
   padding: 36px 20px;
   text-align: center;
@@ -2306,7 +2306,7 @@ export default {
   background: rgba(231,76,60,0.06);
 }
 
-/* User cell */
+/* Lietotāja šūna */
 .user-cell {
   display: flex;
   align-items: center;
@@ -2556,7 +2556,7 @@ export default {
   color: #f1c40f;
 }
 
-/* Empty products */
+/* Tukši produkti */
 .empty-products {
   grid-column: 1 / -1;
   display: flex;
@@ -2581,7 +2581,7 @@ export default {
   margin: 0 0 20px;
 }
 
-/* Empty table */
+/* Tukša tabula */
 .empty-table {
   text-align: center;
   padding: 50px 20px !important;
@@ -3540,7 +3540,7 @@ select.form-input option {
   color: #94a0b1;
 }
 
-/* Fix remaining dark-theme option backgrounds */
+/* Labot atlikušos tumšās tēmas opciju fonus */
 .date-select option,
 select.form-input option,
 .setting-input option {
@@ -4274,7 +4274,7 @@ select.form-input option,
   color: var(--text-1);
 }
 
-/* Topbar */
+/* Augšējā josla */
 .admin-dark .admin-topbar {
   background: rgba(22, 24, 34, 0.92);
   border-bottom-color: var(--line);
@@ -4297,7 +4297,7 @@ select.form-input option,
 }
 .admin-dark .topbar-divider { background: var(--line); }
 
-/* Profile dropdown */
+/* Profila nolaižamā izvēlne */
 .admin-dark .admin-profile {
   background: var(--surface);
   border-color: var(--line);
@@ -4320,7 +4320,7 @@ select.form-input option,
 .admin-dark .dropdown-logout { color: var(--danger); }
 .admin-dark .dropdown-logout:hover { background: rgba(239,68,68,0.1); }
 
-/* Sidebar */
+/* Sānjosla */
 .admin-dark .admin-sidebar {
   background: #141624;
   border-right-color: var(--line);
@@ -4338,7 +4338,7 @@ select.form-input option,
 .admin-dark .nav-item.active .nav-icon { background: rgba(255,255,255,0.22); color: #fff; }
 .admin-dark .nav-badge { background: var(--surface-2); color: var(--text-2); }
 
-/* Section headers */
+/* Sekciju galvenes */
 .admin-dark .section-title-bar h2 { color: var(--text-1); }
 .admin-dark .section-subtitle { color: var(--text-2); }
 
@@ -4361,7 +4361,7 @@ select.form-input option,
 .admin-dark .search-box { background: var(--surface-2); border-color: var(--line); }
 .admin-dark .search-icon { color: var(--text-3); }
 
-/* Stat cards */
+/* Statistikas kartītes */
 .admin-dark .stat-card {
   background: var(--surface);
   border-color: var(--line);
@@ -4372,7 +4372,7 @@ select.form-input option,
 .admin-dark .stat-compare { color: var(--text-3); }
 .admin-dark .stat-icon-bg { background: var(--surface-2); }
 
-/* Dashboard cards */
+/* Vadības paneļa kartītes */
 .admin-dark .dashboard-card {
   background: var(--surface);
   border-color: var(--line);
@@ -4404,7 +4404,7 @@ select.form-input option,
 .admin-dark .timeline-item { border-color: var(--line); }
 .admin-dark .timeline-icon { background: var(--surface-2); }
 
-/* At a glance */
+/* Īsumā */
 .admin-dark .glance-item {
   background: var(--surface-2);
   border-color: var(--line);
@@ -4412,7 +4412,7 @@ select.form-input option,
 .admin-dark .glance-item span { color: var(--text-2); }
 .admin-dark .glance-item strong { color: var(--text-1); }
 
-/* Activity timeline */
+/* Aktivitāšu laika līnija */
 .admin-dark .timeline-content p { color: var(--text-2); }
 .admin-dark .timeline-time { color: var(--text-3); }
 
@@ -4496,7 +4496,7 @@ select.form-input option,
   box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
 }
 
-/* Product cards */
+/* Produktu kartītes */
 .admin-dark .product-card-admin {
   background: var(--surface);
   border-color: var(--line);
@@ -4594,7 +4594,7 @@ select.form-input option,
   box-shadow: 0 4px 12px rgba(34,197,94,0.25);
 }
 
-/* Forum posts */
+/* Foruma ieraksti */
 .admin-dark .post-card {
   background: var(--surface);
   border-color: var(--line);
@@ -4622,7 +4622,7 @@ select.form-input option,
 .admin-dark .settings-card-footer { border-top-color: var(--line); }
 .admin-dark .toggle-slider { background: #3a4058; }
 
-/* Empty states */
+/* Tukšie stāvokļi */
 .admin-dark .empty-state,
 .admin-dark .empty-card,
 .admin-dark .empty-products,
@@ -4630,31 +4630,31 @@ select.form-input option,
 .admin-dark .empty-posts,
 .admin-dark .empty-table { color: var(--text-3); }
 
-/* Badges */
+/* Nozīmes */
 .admin-dark .badge-success { background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.25); }
 .admin-dark .badge-danger { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.25); }
 .admin-dark .badge-admin { background: rgba(99,102,241,0.15); color: #a5b4fc; }
 .admin-dark .badge-user { background: rgba(34,197,94,0.15); color: #4ade80; }
 
-/* Row states */
+/* Rindas stāvokļi */
 .admin-dark .data-table tr.row-blocked { background: rgba(239,68,68,0.06); }
 
-/* Placeholder text */
+/* Vietturu teksts */
 .admin-dark .search-input::placeholder,
 .admin-dark .form-input::placeholder {
   color: var(--text-3);
 }
 
-/* Stat card before-line */
+/* Statistikas kartītes pirmsrinda */
 .admin-dark .stat-card::before { opacity: 0.7; }
 
 /* Data-table hover from V2 */
 .admin-dark .data-table tbody tr:hover { background: var(--surface-2); }
 
-/* Upload area hover */
+/* Augšupielādes apgabala kursors */
 .admin-dark .upload-area:hover { border-color: rgba(34,197,94,0.4); }
 
-/* Section title from LIGHT REMAKE */
+/* Sekcijas virsraksts no gaišā pārveidojuma */
 .admin-dark .section-title-bar h2 { color: var(--text-1); }
 
 /* Settings card h3 from V3 */
@@ -4669,10 +4669,10 @@ select.form-input option,
 /* Toggle slider from V3 */
 .admin-dark .toggle-slider { background: #3a4058; }
 
-/* No-image product placeholder */
+/* Vieturs produktam bez attēla */
 .admin-dark .no-image-admin { background: var(--surface-2); color: var(--text-3); }
 
-/* Responsive dark overrides */
+/* Adaptīvie tumšie pārklājumi */
 @media (max-width: 900px) {
   .admin-dark .order-detail {
     border-bottom-color: var(--line);
